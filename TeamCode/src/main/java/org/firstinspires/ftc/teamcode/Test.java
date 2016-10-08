@@ -32,5 +32,6 @@ public abstract class Test extends Telemetry{
             MoveMotor1(0);
         }
 
+        UpdateTelemetry();
     }
 }

@@ -10,5 +10,6 @@ public abstract class Telemetry extends HardwareMap{
 
     public void UpdateTelemetry (){
         //telemetry data goes here
+        telemetry.addLine("Motor 1 Speed: " + Motor1.getPower());
     }
 }
