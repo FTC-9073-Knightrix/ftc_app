@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 //adds the file to the FtcOpmodeRegister
-@TeleOp(name = "Test")
+@TeleOp(name = "Test", group = "Test Programs")
 
 /**
  * Created by nicolasbravo on 10/8/16.
@@ -11,7 +11,12 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * [Description]
  */
 
-public abstract class Test extends Telemetry{
+public class Test extends Telemetry{
+
+    @Override
+    public void init(){
+
+    }
 
     @Override
     public void start(){
