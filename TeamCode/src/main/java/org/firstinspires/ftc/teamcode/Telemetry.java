@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.util.Hardware;
-
 /**
  * Created by nicolasbravo on 10/8/16.
  * For use in the [Driver Controlled/Autonomous] Portion of the match
@@ -10,5 +8,7 @@ import com.qualcomm.robotcore.util.Hardware;
 
 public abstract class Telemetry extends HardwareMap{
 
-
+    public void UpdateTelemetry (){
+        //telemetry data goes here
+    }
 }
