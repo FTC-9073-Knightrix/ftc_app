@@ -6,13 +6,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "Test", group = "Test Programs")
 
 /**
- * Created by nicolasbravo on 10/8/16.
- * For use in the [Driver Controlled/Autonomous] Portion of the match
- * [Description]
+ * Created by Nicolas Bravo on 10/8/16.
+ * Testing
+ * Moves the motor by pressing 'A'
  */
 
 public class Test extends Telemetry{
-    
+
     @Override
     public void start(){
 
@@ -23,6 +23,7 @@ public class Test extends Telemetry{
     @Override
     public void loop(){
 
+        //Moves the motor when 'A' is pressed
         if(gamepad1.a)
         {
 
@@ -34,6 +35,7 @@ public class Test extends Telemetry{
             MoveMotor1(0);
         }
 
+        //Shows telemetry data
         UpdateTelemetry();
     }
 }

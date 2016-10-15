@@ -4,9 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
- * Created by nicolasbravo on 10/8/16.
- * For use in the [Driver Controlled/Autonomous] Portion of the match
- * [Description]
+ * Created by Nicolas on 10/8/16.
+ * Defines the motors
  */
 
 public abstract class HardwareMap extends OpMode{
@@ -18,6 +17,7 @@ public abstract class HardwareMap extends OpMode{
     public void init(){
         //add the names for the motors
         Motor1 = hardwareMap.dcMotor.get("M1");
+        Motor1.setDirection(DcMotor.Direction.FORWARD);
     }
 
     //classes

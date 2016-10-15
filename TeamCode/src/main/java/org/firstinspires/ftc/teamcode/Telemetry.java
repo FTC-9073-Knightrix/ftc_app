@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 /**
- * Created by nicolasbravo on 10/8/16.
- * For use in the [Driver Controlled/Autonomous] Portion of the match
- * [Description]
+ * Created by Nicolas on 10/8/16.
+ * Shows data on the phone
  */
 
 public abstract class Telemetry extends HardwareMap{
