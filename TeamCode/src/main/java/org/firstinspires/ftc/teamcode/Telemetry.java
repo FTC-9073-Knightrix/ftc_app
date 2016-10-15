@@ -11,5 +11,9 @@ public abstract class Telemetry extends HardwareMap{
         //telemetry data goes here
         telemetry.addLine(Double.toString(getRuntime()));
         telemetry.addLine("Motor 1 Speed: " + Motor1.getPower());
+        telemetry.addLine("Encoder Position: " + Motor1.getCurrentPosition());
+        telemetry.addLine("Motor Mode: " + Motor1.getMode());
+
+
     }
 }
