@@ -12,12 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 
 public class Test extends Telemetry{
-
-    @Override
-    public void init(){
-
-    }
-
+    
     @Override
     public void start(){
 
@@ -28,11 +23,13 @@ public class Test extends Telemetry{
     @Override
     public void loop(){
 
-        if(gamepad1.a){
+        if(gamepad1.a)
+        {
 
             MoveMotor1(1);
         }
-        else{
+        else
+        {
 
             MoveMotor1(0);
         }
