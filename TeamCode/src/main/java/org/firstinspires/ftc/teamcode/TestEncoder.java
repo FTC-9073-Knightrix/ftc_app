@@ -21,7 +21,7 @@ public class TestEncoder extends Telemetry{
     //Checks if the user is using the joystick and stops the rotation
     public boolean Reset = true;
     //Sets the value of a full rotation
-    public static final int ONE_ROTATION = 1120;
+    public static final int ONE_ROTATION = 950;
     //Keeps up with the value of "ONE_ROTATION" and never resets (keeps on getting larger)
     public int counter = ONE_ROTATION;
     //Keeps track with the amount of rotations done
@@ -53,11 +53,11 @@ public class TestEncoder extends Telemetry{
         //If gamepad 1's "A" button is being pressed and "Reset" is false
         if (gamepad1.a && !Reset){
             //Sets the target position of Motor 1 to "counter" so that it can go back to its original position
-            Motor1.setTargetPosition(position + 950);
+            Motor1.setTargetPosition(position + ONE_ROTATION);
             //Makes "position" equal Motor 1's current position
             position = Motor1.getCurrentPosition();
             //A loop that runs while Motor 1's current position is less than "counter"
-            while (Motor1.getCurrentPosition() < position + 950){
+            while (Motor1.getCurrentPosition() < position + ONE_ROTATION){
                 //Sets Motor 1 at full speed
                 Motor1.setPower(1);
                 //Sets the mode of Motor 1 to run to the position set ("counter")
@@ -66,7 +66,7 @@ public class TestEncoder extends Telemetry{
                 times = counter / ONE_ROTATION;
             }
             //A loop that runs while the current position of Motor 1 is greater than "counter"
-            while (Motor1.getCurrentPosition() > position + 950){
+            while (Motor1.getCurrentPosition() > position + ONE_ROTATION){
                 //Makes "counter" equal "counter" plus "ONE_ROTATION"
                 counter += ONE_ROTATION;
                 //Sets the power of Motor 1 to 0
