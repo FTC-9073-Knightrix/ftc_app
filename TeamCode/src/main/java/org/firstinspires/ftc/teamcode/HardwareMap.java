@@ -18,7 +18,6 @@ import com.qualcomm.robotcore.util.Range;
 public abstract class HardwareMap extends OpMode{
 
     //Declare variables
-    public int Color;
     public double Voltage1;
     //Declare the motors
     DcMotor Motor1;
@@ -38,6 +37,7 @@ public abstract class HardwareMap extends OpMode{
 
         //Color1
         Color1 = hardwareMap.colorSensor.get("C1");
+        Color1.enableLed(false);
 
         //Line1
         Line1 = hardwareMap.analogInput.get("L1");
