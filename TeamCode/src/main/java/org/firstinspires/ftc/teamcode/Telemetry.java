@@ -21,7 +21,7 @@ public abstract class Telemetry extends HardwareMap{
         telemetry.addLine("Ultrasonic: " + Range1.getDistance(DistanceUnit.CM) + " cm");
         telemetry.addLine("Optical: " + Range1.cmOptical() + " cm");
         telemetry.addLine("~Color Sensor~");
-        telemetry.addLine("RGB: " + (16 * Color1.red()) + ", " + (16 * Color1.green()) + ", " + (16 * Color1.blue()));
+        telemetry.addLine("RGB: " + (4 * Color1.red()) + ", " + (4 * Color1.green()) + ", " + (4 * Color1.blue()));
         if(Color == 0){
             telemetry.addLine("Beacon Color: Blue");
         }
