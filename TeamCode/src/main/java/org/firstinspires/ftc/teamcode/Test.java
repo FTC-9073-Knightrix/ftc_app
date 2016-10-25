@@ -27,12 +27,12 @@ public class Test extends Telemetry{
         if(gamepad1.a)
         {
 
-            MoveMotor1(1);
+            MoveMiddleDrive(1);
         }
         else
         {
 
-            MoveMotor1(0);
+            MoveMiddleDrive(0);
         }
 
         //Shows telemetry data
