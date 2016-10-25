@@ -12,11 +12,24 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public abstract class Telemetry extends HardwareMap{
     public void UpdateTelemetry (){
         //telemetry data goes here
+        telemetry.addLine("~Gamepad 1~");
+        telemetry.addLine("Right Trigger: " + gamepad1.right_trigger);
+        telemetry.addLine("Left Stick: " + gamepad1.left_stick_y);
+        telemetry.addLine("Right Stick: " + gamepad1.right_stick_y);
+        telemetry.addLine("Dpad Left: " + gamepad1.dpad_left);
+        telemetry.addLine("Dpad Right: " + gamepad1.dpad_right);
+        //
         telemetry.addLine(Double.toString(getRuntime()));
-        telemetry.addLine("~Motor 1~");
+        telemetry.addLine("~Middle Motor~");
         telemetry.addLine("Speed: " + MiddleDrive.getPower() + "%");
         telemetry.addLine("Encoder Position: " + MiddleDrive.getCurrentPosition());
         telemetry.addLine("Mode: " + MiddleDrive.getMode());
+        telemetry.addLine("~Left Motor~");
+        telemetry.addLine("Speed: " + LeftDrive.getPower() + "%");
+        telemetry.addLine("Mode: " + LeftDrive.getMode());
+        telemetry.addLine("~Right Motor~");
+        telemetry.addLine("Speed: " + RightDrive.getPower() + "%");
+        telemetry.addLine("Mode: " + RightDrive.getMode());
         telemetry.addLine("~Range Sensor~");
         telemetry.addLine("Ultrasonic: " + Range1.getDistance(DistanceUnit.CM) + " cm");
         telemetry.addLine("Optical: " + Range1.cmOptical() + " cm");
