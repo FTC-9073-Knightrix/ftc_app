@@ -56,6 +56,16 @@ public abstract class Telemetry extends HardwareMap{
         }
         //Line Tracker
         telemetry.addLine("~Line Tracker~");
+        //If Line1's voltage is below 4 (0-3.999)
+        if (Line1.getVoltage() < 4){
+            //Display the color as white
+            telemetry.addLine("Color: White");
+        }
+        //Else (if Line1's voltage is 4 or greater
+        else{
+            //Display the color as black
+            telemetry.addLine("Color: Black");
+        }
         telemetry.addLine("Value: " + Line1.getVoltage());
     }
 }
