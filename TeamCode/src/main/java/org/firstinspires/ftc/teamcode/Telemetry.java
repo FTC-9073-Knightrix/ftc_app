@@ -12,14 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public abstract class Telemetry extends HardwareMap{
     public void UpdateTelemetry (){
         //telemetry data goes here
-        telemetry.addLine("~Gamepad 1~");
-        telemetry.addLine("Right Trigger: " + gamepad1.right_trigger);
-        telemetry.addLine("Left Stick: " + gamepad1.left_stick_y);
-        telemetry.addLine("Right Stick: " + gamepad1.right_stick_y);
-        telemetry.addLine("Dpad Left: " + gamepad1.dpad_left);
-        telemetry.addLine("Dpad Right: " + gamepad1.dpad_right);
-        //
-        telemetry.addLine(Double.toString(getRuntime()));
+        telemetry.addLine("Time: " + Double.toString(getRuntime()));
         telemetry.addLine("~Middle Motor~");
         telemetry.addLine("Speed: " + MiddleDrive.getPower() + "%");
         telemetry.addLine("Encoder Position: " + MiddleDrive.getCurrentPosition());
