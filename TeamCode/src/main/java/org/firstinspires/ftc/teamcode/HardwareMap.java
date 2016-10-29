@@ -39,7 +39,7 @@ public abstract class HardwareMap extends OpMode{
         LeftDrive.setDirection(DcMotor.Direction.FORWARD);
         //RightDrive
         RightDrive = hardwareMap.dcMotor.get("M3");
-        RightDrive.setDirection(DcMotor.Direction.FORWARD);
+        RightDrive.setDirection(DcMotor.Direction.REVERSE);
         //Range1
         Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
 
