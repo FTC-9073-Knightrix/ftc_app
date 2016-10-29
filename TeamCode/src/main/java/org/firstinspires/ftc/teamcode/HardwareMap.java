@@ -1,29 +1,24 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.AnalogSensor;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.LightSensor;
-import com.qualcomm.robotcore.util.Range;
 
 
 /**
- * Created by Nicolas on 10/8/16.
+ * Created by Nicolas Bravo on 10/8/16.
+ * Program Hierarchy
  * Defines the motors
  */
 
 public abstract class HardwareMap extends OpMode{
-
-    //Declare variables
-    public double Voltage1;
     //Declare the motors
     DcMotor MiddleDrive;
     DcMotor LeftDrive;
     DcMotor RightDrive;
+    DcMotor PickupDrive;
     //Declare the sensors
     ModernRoboticsI2cRangeSensor Range1;
     ColorSensor Color1;
@@ -40,6 +35,9 @@ public abstract class HardwareMap extends OpMode{
         //RightDrive
         RightDrive = hardwareMap.dcMotor.get("M3");
         RightDrive.setDirection(DcMotor.Direction.REVERSE);
+        //BallPickup
+        PickupDrive = hardwareMap.dcMotor.get("M4");
+        PickupDrive.setDirection(DcMotor.Direction.FORWARD);
         //Range1
         Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
 
@@ -64,6 +62,11 @@ public abstract class HardwareMap extends OpMode{
     void MoveRightDrive (double Power){
         if (RightDrive != null){
             RightDrive.setPower (Power);
+        }
+    }
+    void MovePickupDrive (double Power){
+        if (PickupDrive != null){
+            PickupDrive.setPower (Power);
         }
     }
 }
