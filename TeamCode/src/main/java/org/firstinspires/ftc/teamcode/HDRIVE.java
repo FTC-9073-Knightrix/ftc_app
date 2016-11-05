@@ -17,13 +17,46 @@ public class HDRIVE extends Telemetry{
     public void start(){
         super.start();
     }
+
+    boolean leftBumperBoolean = false;
+    boolean rightBumperBoolean = false;
+
     //Main loop
     @Override
     public void loop(){
-        //If gamepad 1's 'A' button is pressed
-        if(gamepad1.a){
+        //If gamepad 2's left bumper is pressed and 'leftBumperBoolean' is false
+        if(gamepad2.left_bumper && leftBumperBoolean == false){
+            //Move the ball release
+            MoveReleaseDrive();
+            //Set 'leftBumperBoolean' to true
+            leftBumperBoolean = true;
+        }
+        //Else if gamepad 2's left bumper is not pressed and 'leftBumperBoolean' is true
+        else if(!gamepad2.left_bumper && leftBumperBoolean == true){
+            //Set 'leftBumperBoolean' to false
+            leftBumperBoolean = false;
+        }
+        //If gamepad 2's right bumper is pressed and 'rightBumperBoolean' is false
+        if(gamepad2.right_bumper && rightBumperBoolean == false){
+            //Shoot the ball
+            MoveBallShooter();
+            //Set 'rightBumperBoolean' to true
+            rightBumperBoolean = true;
+        }
+        //Else if gamepad 2's right bumper is not pressed and 'rightBumperBoolean' is true
+        else if(!gamepad2.right_bumper && rightBumperBoolean == true){
+            //Set 'rightBumperBoolean' to false
+            rightBumperBoolean = false;
+        }
+        //If gamepad 2's 'A' button is pressed
+        if(gamepad2.a){
             //Move the ball pickup at full speed
             MovePickupDrive(1);
+        }
+        //Else if gamepad 2's 'A' button is pressed
+        else if(gamepad2.b){
+            //Move the ball pickup backwards at full speed
+            MovePickupDrive(-1);
         }
         //Else (if gamepad 1's 'A' button is not pressed)
         else{
