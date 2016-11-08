@@ -145,7 +145,7 @@ public abstract class HardwareMap extends OpMode{
             //While the total time passed is less than 'releaseTime' plus one
             while (getRuntime() < releaseTime + 1){
                 //Set the position of 'ReleaseDrive' to 90 more than its previous position
-                ReleaseDrive.setPosition(ReleasePosition + 90);
+                ReleaseDrive.setPosition(ReleasePosition + 0.5);
             }
             //Once the while loop is over, sets the position of 'ReleaseDrive' to its previous position
             ReleaseDrive.setPosition(ReleasePosition);
