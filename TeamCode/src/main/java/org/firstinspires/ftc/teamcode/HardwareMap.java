@@ -159,7 +159,7 @@ public abstract class HardwareMap extends OpMode{
             //If 'Move' is true
             if (Move == true){
                 //Set 'LeftBeacon' to its previous position + 90
-                LeftBeacon.setPosition(LeftPosition + 90);
+                LeftBeacon.setPosition(LeftPosition + 0.5);
             }
             //Else (if 'Move' is false
             else{
@@ -176,7 +176,7 @@ public abstract class HardwareMap extends OpMode{
             //If 'Move' is true
             if (Move == true){
                 //Set 'RightBeacon' to its previous position + 90
-                RightBeacon.setPosition(RightPosition + 90);
+                RightBeacon.setPosition(RightPosition + 0.5);
             }
             //Else (if 'Move' is false
             else{
