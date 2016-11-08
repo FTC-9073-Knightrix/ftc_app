@@ -24,12 +24,16 @@ public abstract class HardwareMap extends OpMode{
     DcMotor BallShooter;
     //Declare the servos
     Servo ReleaseDrive;
+    Servo LeftBeacon;
+    Servo RightBeacon;
     //Declare the sensors
     ModernRoboticsI2cRangeSensor Range1;
     ColorSensor Color1;
     AnalogInput Line1;
     //Declare the variables
     public double ReleasePosition;
+    public double LeftPosition;
+    public double RightPosition;
     public int ballShooterPosition = 0;
     public static final int ONE_ROTATION = 950;
     public double releaseTime;
@@ -51,9 +55,16 @@ public abstract class HardwareMap extends OpMode{
         //BallShooter
         BallShooter = hardwareMap.dcMotor.get("M5");
         BallShooter.setDirection(DcMotor.Direction.FORWARD);
+        /*
         BallShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        */
+        BallShooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //ReleaseDrive
         ReleaseDrive = hardwareMap.servo.get("S1");
+        //LeftBeacon
+        LeftBeacon = hardwareMap.servo.get("S2");
+        //RightBeacon
+        RightBeacon = hardwareMap.servo.get("S3");
         //Range1
         Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
 
@@ -93,6 +104,13 @@ public abstract class HardwareMap extends OpMode{
             PickupDrive.setPower (Power);
         }
     }
+
+    void MoveBallShooter(double Power){
+        if (BallShooter != null){
+            BallShooter.setPower(Power);
+        }
+    }
+    /*
     void MoveBallShooter(){
         //If 'BallShooter' is not null
         if (BallShooter != null){
@@ -116,6 +134,7 @@ public abstract class HardwareMap extends OpMode{
             }
         }
     }
+    */
     void MoveReleaseDrive(){
         //If 'ReleaseDrive' is not null
         if (ReleaseDrive != null){
@@ -130,6 +149,40 @@ public abstract class HardwareMap extends OpMode{
             }
             //Once the while loop is over, sets the position of 'ReleaseDrive' to its previous position
             ReleaseDrive.setPosition(ReleasePosition);
+        }
+    }
+    void MoveLeftBeacon(boolean Move){
+        //If 'LeftBeacon' is not null
+        if (LeftBeacon != null){
+            //Set 'LeftPosition' to the current position of 'LeftBeacon'
+            LeftPosition = LeftBeacon.getPosition();
+            //If 'Move' is true
+            if (Move == true){
+                //Set 'LeftBeacon' to its previous position + 90
+                LeftBeacon.setPosition(LeftPosition + 90);
+            }
+            //Else (if 'Move' is false
+            else{
+                //Set 'LeftBeacon' to its previous position
+                LeftBeacon.setPosition(LeftPosition);
+            }
+        }
+    }
+    void MoveRightBeacon(boolean Move){
+        //If 'RightBeacon' is not null
+        if (RightBeacon != null){
+            //Set 'RightPosition' to the current position of 'RightBeacon'
+            RightPosition = RightBeacon.getPosition();
+            //If 'Move' is true
+            if (Move == true){
+                //Set 'RightBeacon' to its previous position + 90
+                RightBeacon.setPosition(RightPosition + 90);
+            }
+            //Else (if 'Move' is false
+            else{
+                //Set 'RightBeacon' to its previous position
+                RightBeacon.setPosition(RightPosition);
+            }
         }
     }
 }

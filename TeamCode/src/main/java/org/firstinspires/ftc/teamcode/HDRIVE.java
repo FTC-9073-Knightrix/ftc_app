@@ -36,6 +36,14 @@ public class HDRIVE extends Telemetry{
             //Set 'leftBumperBoolean' to false
             leftBumperBoolean = false;
         }
+
+        if(gamepad2.right_bumper){
+            MoveBallShooter(0.5);
+        }
+        else if(!gamepad2.right_bumper){
+            MoveBallShooter(0);
+        }
+        /*
         //If gamepad 2's right bumper is pressed and 'rightBumperBoolean' is false
         if(gamepad2.right_bumper && rightBumperBoolean == false){
             //Shoot the ball
@@ -48,6 +56,7 @@ public class HDRIVE extends Telemetry{
             //Set 'rightBumperBoolean' to false
             rightBumperBoolean = false;
         }
+        */
         //If gamepad 2's 'A' button is pressed
         if(gamepad2.a){
             //Move the ball pickup at full speed
@@ -62,6 +71,26 @@ public class HDRIVE extends Telemetry{
         else{
             //Stop the ball pickup
             MovePickupDrive(0);
+        }
+        //If gamepad 1's left bumper is pressed
+        if(gamepad1.left_bumper){
+            //Move the left beacon presser
+            MoveLeftBeacon(true);
+        }
+        //Else if gamepad 1's left bumper is not being pressed
+        else if(!gamepad1.left_bumper){
+            //Move the left beacon presser back to its original position
+            MoveLeftBeacon(false);
+        }
+        //If gamepad 1's right bumper is pressed
+        if(gamepad1.right_bumper){
+            //Move the right beacon presser
+            MoveRightBeacon(true);
+        }
+        //Else if gamepad 1's right bumper is not being pressed
+        else if(!gamepad1.right_bumper){
+            //Move the right beacon presser back to its original position
+            MoveRightBeacon(false);
         }
         //Move the middle wheel at the speed of the right trigger minus the left trigger (the right trigger being a positive value and the left being negative)
         MoveMiddleDrive(gamepad1.right_trigger-gamepad1.left_trigger);
