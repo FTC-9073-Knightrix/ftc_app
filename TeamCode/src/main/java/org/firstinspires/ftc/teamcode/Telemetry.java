@@ -26,6 +26,7 @@ public abstract class Telemetry extends HardwareMap{
         //Ball Pickup
         telemetry.addLine("~Ball Pickup~");
         telemetry.addLine("Speed: " + (PickupDrive.getPower() * 100) + "%");
+        /*
         //Range Sensor & Optical Sensor
         telemetry.addLine("~Range Sensor~");
         telemetry.addLine("Ultrasonic: " + Range1.getDistance(DistanceUnit.CM) + " cm");
@@ -67,5 +68,8 @@ public abstract class Telemetry extends HardwareMap{
             telemetry.addLine("Color: Black");
         }
         telemetry.addLine("Value: " + Line1.getVoltage());
+        telemetry.addLine("Right Beacon: " + RightBeacon.getPosition());
+        telemetry.addLine("Left Beacon: " + LeftBeacon.getPosition());
+        */
     }
 }
