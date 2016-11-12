@@ -27,7 +27,7 @@ public class HDRIVE extends Telemetry{
         //If gamepad 2's left bumper is pressed and 'leftBumperBoolean' is false
         if(gamepad2.left_bumper && leftBumperBoolean == false){
             //Move the ball release
-            MoveReleaseDrive();
+            //MoveReleaseDrive();
             //Set 'leftBumperBoolean' to true
             leftBumperBoolean = true;
         }
@@ -75,22 +75,22 @@ public class HDRIVE extends Telemetry{
         //If gamepad 1's left bumper is pressed
         if(gamepad1.left_bumper){
             //Move the left beacon presser
-            MoveLeftBeacon(true);
+            MoveRightBeacon(true);
         }
         //Else if gamepad 1's left bumper is not being pressed
         else if(!gamepad1.left_bumper){
             //Move the left beacon presser back to its original position
-            MoveLeftBeacon(false);
+            MoveRightBeacon(false);
         }
         //If gamepad 1's right bumper is pressed
         if(gamepad1.right_bumper){
             //Move the right beacon presser
-            MoveRightBeacon(true);
+            MoveLeftBeacon(true);
         }
         //Else if gamepad 1's right bumper is not being pressed
         else if(!gamepad1.right_bumper){
             //Move the right beacon presser back to its original position
-            MoveRightBeacon(false);
+            MoveLeftBeacon(false);
         }
         //Move the middle wheel at the speed of the right trigger minus the left trigger (the right trigger being a positive value and the left being negative)
         MoveMiddleDrive(gamepad1.right_trigger-gamepad1.left_trigger);
