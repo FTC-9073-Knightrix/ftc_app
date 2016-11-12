@@ -58,13 +58,19 @@ public abstract class HardwareMap extends OpMode{
         /*
         BallShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         */
+
         BallShooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //ReleaseDrive
         ReleaseDrive = hardwareMap.servo.get("S1");
+        ReleaseDrive.setPosition(0.5);
         //LeftBeacon
         LeftBeacon = hardwareMap.servo.get("S2");
+        LeftBeacon.setPosition(0);
         //RightBeacon
         RightBeacon = hardwareMap.servo.get("S3");
+        RightBeacon.setPosition(1);
+
+        /*
         //Range1
         Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
 
@@ -74,6 +80,7 @@ public abstract class HardwareMap extends OpMode{
 
         //Line1
         Line1 = hardwareMap.analogInput.get("L1");
+        */
     }
     //Classes
     void MoveMiddleDrive(double Power){
@@ -138,50 +145,44 @@ public abstract class HardwareMap extends OpMode{
     void MoveReleaseDrive(){
         //If 'ReleaseDrive' is not null
         if (ReleaseDrive != null){
-            //Set 'ReleasePosition' to the current position of 'ReleaseDrive'
-            ReleasePosition = ReleaseDrive.getPosition();
             //Set 'releaseTime' to the current time passed since starting the program
             releaseTime = getRuntime();
             //While the total time passed is less than 'releaseTime' plus one
             while (getRuntime() < releaseTime + 1){
                 //Set the position of 'ReleaseDrive' to 90 more than its previous position
-                ReleaseDrive.setPosition(ReleasePosition + 0.5);
+                ReleaseDrive.setPosition(1);
             }
             //Once the while loop is over, sets the position of 'ReleaseDrive' to its previous position
-            ReleaseDrive.setPosition(ReleasePosition);
+            ReleaseDrive.setPosition(0.5);
         }
     }
     void MoveLeftBeacon(boolean Move){
         //If 'LeftBeacon' is not null
         if (LeftBeacon != null){
-            //Set 'LeftPosition' to the current position of 'LeftBeacon'
-            LeftPosition = LeftBeacon.getPosition();
             //If 'Move' is true
             if (Move == true){
-                //Set 'LeftBeacon' to its previous position + 90
-                LeftBeacon.setPosition(LeftPosition + 0.5);
+                //Set 'LeftBeacon' to 1
+                LeftBeacon.setPosition(0.6);
             }
             //Else (if 'Move' is false
             else{
-                //Set 'LeftBeacon' to its previous position
-                LeftBeacon.setPosition(LeftPosition);
+                //Set 'LeftBeacon' to 0.5
+                LeftBeacon.setPosition(0);
             }
         }
     }
     void MoveRightBeacon(boolean Move){
         //If 'RightBeacon' is not null
         if (RightBeacon != null){
-            //Set 'RightPosition' to the current position of 'RightBeacon'
-            RightPosition = RightBeacon.getPosition();
             //If 'Move' is true
             if (Move == true){
-                //Set 'RightBeacon' to its previous position + 90
-                RightBeacon.setPosition(RightPosition + 0.5);
+                //Set 'RightBeacon' to 1
+                RightBeacon.setPosition(0.4);
             }
             //Else (if 'Move' is false
             else{
-                //Set 'RightBeacon' to its previous position
-                RightBeacon.setPosition(RightPosition);
+                //Set 'RightBeacon' to 0.5
+                RightBeacon.setPosition(1);
             }
         }
     }
