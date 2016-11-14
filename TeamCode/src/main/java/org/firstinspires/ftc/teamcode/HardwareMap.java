@@ -73,11 +73,13 @@ public abstract class HardwareMap extends OpMode{
         /*
         //Range1
         Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
+        */
 
         //Color1
         Color1 = hardwareMap.colorSensor.get("C1");
         Color1.enableLed(false);
 
+        /*
         //Line1
         Line1 = hardwareMap.analogInput.get("L1");
         */
