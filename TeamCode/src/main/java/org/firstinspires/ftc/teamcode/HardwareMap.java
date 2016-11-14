@@ -65,10 +65,10 @@ public abstract class HardwareMap extends OpMode{
         ReleaseDrive.setPosition(0.5);
         //LeftBeacon
         LeftBeacon = hardwareMap.servo.get("S2");
-        LeftBeacon.setPosition(0);
+        LeftBeacon.setPosition(1);
         //RightBeacon
         RightBeacon = hardwareMap.servo.get("S3");
-        RightBeacon.setPosition(1);
+        RightBeacon.setPosition(0);
 
         /*
         //Range1
@@ -163,13 +163,13 @@ public abstract class HardwareMap extends OpMode{
         if (LeftBeacon != null){
             //If 'Move' is true
             if (Move == true){
-                //Set 'LeftBeacon' to 1
-                LeftBeacon.setPosition(0.6);
+                //Set 'LeftBeacon' to 0.4
+                LeftBeacon.setPosition(0.4);
             }
             //Else (if 'Move' is false
             else{
-                //Set 'LeftBeacon' to 0.5
-                LeftBeacon.setPosition(0);
+                //Set 'LeftBeacon' to 1
+                LeftBeacon.setPosition(1);
             }
         }
     }
@@ -178,13 +178,13 @@ public abstract class HardwareMap extends OpMode{
         if (RightBeacon != null){
             //If 'Move' is true
             if (Move == true){
-                //Set 'RightBeacon' to 1
-                RightBeacon.setPosition(0.4);
+                //Set 'RightBeacon' to 0.6
+                RightBeacon.setPosition(0.6);
             }
             //Else (if 'Move' is false
             else{
-                //Set 'RightBeacon' to 0.5
-                RightBeacon.setPosition(1);
+                //Set 'RightBeacon' to 0
+                RightBeacon.setPosition(0);
             }
         }
     }
