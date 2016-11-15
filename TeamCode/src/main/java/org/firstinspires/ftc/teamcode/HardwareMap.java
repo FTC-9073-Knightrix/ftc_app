@@ -24,8 +24,8 @@ public abstract class HardwareMap extends OpMode{
     DcMotor BallShooter;
     //Declare the servos
     Servo ReleaseDrive;
-    Servo LeftBeacon;
     Servo RightBeacon;
+    Servo LeftBeacon;
     //Declare the sensors
     ModernRoboticsI2cRangeSensor Range1;
     ColorSensor Color1;
@@ -37,6 +37,8 @@ public abstract class HardwareMap extends OpMode{
     public int ballShooterPosition = 0;
     public static final int ONE_ROTATION = 950;
     public double releaseTime;
+    public boolean blue;
+    public boolean red;
 
     @Override
     public void init(){
@@ -63,12 +65,12 @@ public abstract class HardwareMap extends OpMode{
         //ReleaseDrive
         ReleaseDrive = hardwareMap.servo.get("S1");
         ReleaseDrive.setPosition(0.5);
-        //LeftBeacon
-        LeftBeacon = hardwareMap.servo.get("S2");
-        LeftBeacon.setPosition(1);
         //RightBeacon
-        RightBeacon = hardwareMap.servo.get("S3");
-        RightBeacon.setPosition(0);
+        RightBeacon = hardwareMap.servo.get("S2");
+        RightBeacon.setPosition(1);
+        //LeftBeacon
+        LeftBeacon = hardwareMap.servo.get("S3");
+        LeftBeacon.setPosition(0);
 
         /*
         //Range1
@@ -158,33 +160,33 @@ public abstract class HardwareMap extends OpMode{
             ReleaseDrive.setPosition(0.5);
         }
     }
-    void MoveLeftBeacon(boolean Move){
-        //If 'LeftBeacon' is not null
-        if (LeftBeacon != null){
-            //If 'Move' is true
-            if (Move == true){
-                //Set 'LeftBeacon' to 0.4
-                LeftBeacon.setPosition(0.4);
-            }
-            //Else (if 'Move' is false
-            else{
-                //Set 'LeftBeacon' to 1
-                LeftBeacon.setPosition(1);
-            }
-        }
-    }
     void MoveRightBeacon(boolean Move){
         //If 'RightBeacon' is not null
         if (RightBeacon != null){
             //If 'Move' is true
             if (Move == true){
-                //Set 'RightBeacon' to 0.6
-                RightBeacon.setPosition(0.6);
+                //Set 'RightBeacon' to 0.4
+                RightBeacon.setPosition(0.4);
             }
             //Else (if 'Move' is false
             else{
-                //Set 'RightBeacon' to 0
-                RightBeacon.setPosition(0);
+                //Set 'RightBeacon' to 1
+                RightBeacon.setPosition(1);
+            }
+        }
+    }
+    void MoveLeftBeacon(boolean Move){
+        //If 'LeftBeacon' is not null
+        if (LeftBeacon != null){
+            //If 'Move' is true
+            if (Move == true){
+                //Set 'LeftBeacon' to 0.6
+                LeftBeacon.setPosition(0.6);
+            }
+            //Else (if 'Move' is false
+            else{
+                //Set 'LeftBeacon' to 0
+                LeftBeacon.setPosition(0);
             }
         }
     }

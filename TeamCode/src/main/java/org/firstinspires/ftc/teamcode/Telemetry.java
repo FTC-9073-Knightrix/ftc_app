@@ -41,21 +41,33 @@ public abstract class Telemetry extends HardwareMap{
             if (Color1.blue() > Color1.red()){
                 //Displays the color of the beacon as blue
                 telemetry.addLine("Beacon Color: Blue");
+                //Sets 'blue' as true and 'red' as false
+                blue = true;
+                red = false;
             }
             //Else if there is more red than blue
             else if (Color1.red() > Color1.blue()){
                 //Displays the color of the beacon as red
                 telemetry.addLine("Beacon Color: Red");
+                //Sets 'blue' as false and 'red' as true
+                blue = false;
+                red = true;
             }
             //Else if they are the same value but not zero
             else if (Color1.blue() == Color1.red() && Color1.blue() != 0 && Color1.red() != 0){
                 //Displays the color of the beacons as both
                 telemetry.addLine("Beacon Color: Both");
+                //Sets 'blue' as false and 'red' as false
+                blue = false;
+                red = false;
             }
             //Else (if none apply)
             else{
                 //Display the color of the beacon as neither
                 telemetry.addLine("Beacon Color: Neither");
+                //Sets 'blue' as false and 'red' as false
+                blue = false;
+                red = false;
             }
         }
 
