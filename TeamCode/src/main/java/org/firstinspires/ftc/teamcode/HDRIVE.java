@@ -18,23 +18,18 @@ public class HDRIVE extends Telemetry{
         super.start();
     }
 
-    boolean leftBumperBoolean = false;
-    boolean rightBumperBoolean = false;
-
     //Main loop
     @Override
     public void loop(){
-        //If gamepad 2's left bumper is pressed and 'leftBumperBoolean' is false
-        if(gamepad2.left_bumper && leftBumperBoolean == false){
+        //If gamepad 2's left bumper is pressed
+        if(gamepad2.left_bumper){
             //Move the ball release
-            //MoveReleaseDrive();
-            //Set 'leftBumperBoolean' to true
-            leftBumperBoolean = true;
+            MoveReleaseDrive(true);
         }
-        //Else if gamepad 2's left bumper is not pressed and 'leftBumperBoolean' is true
-        else if(!gamepad2.left_bumper && leftBumperBoolean == true){
-            //Set 'leftBumperBoolean' to false
-            leftBumperBoolean = false;
+        //Else if gamepad 2's left bumper is not pressed
+        else if(!gamepad2.left_bumper){
+            //Stop the ball release
+            MoveReleaseDrive(false);
         }
 
         if(gamepad2.right_bumper){
@@ -93,11 +88,11 @@ public class HDRIVE extends Telemetry{
             MoveRightBeacon(false);
         }
         //Move the middle wheel at the speed of the right trigger minus the left trigger (the right trigger being a positive value and the left being negative)
-        MoveMiddleDrive(gamepad1.right_trigger-gamepad1.left_trigger);
+        MoveMiddleDrive(gamepad1.left_trigger - gamepad1.right_trigger);
         //Move the left wheel at the speed of gamepad 1's right stick
-        MoveLeftDrive(gamepad1.right_stick_y);
+        MoveLeftDrive(-gamepad1.left_stick_y);
         //Move the right wheel at the speed of gamepad 1's left stick
-        MoveRightDrive(gamepad1.left_stick_y);
+        MoveRightDrive(-gamepad1.right_stick_y);
 
         //Displays telemetry data
         UpdateTelemetry();
