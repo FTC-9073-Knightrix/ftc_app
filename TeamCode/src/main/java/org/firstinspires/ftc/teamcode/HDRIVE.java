@@ -88,7 +88,7 @@ public class HDRIVE extends Telemetry{
             MoveRightBeacon(false);
         }
         //Move the middle wheel at the speed of the right trigger minus the left trigger (the right trigger being a positive value and the left being negative)
-        MoveMiddleDrive(gamepad1.left_trigger - gamepad1.right_trigger);
+        MoveMiddleDrive(gamepad1.right_trigger - gamepad1.left_trigger);
         //Move the left wheel at the speed of gamepad 1's right stick
         MoveLeftDrive(-gamepad1.left_stick_y);
         //Move the right wheel at the speed of gamepad 1's left stick
