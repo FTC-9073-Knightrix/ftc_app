@@ -23,13 +23,13 @@ public class HDRIVE extends Telemetry{
     public void loop(){
         //If gamepad 2's left bumper is pressed
         if(gamepad2.left_bumper){
-            //Move the ball release
-            MoveReleaseDrive(true);
+            //Stop the ball release
+            MoveReleaseDrive(false);
         }
         //Else if gamepad 2's left bumper is not pressed
         else if(!gamepad2.left_bumper){
-            //Stop the ball release
-            MoveReleaseDrive(false);
+            //Move the ball release
+            MoveReleaseDrive(true);
         }
 
         if(gamepad2.right_bumper){
