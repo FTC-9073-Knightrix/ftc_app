@@ -146,18 +146,19 @@ public abstract class HardwareMap extends OpMode{
         }
     }
     */
-    void MoveReleaseDrive(){
+    void MoveReleaseDrive(boolean Move){
         //If 'ReleaseDrive' is not null
         if (ReleaseDrive != null){
-            //Set 'releaseTime' to the current time passed since starting the program
-            releaseTime = getRuntime();
-            //While the total time passed is less than 'releaseTime' plus one
-            while (getRuntime() < releaseTime + 1){
-                //Set the position of 'ReleaseDrive' to 90 more than its previous position
+            //If 'Move' is true
+            if (Move == true){
+                //Set the position of 'ReleaseDrive' to 1
                 ReleaseDrive.setPosition(1);
             }
-            //Once the while loop is over, sets the position of 'ReleaseDrive' to its previous position
-            ReleaseDrive.setPosition(0.5);
+            //Else (if 'Move' is false
+            else{
+                //Set the position of 'ReleaseDrive' to 0.5
+                ReleaseDrive.setPosition(0.5);
+            }
         }
     }
     void MoveRightBeacon(boolean Move){
