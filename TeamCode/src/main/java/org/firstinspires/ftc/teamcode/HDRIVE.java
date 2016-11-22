@@ -67,6 +67,20 @@ public class HDRIVE extends Telemetry{
             //Stop the ball pickup
             MovePickupDrive(0);
         }
+        if(gamepad1.a){
+            //Move the ball pickup at full speed
+            MovePickupDrive(1);
+        }
+        //Else if gamepad 1's 'B' button is pressed
+        else if(gamepad1.b){
+            //Move the ball pickup backwards at full speed
+            MovePickupDrive(-1);
+        }
+        //Else (if gamepad 1's 'B' button is not pressed)
+        else{
+            //Stop the ball pickup
+            MovePickupDrive(0);
+        }
         //If gamepad 1's left bumper is pressed
         if(gamepad1.left_bumper){
             //Move the left beacon presser
@@ -87,12 +101,36 @@ public class HDRIVE extends Telemetry{
             //Move the right beacon presser back to its original position
             MoveRightBeacon(false);
         }
-        //Move the middle wheel at the speed of the right trigger minus the left trigger (the right trigger being a positive value and the left being negative)
-        MoveMiddleDrive(gamepad1.right_trigger - gamepad1.left_trigger);
         //Move the left wheel at the speed of gamepad 1's right stick
         MoveLeftDrive(-gamepad1.left_stick_y);
         //Move the right wheel at the speed of gamepad 1's left stick
         MoveRightDrive(-gamepad1.right_stick_y);
+
+        if (gamepad1.back){
+            benny = true;
+            if (gamepad1.dpad_right){
+                MoveMiddleDrive(1);
+            }
+            else if (gamepad1.dpad_left){
+                MoveMiddleDrive(-1);
+            }
+            if (gamepad1.left_trigger > 0){
+                MoveRobot(-1,-1);
+            }
+            else if (gamepad1.right_trigger > 0){
+                MoveRobot(1,1);
+            }
+            else if (gamepad1.left_trigger > 0 && gamepad1.right_trigger > 0){
+                MoveRobot(0,0);
+            }
+            else{
+                MoveRobot(0,0);
+            }
+        }
+        else if (benny == false || gamepad1.start) {
+            //Move the middle wheel at the speed of the right trigger minus the left trigger (the right trigger being a positive value and the left being negative)
+            MoveMiddleDrive(gamepad1.right_trigger - gamepad1.left_trigger);
+        }
 
         //Displays telemetry data
         UpdateTelemetry();
