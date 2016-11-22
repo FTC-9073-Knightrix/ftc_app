@@ -29,7 +29,9 @@ public abstract class HardwareMap extends OpMode{
     //Declare the sensors
     ModernRoboticsI2cRangeSensor Range1;
     ColorSensor Color1;
-    AnalogInput Line1;
+    AnalogInput FrontLine;
+    AnalogInput RightLine;
+    AnalogInput LeftLine;
     //Declare the variables
     public double ReleasePosition;
     public double LeftPosition;
@@ -39,6 +41,7 @@ public abstract class HardwareMap extends OpMode{
     public double releaseTime;
     public boolean blue;
     public boolean red;
+    public boolean benny = false;
 
     @Override
     public void init(){
@@ -81,10 +84,11 @@ public abstract class HardwareMap extends OpMode{
         Color1 = hardwareMap.colorSensor.get("C1");
         Color1.enableLed(false);
 
-        /*
-        //Line1
-        Line1 = hardwareMap.analogInput.get("L1");
-        */
+        //Line Trackers
+        FrontLine = hardwareMap.analogInput.get("L1");
+        LeftLine = hardwareMap.analogInput.get("L2");
+        RightLine = hardwareMap.analogInput.get("L3");
+
     }
     //Classes
     void MoveMiddleDrive(double Power){
@@ -106,6 +110,18 @@ public abstract class HardwareMap extends OpMode{
         if (RightDrive != null){
             //Set the power of 'RightDrive' to 'Power'
             RightDrive.setPower (Power);
+        }
+    }
+    void MoveRobot(double PowerLeft, double PowerRight){
+        //If 'RightDrive' is not null
+        if (RightDrive != null){
+            //Set the power of 'RightDrive' to 'PowerRight'
+            RightDrive.setPower (PowerRight);
+        }
+        //If 'LeftDrive' is not null
+        if (LeftDrive != null){
+            //Set the power of 'LeftDrive' to 'PowerLeft'
+            LeftDrive.setPower (PowerLeft);
         }
     }
     void MovePickupDrive(double Power){
