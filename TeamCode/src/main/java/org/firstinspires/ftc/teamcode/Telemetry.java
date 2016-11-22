@@ -71,20 +71,40 @@ public abstract class Telemetry extends HardwareMap{
             }
         }
 
-        /*
-        //Line Tracker
+        //Line Trackers
         telemetry.addLine("~Line Tracker~");
-        //If Line1's voltage is below 4 (0-3.999)
-        if (Line1.getVoltage() < 4){
+        //If FrontLine's voltage is below 4 (0-3.999)
+        if (FrontLine.getVoltage() < 4){
             //Display the color as white
-            telemetry.addLine("Color: White");
+            telemetry.addLine("Color 1: White");
         }
-        //Else (if Line1's voltage is 4 or greater
+        //Else (if FrontLine's voltage is 4 or greater
         else{
             //Display the color as black
-            telemetry.addLine("Color: Black");
+            telemetry.addLine("Color 1: Black");
         }
-        telemetry.addLine("Value: " + Line1.getVoltage());
-        */
+        telemetry.addLine("Value 1: " + FrontLine.getVoltage());
+        //If LeftLine's voltage is below 4 (0-3.999)
+        if (LeftLine.getVoltage() < 4){
+            //Display the color as white
+            telemetry.addLine("Color 1: White");
+        }
+        //Else (if LeftLine's voltage is 4 or greater
+        else{
+            //Display the color as black
+            telemetry.addLine("Color 1: Black");
+        }
+        telemetry.addLine("Value 1: " + LeftLine.getVoltage());
+        //If RightLine's voltage is below 4 (0-3.999)
+        if (RightLine.getVoltage() < 4){
+            //Display the color as white
+            telemetry.addLine("Color 1: White");
+        }
+        //Else (if RightLine's voltage is 4 or greater
+        else{
+            //Display the color as black
+            telemetry.addLine("Color 1: Black");
+        }
+        telemetry.addLine("Value 1: " + RightLine.getVoltage());
     }
 }
