@@ -2,9 +2,12 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Autonomous Blue", group = "Autonomous9073")
+@Autonomous(name = "Autonomous Blue", group = "Autonomous")
+
 /**
- * Created by vijay on 11/19/2016.
+ * Created by Vijay Rudraraju on 11/19/2016.
+ * Testing
+ * Moves towards the hoop and shoots two balls at it
  */
 
 public class Autonomous_Blue extends Telemetry {
@@ -82,107 +85,38 @@ public class Autonomous_Blue extends Telemetry {
                     move_state++;
                     break;
                 }
-      /*      case 0:
-                // adds one to the case
-                move_state++;
-                // gives a new value to Variance
-                Variance = getRuntime();
-                // resets the value of TimeNow
-                TimeNow = 0;
-                //moves to next state
-                break;
-            case 1:
-                // moves the robot at 50% power
-                MoveMiddleDrive(-1);
-                // if the robot moved for at least 2 seconds
-                if (TimeNow > 2) {
-                    MoveMiddleDrive(0);
-                    // adds one to the case
+            case 8:
+                if (getRuntime() > 10.5) {
+                    MoveRobot(0,1);
                     move_state++;
-                    // gives a new value to Variance
-                    Variance = getRuntime();
-                    // resets TimeNow
-                    TimeNow = 0;
+                    break;
                 }
-                // moves to the next case
-                break;
-            case 2:
-                // stops the robot
-                MovePickupDrive(0.5);
-                // if the robot is stopped for at least .5 seconds
-                if (TimeNow > 2) {
-                    // adds one to the case
+            case 9:
+                if (getRuntime() > 16.5) {
+                    MoveRobot(1,1);
+                    if (FrontLine.getVoltage() < 4) {
+                        MoveRobot(1,0);
+                    }
                     move_state++;
-                    // gives a new value to Variance
-                    Variance = getRuntime();
-                    // resets TimeNow
-                    TimeNow = 0;
+                    break;
                 }
-                // moves to the next case
-                break;
-            case 3:
-                // turns the robot with 60% power on Motor 2
-                MoveReleaseDrive(true);
-                // if the robot moved for at least 1.5 seconds
-                if ( TimeNow > 1) {
-                    // adds one to move_state
-                    move_state++;
-                    // gives a new value to Variance
-                    Variance = getRuntime();
-                    // resets the value of TimeNow
-                    TimeNow = 0;
+            case 10:
+                if (getRuntime() > 22) {
+                    while (LeftLine.getVoltage() >= 4) {
+                        MoveRobot(0.8,1);
+                    }
+                    while (RightLine.getVoltage() >= 4) {
+                        MoveRobot(1,0.8);
+                    }
+                    while (LeftLine.getVoltage() < 4 && RightLine.getVoltage() < 4 && FrontLine.getVoltage() < 4) {
+                        MoveRobot(1,1);
+                    }
                 }
-                // moves on to the next case
-                break;
-            case 4:
-                // stops the robot
-                MovePickupDrive(2);
-                // if the robot stopped for at least .5 seconds
-                if ( TimeNow > .5) {
-                    // adds one to the counter
-                    move_state++;
-                    // gives a new value to Variance
-                    Variance = getRuntime();
-                    // resets TimeNow
-                    TimeNow = 0;
-                }
-                // moves on to the next case
-                break;
-                */
                 // if none of the cases match up with move_state
             default:
                 // end the movement of the robot
                 break;
-/*
-            case 0:
-                move_state++;
-                break;
 
-            case 1:
-                if (getRuntime() > 2) {
-                    MoveMiddleDrive(1);
-                    move_state++;
-                    break;
-                }
-            case 2:
-
-                if (getRuntime() > 4) {
-                    MoveBallShooter(0.5);
-                    move_state++;
-                    break;
-                }
-            case 3:
-                if (getRuntime() > 6){
-                    MoveReleaseDrive(true);
-                    move_state++;
-                    break;
-                }
-            case 4:
-                if (getRuntime() > 8) {
-                    MoveBallShooter(0.5);
-                    move_state++;
-                    break;
-*/
         }
         UpdateTelemetry();
         telemetry.addData("11", "State: " + move_state);
