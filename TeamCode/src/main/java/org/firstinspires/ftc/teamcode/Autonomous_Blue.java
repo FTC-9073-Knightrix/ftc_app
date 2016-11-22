@@ -149,7 +149,7 @@ public class Autonomous_Blue extends Telemetry {
                 // moves on to the next case
                 break;
                 */
-            // if none of the cases match up with move_state
+                // if none of the cases match up with move_state
             default:
                 // end the movement of the robot
                 break;
@@ -183,12 +183,12 @@ public class Autonomous_Blue extends Telemetry {
                     move_state++;
                     break;
 */
-                }
-                UpdateTelemetry();
+        }
+        UpdateTelemetry();
         telemetry.addData("11", "State: " + move_state);
         telemetry.addData("12", "Clock: " + getRuntime());
         /*telemetry.addData("13", "Var: "+ Variance);
         telemetry.addData("14", "TimeNow: "+ TimeNow );
         */
-        }
     }
+}
