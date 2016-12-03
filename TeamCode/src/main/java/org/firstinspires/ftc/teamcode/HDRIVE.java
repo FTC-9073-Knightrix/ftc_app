@@ -53,30 +53,19 @@ public class HDRIVE extends Telemetry{
         }
         */
         //If gamepad 2's 'A' button is pressed
-        if(gamepad2.a){
+        if(gamepad2.a || gamepad1.a){
             //Move the ball pickup at full speed
             MovePickupDrive(1);
         }
         //Else if gamepad 2's 'A' button is pressed
-        else if(gamepad2.b){
+        else if(gamepad2.b || gamepad1.b){
             //Move the ball pickup backwards at full speed
             MovePickupDrive(-1);
         }
-        //Else (if gamepad 1's 'A' button is not pressed)
-        else{
-            //Stop the ball pickup
-            MovePickupDrive(0);
-        }
-        if(gamepad1.a){
-            //Move the ball pickup at full speed
+        else if(gamepad2.a && gamepad1.a){
             MovePickupDrive(1);
         }
-        //Else if gamepad 1's 'B' button is pressed
-        else if(gamepad1.b){
-            //Move the ball pickup backwards at full speed
-            MovePickupDrive(-1);
-        }
-        //Else (if gamepad 1's 'B' button is not pressed)
+        //Else (if gamepad 1's 'A' button is not pressed)
         else{
             //Stop the ball pickup
             MovePickupDrive(0);
