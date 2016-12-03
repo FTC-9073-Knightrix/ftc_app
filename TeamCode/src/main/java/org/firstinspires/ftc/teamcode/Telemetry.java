@@ -27,11 +27,9 @@ public abstract class Telemetry extends HardwareMap{
         telemetry.addLine("~Ball Pickup~");
         telemetry.addLine("Speed: " + (PickupDrive.getPower() * 100) + "%");
 
-        /*
         //Range Sensor & Optical Sensor
         telemetry.addLine("~Range Sensor~");
         telemetry.addLine("Ultrasonic: " + Range1.getDistance(DistanceUnit.CM) + " cm");
-        */
 
         //Color Sensor
         telemetry.addLine("~Color Sensor~");
@@ -74,7 +72,7 @@ public abstract class Telemetry extends HardwareMap{
         //Line Trackers
         telemetry.addLine("~Line Tracker~");
         //If FrontLine's voltage is below 4 (0-3.999)
-        if (FrontLine.getVoltage() < 4){
+        if (FrontLine.getVoltage() < LineTrackerVoltage){
             //Display the color as white
             telemetry.addLine("Color 1: White");
         }
@@ -85,26 +83,26 @@ public abstract class Telemetry extends HardwareMap{
         }
         telemetry.addLine("Value 1: " + FrontLine.getVoltage());
         //If LeftLine's voltage is below 4 (0-3.999)
-        if (LeftLine.getVoltage() < 4){
+        if (LeftLine.getVoltage() < LineTrackerVoltage){
             //Display the color as white
-            telemetry.addLine("Color 1: White");
+            telemetry.addLine("Color 2: White");
         }
         //Else (if LeftLine's voltage is 4 or greater
         else{
             //Display the color as black
-            telemetry.addLine("Color 1: Black");
+            telemetry.addLine("Color 2: Black");
         }
-        telemetry.addLine("Value 1: " + LeftLine.getVoltage());
+        telemetry.addLine("Value 2: " + LeftLine.getVoltage());
         //If RightLine's voltage is below 4 (0-3.999)
-        if (RightLine.getVoltage() < 4){
+        if (RightLine.getVoltage() < LineTrackerVoltage){
             //Display the color as white
-            telemetry.addLine("Color 1: White");
+            telemetry.addLine("Color 3: White");
         }
         //Else (if RightLine's voltage is 4 or greater
         else{
             //Display the color as black
-            telemetry.addLine("Color 1: Black");
+            telemetry.addLine("Color 3: Black");
         }
-        telemetry.addLine("Value 1: " + RightLine.getVoltage());
+        telemetry.addLine("Value 3: " + RightLine.getVoltage());
     }
 }

@@ -42,6 +42,7 @@ public abstract class HardwareMap extends OpMode{
     public boolean blue;
     public boolean red;
     public boolean benny = false;
+    public static final double LineTrackerVoltage = 3.6;
 
     @Override
     public void init(){
@@ -75,10 +76,8 @@ public abstract class HardwareMap extends OpMode{
         LeftBeacon = hardwareMap.servo.get("S3");
         LeftBeacon.setPosition(0);
 
-        /*
         //Range1
         Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
-        */
 
         //Color1
         Color1 = hardwareMap.colorSensor.get("C1");
