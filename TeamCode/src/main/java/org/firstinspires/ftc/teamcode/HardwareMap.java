@@ -43,6 +43,7 @@ public abstract class HardwareMap extends OpMode{
     public boolean red;
     public boolean benny = false;
     public static final double LineTrackerVoltage = 3.6;
+    public int move_state = 0;
 
     @Override
     public void init(){
@@ -68,7 +69,7 @@ public abstract class HardwareMap extends OpMode{
         BallShooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //ReleaseDrive
         ReleaseDrive = hardwareMap.servo.get("S1");
-        ReleaseDrive.setPosition(0.5);
+        ReleaseDrive.setPosition(1);
         //RightBeacon
         RightBeacon = hardwareMap.servo.get("S2");
         RightBeacon.setPosition(1);
@@ -167,12 +168,12 @@ public abstract class HardwareMap extends OpMode{
             //If 'Move' is true
             if (Move == true){
                 //Set the position of 'ReleaseDrive' to 1
-                ReleaseDrive.setPosition(1);
+                ReleaseDrive.setPosition(0.5);
             }
             //Else (if 'Move' is false
             else{
                 //Set the position of 'ReleaseDrive' to 0.5
-                ReleaseDrive.setPosition(0.5);
+                ReleaseDrive.setPosition(1);
             }
         }
     }
