@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Autonomous Blue", group = "Autonomous")
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+@Autonomous(name = "Autonomous Red", group = "Autonomous")
 
 /**
  * Created by Vijay Rudraraju on 11/19/2016.
@@ -14,7 +16,7 @@ public class Autonomous_Blue extends Telemetry {
 
 
     // used for keeping track of the state
-    int move_state = 0;
+    double timer = getRuntime();
     // used to determine TimeNow
    /* double Variance = 0;
     // The amount of time we want the robot to move
@@ -32,60 +34,90 @@ public class Autonomous_Blue extends Telemetry {
         switch (move_state)
         {
             case 0:
-                /* might need to reset motor */
-                move_state++;
-                //moves to next state
-                break;
-
-            case 1:
-                if (getRuntime() > 1) {
+                while (getRuntime() <= 1.5) {
                     MoveMiddleDrive(-1);
-                    //if time is greater than one second then move forwards for 2 seconds
-                    move_state++;
-                    break;
                 }
+                MoveMiddleDrive(0);
+                while (getRuntime() >= 2 && getRuntime() <= 3) {
+                    MoveBallShooter(0.5);
+                }
+                MoveBallShooter(0);
+                MoveReleaseDrive(true);
+                while (getRuntime() >= 4.5 && getRuntime() <= 5.5) {
+                    MoveBallShooter(0.5);
+                }
+                MoveBallShooter(0);
+                move_state++;
+                break;
+            case 1:
+                while(Range1.getDistance(DistanceUnit.CM) > 52 && getRuntime() >= 5.5) {
+                    MoveRobot(-1, -1);
+                }
+                MoveRobot(0,0);
+                move_state++;
+                break;
             case 2:
-                if (getRuntime() > 2.175) {
-                    MoveMiddleDrive(0);
-                    //if time is greater than 3.5 second stop for one second
-                    move_state++;
-                }
+                MoveMiddleDrive(-0.3);
+                //While FrontLine is black
+                while(FrontLine.getVoltage() >= LineTrackerVoltage);
+                //Move MiddleDrive to the right by 0.5
+                MoveMiddleDrive(0);
+                //Move to next case
+                move_state++;
+                break;
             case 3:
-                if (getRuntime() > 3.5) {
-                    MoveBallShooter(0.5);
-                    //if time is greater than 5 seconds point turn towards rescue zone
-                    move_state++;
-                    break;
+                //While all the line trackers are black
+                while(RightLine.getVoltage() >= LineTrackerVoltage || LeftLine.getVoltage() >= LineTrackerVoltage || FrontLine.getVoltage() >= LineTrackerVoltage)
+                {
+                    //While LeftLine is black
+                    while (LeftLine.getVoltage() >= LineTrackerVoltage)
+                    {
+                        //Move MiddleDrive left by 0.2
+                        MoveMiddleDrive(0.15);
+                    }
+                    MoveMiddleDrive(0);
+                    //While RightLine is black
+                    while (RightLine.getVoltage() >= LineTrackerVoltage)
+                    {
+                        //Move MiddleDrive right by 0.2
+                        MoveMiddleDrive(-0.15);
+                    }
+                    MoveMiddleDrive(0);
                 }
+                //Move to next case
+                move_state++;
+                break;
             case 4:
-                if (getRuntime() > 5.5) {
-                    MoveBallShooter(0);
-                    //if time is greater than nine seconds stop for one second
-                    move_state++;
-                    break;
+                //While FrontLine senses white
+                while(Range1.getDistance(DistanceUnit.CM) > 11){
+                    MoveRobot(-1 * (LeftLine.getVoltage() * 0.2 * 0.5), -1 * (RightLine.getVoltage() * 0.2 * 0.5));
                 }
+                MoveRobot(0,0);
+                move_state++;
+                break;
             case 5:
-                if (getRuntime() > 6) {
-                    MoveReleaseDrive(true);
-                    //if time is greater than nine seconds stop for one second
-                    move_state++;
-                    break;
+                if (red && !blue){
+                    MoveRightBeacon(true);
+                    MoveLeftBeacon(false);
                 }
+                else if(blue && !red){
+                    MoveLeftBeacon(true);
+                    MoveRightBeacon(false);
+                }
+                else if((!blue && !red) || (red && blue)){
+                    MoveLeftBeacon(false);
+                    MoveRightBeacon(false);
+                }
+                move_state++;
+                break;
             case 6:
-                if (getRuntime() > 7) {
-                    MoveBallShooter(0.5);
-                    //if time is greater than nine seconds stop for one second
-                    move_state++;
-                    break;
+                timer = getRuntime();
+                while(timer + getRuntime() < 2) {
+                    MoveRobot(-0.5,-0.5);
                 }
-            case 7:
-                if (getRuntime() > 9) {
-                    MoveBallShooter(0);
-                    //if time is greater than nine seconds stop for one second
-                    move_state++;
-                    break;
-                }
-            case 8:
+                MoveRobot(0,0);
+                move_state++;
+           /* case 8:
                 if (getRuntime() > 10.5) {
                     MoveRobot(0,1);
                     move_state++;
@@ -111,7 +143,7 @@ public class Autonomous_Blue extends Telemetry {
                     while (LeftLine.getVoltage() < 4 && RightLine.getVoltage() < 4 && FrontLine.getVoltage() < 4) {
                         MoveRobot(1,1);
                     }
-                }
+                }*/
                 // if none of the cases match up with move_state
             default:
                 // end the movement of the robot
