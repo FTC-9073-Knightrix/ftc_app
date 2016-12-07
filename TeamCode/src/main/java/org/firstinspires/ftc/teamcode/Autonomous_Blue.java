@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+import java.util.Timer;
+
 @Autonomous(name = "Autonomous Red", group = "Autonomous")
 
 /**
@@ -16,7 +18,6 @@ public class Autonomous_Blue extends Telemetry {
 
 
     // used for keeping track of the state
-    double timer = getRuntime();
     // used to determine TimeNow
    /* double Variance = 0;
     // The amount of time we want the robot to move
@@ -34,21 +35,27 @@ public class Autonomous_Blue extends Telemetry {
         switch (move_state)
         {
             case 0:
-                while (getRuntime() <= 1.5) {
+                TimerReset();
+                while (timer2 <= 1.5) {
                     MoveMiddleDrive(-1);
+                    Timer2Reset();
                 }
                 MoveMiddleDrive(0);
-                while (getRuntime() >= 2 && getRuntime() <= 3) {
+                TimerReset();
+                while (timer2 <= 1) {
                     MoveBallShooter(0.5);
+                    Timer2Reset();
                 }
                 MoveBallShooter(0);
                 MoveReleaseDrive(true);
-                while (getRuntime() >= 4.5 && getRuntime() <= 5.5) {
+                TimerReset();
+                while (timer2 >= 1 && timer2 <= 2) {
                     MoveBallShooter(0.5);
+                    Timer2Reset();
                 }
                 MoveBallShooter(0);
                 move_state++;
-                break;
+                break;/*
             case 1:
                 while(Range1.getDistance(DistanceUnit.CM) > 52 && getRuntime() >= 5.5) {
                     MoveRobot(-1, -1);
