@@ -165,7 +165,7 @@ public class ViNi extends Telemetry {
         telemetry.addData("11", "State: " + move_state);
         telemetry.addData("12", "Clock: " + getRuntime());
         /*telemetry.addData("13", "Var: "+ Variance);
-        telemetry.addData("14", "TimeNow: "+ TimeNow );
+        telemetry.addData("14", "TimeNow: "+ TimeNow );*/
         
     }
 }
