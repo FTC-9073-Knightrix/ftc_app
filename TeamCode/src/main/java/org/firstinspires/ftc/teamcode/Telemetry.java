@@ -29,7 +29,7 @@ public abstract class Telemetry extends HardwareMap{
 
         //Range Sensor & Optical Sensor
         telemetry.addLine("~Range Sensor~");
-        telemetry.addLine("Ultrasonic: " + Range1.getDistance(DistanceUnit.CM) + " cm");
+        telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
 
         //Color Sensor
         telemetry.addLine("~Color Sensor~");
