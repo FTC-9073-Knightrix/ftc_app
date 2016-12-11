@@ -47,6 +47,8 @@ public abstract class HardwareMap extends OpMode{
     public double timer_state = 0;
     public double timer1 = getRuntime();
     public double timer2 = getRuntime() - timer1;
+    public boolean left = false;
+    public boolean right = false;
 
 
     @Override
