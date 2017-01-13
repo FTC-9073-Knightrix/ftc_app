@@ -167,7 +167,7 @@ public class Autonomous_Blue extends Telemetry{
         {
             //Reset all timers
             TimerReset();
-            timer_state++;
+            timer_state = timer_state + 0.1;
         }
         //If the timer is less than or equal to 2.3 and the robot is in state 5
         if (timer2 <= 2.5 && move_state == 5)
@@ -195,9 +195,55 @@ public class Autonomous_Blue extends Telemetry{
         else if (FrontLine.getVoltage() < LineTrackerVoltage && move_state == 6)
         {
             //Move to the next state
-            move_state++;
+            move_state = move_state + 0.1;
             //Stop the middle motor
             MoveMiddleDrive(0);
+        }
+        //If 'timer_state' is 5.1
+        if (timer_state == 5.1 && move_state == 6.1)
+        {
+            //Reset all timers
+            TimerReset();
+            timer_state = timer_state + 0.1;
+        }
+        if (timer2 <= 3 && move_state == 6.1)
+        {
+            MoveMiddleDrive(1);
+        }
+        else if (timer2 > 3 && move_state == 6.1)
+        {
+            move_state = move_state + 0.1;
+            MoveMiddleDrive(0);
+        }
+        if (timer_state == 5.2 && move_state == 6.2)
+        {
+            TimerReset();
+            timer_state = timer_state + 0.1;
+        }
+        if (timer2 <= 1.5 && move_state == 6.2)
+        {
+            MoveRightBeacon(true);
+            MoveLeftBeacon(true);
+            MoveRobot(-1,-1);
+        }
+        else if (timer2 > 1.5 && move_state == 6.2)
+        {
+            move_state = move_state + 0.1;
+            MoveRobot(0,0);
+        }
+        if (timer_state == 5.3 && move_state == 6.3)
+        {
+            TimerReset();
+            timer_state = timer_state + 0.7;
+        }
+        if (timer2 <= 1.3 && move_state == 6.3)
+        {
+            MoveRobot(1,1);
+        }
+        else if (timer2 > 1.3 && move_state == 6.3)
+        {
+            move_state = move_state + 0.7;
+            MoveRobot(0,0);
         }
         //If at least one line tracker detects black and the robot is in state 7
         if ((RightLine.getVoltage() >= LineTrackerVoltage || LeftLine.getVoltage() >= LineTrackerVoltage || FrontLine.getVoltage() >= LineTrackerVoltage) && move_state == 7)
@@ -206,7 +252,7 @@ public class Autonomous_Blue extends Telemetry{
             if (LeftLine.getVoltage() >= LineTrackerVoltage && right == false)
             {
                 //Move MiddleDrive left by 0.15
-                MoveMiddleDrive(-0.15);
+                MoveMiddleDrive(0.15);
                 left = true;
             }
             //If it no longer applies
@@ -220,7 +266,7 @@ public class Autonomous_Blue extends Telemetry{
             if (RightLine.getVoltage() >= LineTrackerVoltage && left == false)
             {
                 //Move MiddleDrive right by 0.15
-                MoveMiddleDrive(0.15);
+                MoveMiddleDrive(-0.15);
                 right = true;
             }
             //If it no longer applies
