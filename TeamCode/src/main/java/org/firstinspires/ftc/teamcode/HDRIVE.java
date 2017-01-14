@@ -104,16 +104,16 @@ public class HDRIVE extends Telemetry{
                 MoveMiddleDrive(-1);
             }
             if (gamepad1.left_trigger > 0){
-                MoveRobot(-1,-1);
+                MoveRobotTeleOp(-1,-1);
             }
             else if (gamepad1.right_trigger > 0){
-                MoveRobot(1,1);
+                MoveRobotTeleOp(1,1);
             }
             else if (gamepad1.left_trigger > 0 && gamepad1.right_trigger > 0){
-                MoveRobot(0,0);
+                MoveRobotTeleOp(0,0);
             }
             else{
-                MoveRobot(0,0);
+                MoveRobotTeleOp(0,0);
             }
         }
         else if (benny == false || gamepad1.start) {

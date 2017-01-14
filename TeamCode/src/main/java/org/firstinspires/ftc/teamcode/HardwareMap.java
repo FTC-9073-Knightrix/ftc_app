@@ -122,6 +122,18 @@ public abstract class HardwareMap extends OpMode{
         //If 'RightDrive' is not null
         if (RightDrive != null){
             //Set the power of 'RightDrive' to 'PowerRight'
+            RightDrive.setPower (PowerRight/3);
+        }
+        //If 'LeftDrive' is not null
+        if (LeftDrive != null){
+            //Set the power of 'LeftDrive' to 'PowerLeft'
+            LeftDrive.setPower (PowerLeft/3);
+        }
+    }
+    void MoveRobotTeleOp(double PowerLeft, double PowerRight){
+        //If 'RightDrive' is not null
+        if (RightDrive != null){
+            //Set the power of 'RightDrive' to 'PowerRight'
             RightDrive.setPower (PowerRight);
         }
         //If 'LeftDrive' is not null
