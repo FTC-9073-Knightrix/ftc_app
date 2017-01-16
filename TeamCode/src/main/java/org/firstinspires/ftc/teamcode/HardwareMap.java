@@ -232,4 +232,71 @@ public abstract class HardwareMap extends OpMode{
     void Timer2Reset(){
         timer2 = getRuntime() - timer1;
     }
+    void LineTrackerLeft()
+    {
+        //If LeftLine is black
+        if (LeftLine.getVoltage() >= LineTrackerVoltage && right == false)
+        {
+            //Move MiddleDrive left by 0.15
+            MoveMiddleDrive(0.2);
+            left = true;
+        }
+        //If it no longer applies
+        else if (LeftLine.getVoltage() < LineTrackerVoltage && left == true)
+        {
+            //Stop the middle wheel
+            MoveMiddleDrive(0);
+            left = false;
+        }
+        //While RightLine is black
+        if (RightLine.getVoltage() >= LineTrackerVoltage && left == false)
+        {
+            //Move MiddleDrive right by 0.15
+            MoveMiddleDrive(-0.2);
+            right = true;
+        }
+        //If it no longer applies
+        else if (RightLine.getVoltage() < LineTrackerVoltage && right == true)
+        {
+            //Stop the middle motor
+            MoveMiddleDrive(0);
+            right = false;
+        }
+    }
+    void LineTrackerRight()
+    {
+        //If LeftLine is black
+        if (LeftLine.getVoltage() >= LineTrackerVoltage)
+        {
+            //Move MiddleDrive left by 0.15
+            MoveMiddleDrive(-0.2);
+        }
+        //If it no longer applies
+        else if (LeftLine.getVoltage() < LineTrackerVoltage)
+        {
+            //Stop the middle wheel
+            MoveMiddleDrive(0);
+        }
+        //While RightLine is black
+        if (RightLine.getVoltage() >= LineTrackerVoltage)
+        {
+            //Move MiddleDrive right by 0.15
+            MoveMiddleDrive(0.2);
+        }
+        //If it no longer applies
+        else if (RightLine.getVoltage() < LineTrackerVoltage)
+        {
+            //Stop the middle motor
+            MoveMiddleDrive(0);
+        }
+    }
+    void NextState()
+    {
+        //Stop the robot
+        MoveRobot(0,0);
+        MoveMiddleDrive(0);
+        MoveBallShooter(0);
+        //Move to the next state
+        move_state++;
+    }
 }

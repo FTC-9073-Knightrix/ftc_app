@@ -32,8 +32,8 @@ public class Autonomous_Red extends Telemetry {
             TimerReset();
             timer_state++;
         }
-        //If the timer is less than or equal to 1.5 seconds and 'move_state' is 0
-        if (timer2 <= 1.2 && move_state == 0)
+        //If the timer is less than or equal to 1.2 seconds and 'move_state' is 0
+        if (timer2 <= 0.7 && move_state == 0)
         {
             //Move the robot
             MoveMiddleDrive(-1);
@@ -41,12 +41,10 @@ public class Autonomous_Red extends Telemetry {
             Timer2Reset();
         }
         //If it does not apply
-        else if (timer2 > 1.2 && move_state == 0)
+        else if (timer2 > 0.7 && move_state == 0)
         {
-            //Add one to 'move_state'
-            move_state++;
-            //Stop the middle wheel
-            MoveMiddleDrive(0);
+            //Move to the next state
+            NextState();
         }
         //If timer_state is 1 (and move_state is also 1)
         if (timer_state == 1 && move_state == 1)
@@ -66,10 +64,8 @@ public class Autonomous_Red extends Telemetry {
         //If it no longer applies
         else if (timer2 > 1.35 && move_state == 1)
         {
-            //Add 1 to 'move_state'
-            move_state++;
-            //Stop the ball shooter
-            MoveBallShooter(0);
+            //Move to the next state
+            NextState();
             //Open the release mechanism
             MoveReleaseDrive(true);
         }
@@ -112,9 +108,7 @@ public class Autonomous_Red extends Telemetry {
         else if (timer2 > 1.3 && move_state == 3)
         {
             //Move to the next state
-            move_state++;
-            //Stop the ball shooter
-            MoveBallShooter(0);
+            NextState();
         }
         //If 'timer_state' is 4
         if (timer_state == 4 && move_state == 4)
@@ -127,7 +121,7 @@ public class Autonomous_Red extends Telemetry {
         if (timer2 <= 1.7 && move_state == 4)
         {
             //Move the robot
-            MoveMiddleDrive(-1);
+            MoveMiddleDrive(-0.7);
             //Reset the timer that keeps track of time change
             Timer2Reset();
         }
@@ -135,9 +129,7 @@ public class Autonomous_Red extends Telemetry {
         else if (timer2 > 1.7 && move_state == 4)
         {
             //Move to the next state
-            move_state++;
-            //Stop the middle wheel
-            MoveMiddleDrive(0);
+            NextState();
         }
         //If 'timer_state' is 5
         if (timer_state == 5 && move_state == 5)
@@ -147,7 +139,7 @@ public class Autonomous_Red extends Telemetry {
             timer_state = timer_state + 0.1;
         }
         //If the timer is less than or equal to 2.3 and the robot is in state 5
-        if (timer2 <= 2.3 && move_state == 5)
+        if (timer2 <= 2.5 && move_state == 5)
         {
             //Move the robot at full speed
             MoveRobot(-1, -1);
@@ -155,14 +147,13 @@ public class Autonomous_Red extends Telemetry {
             Timer2Reset();
         }
         //If it no longer applies
-        else if (timer2 > 2.3 && move_state == 5)
+        else if (timer2 > 2.5 && move_state == 5)
         {
             //Move to the next state
-            move_state++;
-            //Stop the robot
-            MoveRobot(0, 0);
+            MoveRobot(0,0);
+            move_state = move_state + 1.1;
         }
-        //If the front line tracker detects white and the robot is in state 6
+        /*//If the front line tracker detects white and the robot is in state 6
         if (FrontLine.getVoltage() >= LineTrackerVoltage && move_state == 6)
         {
             //Move the middle motor by -0.25
@@ -175,7 +166,7 @@ public class Autonomous_Red extends Telemetry {
             move_state = move_state + 0.1;
             //Stop the middle motor
             MoveMiddleDrive(0);
-        }
+        }*/
         //If 'timer_state' is 5.1
         if (timer_state == 5.1 && move_state == 6.1)
         {
@@ -186,11 +177,16 @@ public class Autonomous_Red extends Telemetry {
         if (timer2 <= 3 && move_state == 6.1)
         {
             MoveMiddleDrive(-1);
+            Timer2Reset();
         }
         else if (timer2 > 3 && move_state == 6.1)
         {
             move_state = move_state + 0.1;
             MoveMiddleDrive(0);
+        }
+        if (move_state > 6.1 && move_state < 6.2)
+        {
+            move_state = 6.2;
         }
         if (timer_state == 5.2 && move_state == 6.2)
         {
@@ -202,6 +198,7 @@ public class Autonomous_Red extends Telemetry {
             MoveRightBeacon(true);
             MoveLeftBeacon(true);
             MoveRobot(-1,-1);
+            Timer2Reset();
         }
         else if (timer2 > 1.5 && move_state == 6.2)
         {
@@ -216,6 +213,7 @@ public class Autonomous_Red extends Telemetry {
         if (timer2 <= 1.3 && move_state == 6.3)
         {
             MoveRobot(1,1);
+            Timer2Reset();
         }
         else if (timer2 > 1.3 && move_state == 6.3)
         {
@@ -225,38 +223,13 @@ public class Autonomous_Red extends Telemetry {
         //If at least one line tracker detects black and the robot is in state 7
         if ((RightLine.getVoltage() >= LineTrackerVoltage || LeftLine.getVoltage() >= LineTrackerVoltage || FrontLine.getVoltage() >= LineTrackerVoltage) && move_state == 7)
         {
-            //If LeftLine is black
-            if (LeftLine.getVoltage() >= LineTrackerVoltage && right == false)
-            {
-                //Move MiddleDrive left by 0.15
-                MoveMiddleDrive(-0.15);
-            }
-            //If it no longer applies
-            else if (LeftLine.getVoltage() < LineTrackerVoltage && left == true)
-            {
-                //Stop the middle wheel
-                MoveMiddleDrive(0);
-            }
-            //While RightLine is black
-            if (RightLine.getVoltage() >= LineTrackerVoltage && left == false)
-            {
-                //Move MiddleDrive right by 0.15
-                MoveMiddleDrive(0.15);
-            }
-            //If it no longer applies
-            else if (RightLine.getVoltage() < LineTrackerVoltage && right == true)
-            {
-                //Stop the middle motor
-                MoveMiddleDrive(0);
-            }
+            LineTrackerRight();
         }
         //If it no longer applies
         else if ((RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage && FrontLine.getVoltage() < LineTrackerVoltage) && move_state == 7)
         {
             //Move to the next state
-            move_state++;
-            //Stop the middle motor
-            MoveMiddleDrive(0);
+            NextState();
         }
         //If the robot is in state 8 and 17 cm from the wall
         /**if (Range1.getDistance(DistanceUnit.CM) > 17 && move_state == 8)
@@ -279,10 +252,8 @@ public class Autonomous_Red extends Telemetry {
         //If the color sensor detects red and the robot is in state 8 and the robot is 17 cm away from the wall
         if (red && !blue && move_state == 8 && Range1.getDistance(DistanceUnit.CM) <= 17)
         {
-            //Stop the robot
-            MoveRobot(0,0);
             //Move to the next state
-            move_state++;
+            NextState();
             //Move the right beacon presser up and leave the left beacon presser down
             MoveRightBeacon(true);
             MoveLeftBeacon(false);
@@ -290,10 +261,8 @@ public class Autonomous_Red extends Telemetry {
         //If the color sensor detects blue and the robot is in state 8 and the robot is 17 cm away from the wall
         else if(blue && !red && move_state == 8 && Range1.getDistance(DistanceUnit.CM) <= 17)
         {
-            //Stop the robot
-            MoveRobot(0,0);
             //Move to the next state
-            move_state++;
+            NextState();
             //Move the left beacon presser up and leave the right beacon presser down
             MoveLeftBeacon(true);
             MoveRightBeacon(false);
@@ -324,9 +293,7 @@ public class Autonomous_Red extends Telemetry {
         else if (timer2 > 2 && move_state == 9)
         {
             //Move to the next state
-            move_state++;
-            //Stop the robot
-            MoveRobot(0,0);
+            NextState();
         }
         //If 'timer_state' is 7
         if (timer_state == 7 && move_state == 10)
@@ -347,9 +314,7 @@ public class Autonomous_Red extends Telemetry {
         else if (timer2 > 0.8 && move_state == 10)
         {
             //Move to the next state
-            move_state++;
-            //Stop the robot
-            MoveRobot(0,0);
+            NextState();
         }
         //If 'timer_state' is 8
         if (timer_state == 8 && move_state == 11)
@@ -378,45 +343,18 @@ public class Autonomous_Red extends Telemetry {
         else if (FrontLine.getVoltage() < LineTrackerVoltage && move_state == 11 && timer2 > 0.5)
         {
             //Move to the next state
-            move_state++;
-            //Stop the middle motor
-            MoveMiddleDrive(0);
+            NextState();
         }
         //If at least one line tracker detects black and the robot is in state 12
         if ((RightLine.getVoltage() >= LineTrackerVoltage || LeftLine.getVoltage() >= LineTrackerVoltage || FrontLine.getVoltage() >= LineTrackerVoltage) && move_state == 12)
         {
-            //If LeftLine is black
-            if (LeftLine.getVoltage() >= LineTrackerVoltage)
-            {
-                //Move MiddleDrive left by 0.15
-                MoveMiddleDrive(0.15);
-            }
-            //If it no longer applies
-            else if (LeftLine.getVoltage() < LineTrackerVoltage)
-            {
-                //Stop the middle wheel
-                MoveMiddleDrive(0);
-            }
-            //While RightLine is black
-            if (RightLine.getVoltage() >= LineTrackerVoltage)
-            {
-                //Move MiddleDrive right by 0.15
-                MoveMiddleDrive(0.15);
-            }
-            //If it no longer applies
-            else if (RightLine.getVoltage() < LineTrackerVoltage)
-            {
-                //Stop the middle motor
-                MoveMiddleDrive(0);
-            }
+            LineTrackerRight();
         }
         //If it no longer applies
         else if ((RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage && FrontLine.getVoltage() < LineTrackerVoltage) && move_state == 12)
         {
             //Move to the next state
-            move_state++;
-            //Stop the middle motor
-            MoveMiddleDrive(0);
+            NextState();
         }
         //If the robot is in state 13
         if (move_state == 13)
@@ -427,10 +365,8 @@ public class Autonomous_Red extends Telemetry {
         //If the color sensor detects red and the robot is in state 13 and the robot is 17 cm from the robot
         if (red && !blue && move_state == 13 && Range1.getDistance(DistanceUnit.CM) <= 17)
         {
-            //Stop the robot
-            MoveRobot(0,0);
             //Move to the next state
-            move_state++;
+            NextState();
             //Move the right beacon presser up and leave the left beacon presser down
             MoveRightBeacon(true);
             MoveLeftBeacon(false);
@@ -438,10 +374,8 @@ public class Autonomous_Red extends Telemetry {
         //If the color sensor detects blue and the robot is in state 13 and the robot is 17 cm from the robot
         else if(blue && !red && move_state == 13 && Range1.getDistance(DistanceUnit.CM) <= 17)
         {
-            //Stop the robot
-            MoveRobot(0,0);
             //Move to the next state
-            move_state++;
+            NextState();
             //Move the left beacon presser up and leave the right beacon presser down
             MoveLeftBeacon(true);
             MoveRightBeacon(false);
@@ -472,9 +406,7 @@ public class Autonomous_Red extends Telemetry {
         else if (timer2 > 2 && move_state == 14)
         {
             //Move to the next state
-            move_state++;
-            //Stop the robot
-            MoveRobot(0,0);
+            NextState();
         }
         /***/
         UpdateTelemetry();
