@@ -132,7 +132,7 @@ public class Autonomous_Blue extends Telemetry{
             timer_state = 4.5;
         }
         //If the timer is less than or equal to 2 seconds and 'move_state' is 4
-        if (timer2 <= 1.7 && move_state == 4)
+        if (timer2 <= 1.5 && move_state == 4)
         {
             //Move the robot
             MoveMiddleDrive(-.7);
@@ -140,7 +140,7 @@ public class Autonomous_Blue extends Telemetry{
             Timer2Reset();
         }
         //If it no longer applies
-        else if (timer2 > 1.7 && move_state == 4)
+        else if (timer2 > 1.5 && move_state == 4)
         {
             //Move to the next state
             move_state = 4.5;
@@ -157,7 +157,7 @@ public class Autonomous_Blue extends Telemetry{
             timer_state = 5;
         }
         //If the timer is less than or equal to 1.7 and the robot is in state 4.5
-        if (timer2 <= 1.45 && move_state == 4.5)
+        if (timer2 <= 1.35 && move_state == 4.5)
         {
             //Spin the robot halfway
             MoveRobot(1,-1);
@@ -165,7 +165,7 @@ public class Autonomous_Blue extends Telemetry{
             Timer2Reset();
         }
         //If it no longer applies
-        else if (timer2 > 1.45 && move_state == 4.5)
+        else if (timer2 > 1.35 && move_state == 4.5)
         {
             //Move to the next state
             move_state = 5;
@@ -182,7 +182,7 @@ public class Autonomous_Blue extends Telemetry{
             timer_state = 5.1;
         }
         //If the timer is less than or equal to 2.3 and the robot is in state 5
-        if (timer2 <= 2.5 && move_state == 5)
+        if (timer2 <= 2.6 && move_state == 5)
         {
             //Move the robot at full speed
             MoveRobot(-1, -1);
@@ -190,7 +190,7 @@ public class Autonomous_Blue extends Telemetry{
             Timer2Reset();
         }
         //If it no longer applies
-        else if (timer2 > 2.5 && move_state == 5)
+        else if (timer2 > 2.6 && move_state == 5)
         {
             //Move to the next state
             MoveRobot(0,0);
@@ -236,15 +236,15 @@ public class Autonomous_Blue extends Telemetry{
             timer_state = timer_state + 0.1;
         }
         //Move towards the wall
-        if (timer2 <= 2 && move_state == 6.2)
+        if (timer2 <= 2.5 && move_state == 6.2)
         {
-            MoveRightBeacon(true);
-            MoveLeftBeacon(true);
+//            MoveRightBeacon(true);
+//            MoveLeftBeacon(true);
             MoveRobot(-0.8,-0.8);
             Timer2Reset();
         }
         //Reached the wall
-        else if (timer2 > 2 && move_state == 6.2)
+        else if (timer2 > 2.5 && move_state == 6.2)
         {
             move_state = move_state + 0.1;
             MoveRobot(0,0);
