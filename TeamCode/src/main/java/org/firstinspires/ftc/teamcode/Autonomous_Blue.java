@@ -129,10 +129,10 @@ public class Autonomous_Blue extends Telemetry{
         {
             //Reset all timers
             TimerReset();
-            timer_state = 4.5;
+            timer_state = 5;
         }
         //If the timer is less than or equal to 2 seconds and 'move_state' is 4
-        if (timer2 <= 1.5 && move_state == 4)
+        if (timer2 <= 1.3 && move_state == 4)
         {
             //Move the robot
             MoveMiddleDrive(-.7);
@@ -140,38 +140,38 @@ public class Autonomous_Blue extends Telemetry{
             Timer2Reset();
         }
         //If it no longer applies
-        else if (timer2 > 1.5 && move_state == 4)
+        else if (timer2 > 1.3 && move_state == 4)
         {
             //Move to the next state
-            move_state = 4.5;
+            move_state = 5;
             //Stop the middle wheel
             MoveMiddleDrive(0);
         }
     // Move_state == 4.5
     // Spins the robot
         // If 'timer_state' equals 4.5
-        if (timer_state == 4.5 && move_state == 4.5)
-        {
-            //Reset all timers
-            TimerReset();
-            timer_state = 5;
-        }
-        //If the timer is less than or equal to 1.7 and the robot is in state 4.5
-        if (timer2 <= 1.35 && move_state == 4.5)
-        {
-            //Spin the robot halfway
-            MoveRobot(1,-1);
-            //Reset the timer that keeps up with changes in time
-            Timer2Reset();
-        }
-        //If it no longer applies
-        else if (timer2 > 1.35 && move_state == 4.5)
-        {
-            //Move to the next state
-            move_state = 5;
-            //Stop the motors
-            MoveRobot(0,0);
-        }
+//        if (timer_state == 4.5 && move_state == 4.5)
+//        {
+//            //Reset all timers
+//            TimerReset();
+//            timer_state = 5;
+//        }
+//        //If the timer is less than or equal to 1.7 and the robot is in state 4.5
+//        if (timer2 <= 1.45 && move_state == 4.5)
+//        {
+//            //Spin the robot halfway
+//            MoveRobot(1,-1);
+//            //Reset the timer that keeps up with changes in time
+//            Timer2Reset();
+//        }
+//        //If it no longer applies
+//        else if (timer2 > 1.45 && move_state == 4.5)
+//        {
+//            //Move to the next state
+//            move_state = 5;
+//            //Stop the motors
+//            MoveRobot(0,0);
+//        }
     // Move_state == 5
     // Goes Forward
         // If 'timer_state' is 5
@@ -179,23 +179,49 @@ public class Autonomous_Blue extends Telemetry{
         {
             //Reset all timers
             TimerReset();
-            timer_state = 5.1;
+            //timer_state = 5.1;
+            timer_state = 5.5;
         }
         //If the timer is less than or equal to 2.3 and the robot is in state 5
-        if (timer2 <= 2.6 && move_state == 5)
+        if (timer2 <= 3.6 && move_state == 5)
         {
             //Move the robot at full speed
-            MoveRobot(-1, -1);
+            MoveRobot(0.7, 0.7);
             //Reset the timer that keeps track of change in time
             Timer2Reset();
         }
         //If it no longer applies
-        else if (timer2 > 2.6 && move_state == 5)
+        else if (timer2 > 3.6 && move_state == 5)
         {
             //Move to the next state
             MoveRobot(0,0);
-            move_state = move_state + 1.1;
+            //move_state = move_state + 1.1;
+            //move_state = 7;
+            move_state = 6.5;
         }
+        /**/
+        if (timer_state == 5.5 && move_state == 6.5)
+        {
+            //Reset all timers
+            TimerReset();
+            timer_state = 6;
+        }
+        if (timer2 <= 1.65 && move_state == 6.5)
+        {
+            //Spin the robot halfway
+            MoveRobot(1,-1);
+            //Reset the timer that keeps up with changes in time
+            Timer2Reset();
+        }
+        //If it no longer applies
+        else if (timer2 > 1.65 && move_state == 6.5)
+        {
+            //Move to the next state
+            move_state = 7;
+            //Stop the motors
+            MoveRobot(0,0);
+        }
+        /**/
         /*//If the front line tracker detects white and the robot is in state 6
         if (FrontLine.getVoltage() >= LineTrackerVoltage && move_state == 6)
         {
@@ -212,8 +238,9 @@ public class Autonomous_Blue extends Telemetry{
         }*/
 
     // Move_state == 6.1
+    // Move sideways
         //If 'timer_state' is 5.1
-        if (timer_state == 5.1 && move_state == 6.1)
+        /**if (timer_state == 5.1 && move_state == 6.1)
         {
             //Reset all timers
             TimerReset();
@@ -230,6 +257,7 @@ public class Autonomous_Blue extends Telemetry{
             MoveMiddleDrive(0);
         }
     // Move_state == 6.2
+    // Move Aligns Robot with wall
         if (timer_state == 5.2 && move_state == 6.2)
         {
             TimerReset();
@@ -251,6 +279,7 @@ public class Autonomous_Blue extends Telemetry{
         }
 
     // Move_state == 6.3
+    // Move away from the wall
         if (timer_state == 5.3 && move_state == 6.3)
         {
             TimerReset();
@@ -266,21 +295,24 @@ public class Autonomous_Blue extends Telemetry{
         {
             move_state = move_state + 0.7;
             MoveRobot(0,0);
-        }
+        }*/
     // Move_state == 7
+    // Moves sideways trying to sense the 1st white line
         //If at least one line tracker detects black and the robot is in state 7
         if ((RightLine.getVoltage() > LineTrackerVoltage && LeftLine.getVoltage() > LineTrackerVoltage && FrontLine.getVoltage() > LineTrackerVoltage) && move_state == 7)
         {
-            MoveMiddleDrive(-0.25);
+            MoveMiddleDrive(0.2);
         }
         if ((RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage) && !(RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage && FrontLine.getVoltage() < LineTrackerVoltage) && move_state == 7)
         {
-            LineTrackerRight();
+            LineTrackerLeft();
         }
         //If it no longer applies
         else if ((RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage && FrontLine.getVoltage() < LineTrackerVoltage) && move_state == 7)
         {
             //Move to the next state
+            MoveRightBeacon(true);
+            MoveLeftBeacon(true);
             NextState();
         }
         //If the robot is in state 8 and 17 cm from the wall
@@ -290,20 +322,22 @@ public class Autonomous_Blue extends Telemetry{
             MoveRobot(-1 * (LeftLine.getVoltage() * 0.2 * 0.3), -1 * (RightLine.getVoltage() * 0.2 * 0.3));
         }*/
     // Move_state = 8
-        if (Range1.getDistance(DistanceUnit.CM) > 17 && move_state == 8 && RightLine.getVoltage() > LeftLine.getVoltage())
+    // Line track 1st line
+
+        if (Range1.getDistance(DistanceUnit.CM) > 15 && move_state == 8 && RightLine.getVoltage() >= LineTrackerVoltage)
         {
             MoveRobot(-0.3,-0.5);
         }
-        if (Range1.getDistance(DistanceUnit.CM) > 17 && move_state == 8 && LeftLine.getVoltage() > RightLine.getVoltage())
+        if (Range1.getDistance(DistanceUnit.CM) > 15 && move_state == 8 && LeftLine.getVoltage() >= LineTrackerVoltage)
         {
             MoveRobot(-0.5,-0.3);
         }
-        if (Range1.getDistance(DistanceUnit.CM) > 17 && move_state == 8 && RightLine.getVoltage() == LeftLine.getVoltage())
+        if (Range1.getDistance(DistanceUnit.CM) > 15 && move_state == 8 && RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
         {
             MoveRobot(-0.5,-0.5);
         }
         //If the color sensor detects red and the robot is in state 8 and the robot is 17 cm away from the wall
-        if (red && !blue && move_state == 8 && Range1.getDistance(DistanceUnit.CM) <= 17)
+        if (red && !blue && move_state == 8 && Range1.getDistance(DistanceUnit.CM) <= 15)
         {
             //Move to the next state
             NextState();
@@ -312,7 +346,7 @@ public class Autonomous_Blue extends Telemetry{
             MoveLeftBeacon(true);
         }
         //If the color sensor detects blue and the robot is in state 8 and the robot is 17 cm away from the wall
-        else if(blue && !red && move_state == 8 && Range1.getDistance(DistanceUnit.CM) <= 17)
+        else if(blue && !red && move_state == 8 && Range1.getDistance(DistanceUnit.CM) <= 15)
         {
             //Move to the next state
             NextState();
@@ -324,10 +358,11 @@ public class Autonomous_Blue extends Telemetry{
         else if (((!blue && !red) || (red && blue)) && move_state == 8)
         {
             //Leave both of the beacon pressers down
-            MoveLeftBeacon(false);
-            MoveRightBeacon(false);
+            MoveLeftBeacon(true);
+            MoveRightBeacon(true);
         }
     // Move_state == 9
+    // Sees the beacon and pushes forward
         //If 'timer_state' is 6
         if (timer_state == 6 && move_state == 9)
         {
@@ -339,7 +374,7 @@ public class Autonomous_Blue extends Telemetry{
         if (timer2 <= 2 && move_state == 9)
         {
             //Move the robot at -0.5 on both wheels
-            MoveRobot(-0.35, -0.35);
+            MoveRobot(-0.5, -0.5);
             //Reset the timer that keeps up with change in time
             Timer2Reset();
         }
@@ -386,7 +421,7 @@ public class Autonomous_Blue extends Telemetry{
             //Reset the timer that keeps track of the change in time
             Timer2Reset();
             //Move the middle motor by -0.25
-            MoveMiddleDrive(0.25);
+            MoveMiddleDrive(0.32);
         }
         //If the timer is less that half a second
         else if (timer2 <= 0.5 && move_state == 11)
@@ -394,7 +429,7 @@ public class Autonomous_Blue extends Telemetry{
             //Reset the timer that keeps track of the change in time
             Timer2Reset();
             //Move the middle motor by -0.25
-            MoveMiddleDrive(0.25);
+            MoveMiddleDrive(0.32);
         }
         //If it no longer applies
         else if (FrontLine.getVoltage() < LineTrackerVoltage && move_state == 11 && timer2 > 0.5)
@@ -405,32 +440,37 @@ public class Autonomous_Blue extends Telemetry{
     // Move_state == 12
         if (move_state ==12)
         {
-            if ((RightLine.getVoltage() > LineTrackerVoltage && FrontLine.getVoltage() > LineTrackerVoltage && LeftLine.getVoltage() > LineTrackerVoltage) || (RightLine.getVoltage() > LineTrackerVoltage && FrontLine.getVoltage() > LineTrackerVoltage && LeftLine.getVoltage() <= LineTrackerVoltage) && move_state == 12)
+            //If at least one line tracker detects black and the robot is in state 12
+            if ((RightLine.getVoltage() >= LineTrackerVoltage || LeftLine.getVoltage() >= LineTrackerVoltage || FrontLine.getVoltage() >= LineTrackerVoltage) && move_state == 12)
             {
-                MoveRobot(-0.1,0);
+                LineTrackerLeft();
             }
-                //If at least one line tracker detects black and the robot is in state 12
-                if ((RightLine.getVoltage() >= LineTrackerVoltage || LeftLine.getVoltage() >= LineTrackerVoltage || FrontLine.getVoltage() >= LineTrackerVoltage) && move_state == 12)
-                {
-                    LineTrackerLeft();
-                }
-                //If it no longer applies
-                else if ((RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage && FrontLine.getVoltage() < LineTrackerVoltage) && move_state == 12)
-                {
-                    //Move to the next state
-                    NextState();
-                }
+            //If it no longer applies
+            else if ((RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage && FrontLine.getVoltage() < LineTrackerVoltage) && move_state == 12)
+            {
+                //Move to the next state
+                MoveRightBeacon(true);
+                MoveLeftBeacon(true);
+                NextState();
+            }
         }
 
     // Move_state == 13
         //If the robot is in state 13
-        if (move_state == 13)
+        if (Range1.getDistance(DistanceUnit.CM) > 16 && move_state == 13 && RightLine.getVoltage() >= LineTrackerVoltage)
         {
-            //Move the robot in a straight line, going left or right based on what the voltage of the line trackers are
-            MoveRobot(-1 * (LeftLine.getVoltage() * 0.2 * 0.3), -1 * (RightLine.getVoltage() * 0.2 * 0.3));
+            MoveRobot(-0.3,-0.5);
+        }
+        if (Range1.getDistance(DistanceUnit.CM) > 16 && move_state == 13 && LeftLine.getVoltage() >= LineTrackerVoltage)
+        {
+            MoveRobot(-0.5,-0.3);
+        }
+        if (Range1.getDistance(DistanceUnit.CM) > 16 && move_state == 13 && RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
+        {
+            MoveRobot(-0.5,-0.5);
         }
         //If the color sensor detects red and the robot is in state 13 and the robot is 17 cm from the robot
-        if (red && !blue && move_state == 13 && Range1.getDistance(DistanceUnit.CM) <= 17)
+        if (red && !blue && move_state == 13 && Range1.getDistance(DistanceUnit.CM) <= 16)
         {
             //Move to the next state
             NextState();
@@ -439,7 +479,7 @@ public class Autonomous_Blue extends Telemetry{
             MoveLeftBeacon(true);
         }
         //If the color sensor detects blue and the robot is in state 13 and the robot is 17 cm from the robot
-        else if(blue && !red && move_state == 13 && Range1.getDistance(DistanceUnit.CM) <= 17)
+        else if(blue && !red && move_state == 13 && Range1.getDistance(DistanceUnit.CM) <= 16)
         {
             //Move to the next state
             NextState();
@@ -451,8 +491,8 @@ public class Autonomous_Blue extends Telemetry{
         else if (((!blue && !red) || (red && blue)) && move_state == 13)
         {
             //Leave both of the beacon pressers down
-            MoveLeftBeacon(false);
-            MoveRightBeacon(false);
+            MoveLeftBeacon(true);
+            MoveRightBeacon(true);
         }
         //If 'timer_state' is 9
         if (timer_state == 9 && move_state == 14)
@@ -465,7 +505,7 @@ public class Autonomous_Blue extends Telemetry{
         if (timer2 <= 2 && move_state == 14)
         {
             //Move the robot at -0.5 on both wheels
-            MoveRobot(-0.35, -0.35);
+            MoveRobot(-0.5, -0.5);
             //Reset the timer that keeps up with change in time
             Timer2Reset();
         }

@@ -238,7 +238,7 @@ public abstract class HardwareMap extends OpMode{
         if (LeftLine.getVoltage() >= LineTrackerVoltage && right == false)
         {
             //Move MiddleDrive left by 0.15
-            MoveMiddleDrive(0.3);
+            MoveMiddleDrive(0.27);
             left = true;
         }
         //If it no longer applies
@@ -252,7 +252,7 @@ public abstract class HardwareMap extends OpMode{
         if (RightLine.getVoltage() >= LineTrackerVoltage && left == false)
         {
             //Move MiddleDrive right by 0.15
-            MoveMiddleDrive(-0.3);
+            MoveMiddleDrive(-0.27);
             right = true;
         }
         //If it no longer applies
@@ -269,7 +269,7 @@ public abstract class HardwareMap extends OpMode{
         if (LeftLine.getVoltage() >= LineTrackerVoltage)
         {
             //Move MiddleDrive left by 0.15
-            MoveMiddleDrive(-0.3);
+            MoveMiddleDrive(-0.27);
         }
         //If it no longer applies
         else if (LeftLine.getVoltage() < LineTrackerVoltage)
@@ -281,7 +281,7 @@ public abstract class HardwareMap extends OpMode{
         if (RightLine.getVoltage() >= LineTrackerVoltage)
         {
             //Move MiddleDrive right by 0.15
-            MoveMiddleDrive(0.3);
+            MoveMiddleDrive(0.27);
         }
         //If it no longer applies
         else if (RightLine.getVoltage() < LineTrackerVoltage)
