@@ -143,7 +143,7 @@ public class Autonomous_Blue extends Telemetry{
                 timer_state = 5;
             }
             //If the timer is less than or equal to 2 seconds and 'move_state' is 4
-            if (timer2 <= 1.3)
+            if (timer2 <= 1.1)
             {
                 //Move the robot
                 MoveMiddleDrive(-.7);
@@ -151,7 +151,7 @@ public class Autonomous_Blue extends Telemetry{
                 Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 1.3)
+            else if (timer2 > 1.1)
             {
                 //Move to the next state
                 move_state = 5;
@@ -197,7 +197,7 @@ public class Autonomous_Blue extends Telemetry{
                 timer_state = 5.5;
             }
             //If the timer is less than or equal to 2.3 and the robot is in state 5
-            if (timer2 <= 3.6)
+            if (timer2 <= 2.8)
             {
                 //Move the robot at full speed
                 MoveRobot(0.7, 0.7);
@@ -205,7 +205,7 @@ public class Autonomous_Blue extends Telemetry{
                 Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 3.6)
+            else if (timer2 > 2.8)
             {
                 //Move to the next state
                 MoveRobot(0, 0);
@@ -223,7 +223,7 @@ public class Autonomous_Blue extends Telemetry{
                 TimerReset();
                 timer_state = 6;
             }
-            if (timer2 <= 1.65)
+            if (timer2 <= 1.45)
             {
                 //Spin the robot halfway
                 MoveRobot(1, -1);
@@ -231,7 +231,7 @@ public class Autonomous_Blue extends Telemetry{
                 Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 1.65)
+            else if (timer2 > 1.45)
             {
                 //Move to the next state
                 move_state = 7;
@@ -354,54 +354,61 @@ public class Autonomous_Blue extends Telemetry{
     // Line track 1st line
         if (move_state == 8)
         {
-            if (Range1.getDistance(DistanceUnit.CM) > 15 && RightLine.getVoltage() >= LineTrackerVoltage)
-            {
-                MoveRobot(-0.3, -0.5);
-                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
-            }
-            if (Range1.getDistance(DistanceUnit.CM) > 15 && LeftLine.getVoltage() >= LineTrackerVoltage)
-            {
-                MoveRobot(-0.5, -0.3);
-                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
-            }
-            if (Range1.getDistance(DistanceUnit.CM) > 15 && RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
+            if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
             {
                 MoveRobot(-0.5, -0.5);
                 RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
                 LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
             }
-            if (Range1.getDistance(DistanceUnit.CM) > 15 && RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
+            else
             {
-                MoveMiddleDrive(0.25);
-                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                if (RightLine.getVoltage() >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.3, -0.5);
+                    RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
+                    LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                }
+                if (LeftLine.getVoltage() >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.5, -0.3);
+                    RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
+                    LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                }
             }
+
+//            if (Range1.getDistance(DistanceUnit.CM) > 15 && RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
+//            {
+//                MoveMiddleDrive(0.25);
+//                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
+//                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+//            }
             //If the color sensor detects red and the robot is in state 8 and the robot is 17 cm away from the wall
-            if (red && !blue && Range1.getDistance(DistanceUnit.CM) <= 15)
+            if (Range1.getDistance(DistanceUnit.CM) < 15)
             {
-                //Move to the next state
-                NextState();
-                //Move the left beacon presser up and leave the right beacon presser down
-                MoveRightBeacon(false);
-                MoveLeftBeacon(true);
-            }
-            //If the color sensor detects blue and the robot is in state 8 and the robot is 17 cm away from the wall
-            else if (blue && !red && Range1.getDistance(DistanceUnit.CM) <= 15)
-            {
-                //Move to the next state
-                NextState();
-                //Move the right beacon presser up and leave the left beacon presser down
-                MoveLeftBeacon(false);
-                MoveRightBeacon(true);
-            }
-            //If neither red or blue is seen by the color sensor or both are seen by the color sensor
-            else if ((!blue && !red) || (red && blue))
-            {
-                //Leave both of the beacon pressers down
-                MoveLeftBeacon(true);
-                MoveRightBeacon(true);
+                if (red && !blue)
+                {
+                    //Move to the next state
+                    NextState();
+                    //Move the left beacon presser up and leave the right beacon presser down
+                    MoveRightBeacon(false);
+                    MoveLeftBeacon(true);
+                }
+                //If the color sensor detects blue and the robot is in state 8 and the robot is 17 cm away from the wall
+                else if (blue && !red)
+                {
+                    //Move to the next state
+                    NextState();
+                    //Move the right beacon presser up and leave the left beacon presser down
+                    MoveLeftBeacon(false);
+                    MoveRightBeacon(true);
+                }
+                //If neither red or blue is seen by the color sensor or both are seen by the color sensor
+                else if ((!blue && !red) || (red && blue))
+                {
+                    //Leave both of the beacon pressers down
+                    MoveLeftBeacon(true);
+                    MoveRightBeacon(true);
+                }
             }
         }
     // Move_state == 9
@@ -522,54 +529,57 @@ public class Autonomous_Blue extends Telemetry{
 //            RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
 //            LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
 //        }
-            if (Range1.getDistance(DistanceUnit.CM) > 15 && RightLine.getVoltage() >= LineTrackerVoltage)
+            if (RightLine.getVoltage() >= LineTrackerVoltage)
             {
                 MoveRobot(-0.3, -0.5);
                 RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
                 LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
             }
-            if (Range1.getDistance(DistanceUnit.CM) > 15 && LeftLine.getVoltage() >= LineTrackerVoltage)
+            if (LeftLine.getVoltage() >= LineTrackerVoltage)
             {
                 MoveRobot(-0.5, -0.3);
                 RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
                 LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
             }
-            if (Range1.getDistance(DistanceUnit.CM) > 15 && RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
+            if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
             {
                 MoveRobot(-0.5, -0.5);
                 RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
                 LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
             }
-            if (Range1.getDistance(DistanceUnit.CM) > 15 && RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
-            {
-                MoveMiddleDrive(0.25);
-                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
-            }
+//            if (Range1.getDistance(DistanceUnit.CM) > 15 && RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
+//            {
+//                MoveMiddleDrive(0.25);
+//                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
+//                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+//            }
             //If the color sensor detects red and the robot is in state 13 and the robot is 17 cm from the robot
-            if (red && !blue && Range1.getDistance(DistanceUnit.CM) <= 16)
+            if (Range1.getDistance(DistanceUnit.CM) < 15)
             {
-                //Move to the next state
-                NextState();
-                //Move the left beacon presser up and leave the right beacon presser down
-                MoveRightBeacon(false);
-                MoveLeftBeacon(true);
-            }
-            //If the color sensor detects blue and the robot is in state 13 and the robot is 17 cm from the robot
-            else if (blue && !red && Range1.getDistance(DistanceUnit.CM) <= 16)
-            {
-                //Move to the next state
-                NextState();
-                //Move the right beacon presser up and leave the left beacon presser down
-                MoveLeftBeacon(false);
-                MoveRightBeacon(true);
-            }
-            //If neither red or blue is seen by the color sensor or both are seen by the color sensor
-            else if ((!blue && !red) || (red && blue))
-            {
-                //Leave both of the beacon pressers down
-                MoveLeftBeacon(true);
-                MoveRightBeacon(true);
+                if (red && !blue)
+                {
+                    //Move to the next state
+                    NextState();
+                    //Move the left beacon presser up and leave the right beacon presser down
+                    MoveRightBeacon(false);
+                    MoveLeftBeacon(true);
+                }
+                //If the color sensor detects blue and the robot is in state 13 and the robot is 17 cm from the robot
+                else if (blue && !red)
+                {
+                    //Move to the next state
+                    NextState();
+                    //Move the right beacon presser up and leave the left beacon presser down
+                    MoveLeftBeacon(false);
+                    MoveRightBeacon(true);
+                }
+                //If neither red or blue is seen by the color sensor or both are seen by the color sensor
+                else if ((!blue && !red) || (red && blue))
+                {
+                    //Leave both of the beacon pressers down
+                    MoveLeftBeacon(true);
+                    MoveRightBeacon(true);
+                }
             }
         }
         if (move_state == 14)
