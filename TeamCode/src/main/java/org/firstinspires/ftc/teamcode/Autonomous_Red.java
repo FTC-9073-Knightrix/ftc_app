@@ -267,23 +267,21 @@ public class Autonomous_Red extends Telemetry {
         {
             if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
             {
-                MoveRobot(-0.5, -0.5);
-                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                MoveRobot(-0.65, -0.65);
             }
             else
             {
-                if (RightLine.getVoltage() >= LineTrackerVoltage)
+                if (RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.3, -0.5);
-                    RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                    LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                    MoveRobot(-0.65, -0.65);
                 }
-                if (LeftLine.getVoltage() >= LineTrackerVoltage)
+                else if (RightLine.getVoltage() >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.5, -0.3);
-                    RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                    LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                    MoveRobot(-0.2, -0.65);
+                }
+                else if (LeftLine.getVoltage() >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.65, -0.2);
                 }
             }
             //If the color sensor detects red and the robot is in state 8 and the robot is 17 cm away from the wall
@@ -409,25 +407,28 @@ public class Autonomous_Red extends Telemetry {
         //If the robot is in state 13
         if (move_state == 13)
         {
+            // Both sensors are white = Go Forwards
             if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
             {
-                MoveRobot(-0.5, -0.5);
-                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                MoveRobot(-0.65, -0.65);
             }
+            // One or more sensors are black
             else
             {
-                if (RightLine.getVoltage() >= LineTrackerVoltage)
+                // Both are black = Go Forwards more slowly (?)
+                if (RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.3, -0.5);
-                    RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                    LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                    MoveRobot(-0.65, -0.65);
                 }
-                if (LeftLine.getVoltage() >= LineTrackerVoltage)
+                // Right is black
+                else if (RightLine.getVoltage() >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.5, -0.3);
-                    RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                    LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                    MoveRobot(-0.2, -0.65);
+                }
+                // Left is black
+                else if (LeftLine.getVoltage() >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.65, -0.2);
                 }
             }
             //If the color sensor detects red and the robot is in state 8 and the robot is 17 cm away from the wall

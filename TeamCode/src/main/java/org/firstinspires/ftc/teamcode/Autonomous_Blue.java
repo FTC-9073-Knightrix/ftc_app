@@ -356,23 +356,21 @@ public class Autonomous_Blue extends Telemetry{
         {
             if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
             {
-                MoveRobot(-0.5, -0.5);
-                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                MoveRobot(-0.65, -0.65);
             }
             else
             {
-                if (RightLine.getVoltage() >= LineTrackerVoltage)
+                if (RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.3, -0.5);
-                    RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                    LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                    MoveRobot(-0.65, -0.65);
                 }
-                if (LeftLine.getVoltage() >= LineTrackerVoltage)
+                else if (RightLine.getVoltage() >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.5, -0.3);
-                    RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                    LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                    MoveRobot(-0.2, -0.65);
+                }
+                else if (LeftLine.getVoltage() >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.65, -0.2);
                 }
             }
 
@@ -406,8 +404,8 @@ public class Autonomous_Blue extends Telemetry{
                 else if ((!blue && !red) || (red && blue))
                 {
                     //Leave both of the beacon pressers down
-                    MoveLeftBeacon(true);
-                    MoveRightBeacon(true);
+                    MoveLeftBeacon(false);
+                    MoveRightBeacon(false);
                 }
             }
         }
@@ -529,23 +527,24 @@ public class Autonomous_Blue extends Telemetry{
 //            RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
 //            LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
 //        }
-            if (RightLine.getVoltage() >= LineTrackerVoltage)
-            {
-                MoveRobot(-0.3, -0.5);
-                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
-            }
-            if (LeftLine.getVoltage() >= LineTrackerVoltage)
-            {
-                MoveRobot(-0.5, -0.3);
-                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
-            }
             if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
             {
-                MoveRobot(-0.5, -0.5);
-                RightBeacon.setPosition(1 - (RightLine.getVoltage() / 5 * .6));
-                LeftBeacon.setPosition((LeftLine.getVoltage() / 5 * .6));
+                MoveRobot(-0.65, -0.65);
+            }
+            else
+            {
+                if (RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.65, -0.65);
+                }
+                else if (RightLine.getVoltage() >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.2, -0.65);
+                }
+                else if (LeftLine.getVoltage() >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.65, -0.2);
+                }
             }
 //            if (Range1.getDistance(DistanceUnit.CM) > 15 && RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
 //            {
@@ -577,8 +576,8 @@ public class Autonomous_Blue extends Telemetry{
                 else if ((!blue && !red) || (red && blue))
                 {
                     //Leave both of the beacon pressers down
-                    MoveLeftBeacon(true);
-                    MoveRightBeacon(true);
+                    MoveLeftBeacon(false);
+                    MoveRightBeacon(false);
                 }
             }
         }
