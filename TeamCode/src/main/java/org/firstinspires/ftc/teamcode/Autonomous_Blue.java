@@ -404,9 +404,14 @@ public class Autonomous_Blue extends Telemetry{
                 else if ((!blue && !red) || (red && blue))
                 {
                     //Leave both of the beacon pressers down
-                    MoveLeftBeacon(false);
-                    MoveRightBeacon(false);
+                    MoveLeftBeacon(true);
+                    MoveRightBeacon(true);
                 }
+            }
+            else
+            {
+                MoveLeftBeacon(true);
+                MoveRightBeacon(true);
             }
         }
     // Move_state == 9
@@ -576,9 +581,14 @@ public class Autonomous_Blue extends Telemetry{
                 else if ((!blue && !red) || (red && blue))
                 {
                     //Leave both of the beacon pressers down
-                    MoveLeftBeacon(false);
-                    MoveRightBeacon(false);
+                    MoveLeftBeacon(true);
+                    MoveRightBeacon(true);
                 }
+            }
+            else
+            {
+                MoveLeftBeacon(true);
+                MoveRightBeacon(true);
             }
         }
         if (move_state == 14)
