@@ -1,0 +1,56 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import java.util.Timer;
+
+@Autonomous(name = "Turn Range", group = "Autonomous")
+
+/**
+ * Created by Vijay Rudraraju on 11/19/2016.
+ * Testing
+ * Turns left and aligns to the wall
+ */
+
+public class TurnRange extends Telemetry{
+    //Start
+    @Override
+    public void start() {
+        super.start();
+    }
+    //Main Loop
+    @Override
+    public void loop()
+    {
+        if (move_state == 0)
+        {
+          //Spin the robot halfway
+          MoveRobot(.8, -.8);
+          ThisReading = 500
+          if (Range1.getDistance(DistanceUnit.CM) > ThisReading)
+          {
+           // Stop the robot and move to the next stage
+            MoveRobot(0, 0);
+            NextState();
+          }
+        ThisReading = Range1.getDistance(DistanceUnit.CM)
+        }
+        
+        if (move_state == 1)
+        {
+          //Spin the robot halfway
+          MoveRobot(.5, .5);
+        }
+    
+        /***/
+        UpdateTelemetry();
+        }
+        //Range Sensor & Optical Sensor
+        telemetry.addLine("~Range Sensor~");
+        telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
+
+    }
+}
