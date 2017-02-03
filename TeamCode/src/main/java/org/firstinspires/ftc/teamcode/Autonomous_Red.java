@@ -156,7 +156,7 @@ public class Autonomous_Red extends Telemetry {
                 timer_state = 6;
             }
             //If the timer is less than or equal to 2.3 and the robot is in state 5
-            if (timer2 <= 2.8)
+            if (timer2 <= 2.9)
             {
                 //Move the robot at full speed
                 MoveRobot(-0.7, -0.7);
@@ -164,7 +164,7 @@ public class Autonomous_Red extends Telemetry {
                 Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 2.8)
+            else if (timer2 > 2.9)
             {
                 //Move to the next state
                 MoveRobot(0, 0);
@@ -352,7 +352,7 @@ public class Autonomous_Red extends Telemetry {
                 timer_state++;
             }
             //If the timer is less than or equal to 1 and the robot is in state 10
-            if (timer2 <= 0.8)
+            if (timer2 <= 1)
             {
                 //Move the robot at 0.8 on both wheels
                 MoveRobot(0.8, 0.8);
@@ -360,7 +360,7 @@ public class Autonomous_Red extends Telemetry {
                 Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 0.8)
+            else if (timer2 > 1)
             {
                 //Move to the next state
                 NextState();
@@ -480,7 +480,7 @@ public class Autonomous_Red extends Telemetry {
                 timer_state++;
             }
             //If the timer is less than or equal to 2 and the robot is in state 14
-            if (timer2 <= 2)
+            if (timer2 <= 2.3)
             {
                 //Move the robot at -0.5 on both wheels
                 MoveRobot(-0.5, -0.5);
@@ -488,7 +488,7 @@ public class Autonomous_Red extends Telemetry {
                 Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 2)
+            else if (timer2 > 2.3)
             {
                 //Move to the next state
                 NextState();
