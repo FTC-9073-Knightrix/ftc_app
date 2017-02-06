@@ -137,8 +137,8 @@ public class Autonomous_Blue extends Telemetry{
                 TimerReset();
                 timer_state = 5;
             }
-            //If the timer is less than or equal to 1.1 seconds
-            if (timer2 <= 1.1)
+            //If the timer is less than or equal to 0.95 seconds
+            if (timer2 <= 0.95)
             {
                 //Move the middle wheel by -0.7
                 MoveMiddleDrive(-.7);
@@ -146,7 +146,7 @@ public class Autonomous_Blue extends Telemetry{
                 Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 1.1)
+            else if (timer2 > 0.95)
             {
                 //Move to the next state
                 move_state = 5;
@@ -167,8 +167,8 @@ public class Autonomous_Blue extends Telemetry{
             //If the timer is less than or equal to 2.9
             if (timer2 <= 2.9)
             {
-                //Move the robot at 0.7
-                MoveRobot(0.7, 0.7);
+                //Move the robot at 0.8
+                MoveRobot(0.8, 0.8);
                 //Reset the timer that keeps track of change in time
                 Timer2Reset();
             }
@@ -191,8 +191,8 @@ public class Autonomous_Blue extends Telemetry{
                 //Set timer state to 6
                 timer_state = 6;
             }
-            //If the timer is less than or equal to 1.45
-            if (timer2 <= 1.45)
+            //If the timer is less than or equal to 1.4
+            if (timer2 <= 1.4)
             {
                 //Spin the robot halfway
                 MoveRobot(1, -1);
@@ -200,7 +200,7 @@ public class Autonomous_Blue extends Telemetry{
                 Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 1.45)
+            else if (timer2 > 1.4)
             {
                 //Move to the next state
                 move_state = 7;
@@ -255,8 +255,8 @@ public class Autonomous_Blue extends Telemetry{
                     MoveRobot(-0.65, -0.2);
                 }
             }
-            //If the robot is less than 15 cm from the wall
-            if (Range1.getDistance(DistanceUnit.CM) < 15)
+            //If the robot is less than 16 cm from the wall
+            if (Range1.getDistance(DistanceUnit.CM) < 16)
             {
                 //If the beacon is red
                 if (red && !blue)
@@ -284,7 +284,7 @@ public class Autonomous_Blue extends Telemetry{
                     MoveRightBeacon(true);
                 }
             }
-            //If the robot is greater than 15 cm from the wall
+            //If the robot is greater than 16 cm from the wall
             else
             {
                 //Keep both of the beacon pressers up
@@ -327,8 +327,8 @@ public class Autonomous_Blue extends Telemetry{
                 TimerReset();
                 timer_state++;
             }
-            //If the timer is less than or equal to 1
-            if (timer2 <= 1)
+            //If the timer is less than or equal to 1.2
+            if (timer2 <= 1.2)
             {
                 //Move the robot at 0.8 on both wheels
                 MoveRobot(0.8, 0.8);
@@ -336,7 +336,7 @@ public class Autonomous_Blue extends Telemetry{
                 Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 1)
+            else if (timer2 > 1.2)
             {
                 //Move to the next state
                 NextState();
@@ -422,8 +422,8 @@ public class Autonomous_Blue extends Telemetry{
                     MoveRobot(-0.65, -0.2);
                 }
             }
-            //If the robot is less than 15 cm from the wall
-            if (Range1.getDistance(DistanceUnit.CM) < 15)
+            //If the robot is less than 16 cm from the wall
+            if (Range1.getDistance(DistanceUnit.CM) < 16)
             {
                 //If the beacon is red
                 if (red && !blue)
@@ -451,7 +451,7 @@ public class Autonomous_Blue extends Telemetry{
                     MoveRightBeacon(true);
                 }
             }
-            //If the robot is greater than or equal to 15 cm from the wall
+            //If the robot is greater than or equal to 16 cm from the wall
             else
             {
                 //Keep both beacon pressers up
