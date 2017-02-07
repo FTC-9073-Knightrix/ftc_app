@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
@@ -32,6 +34,7 @@ public abstract class HardwareMap extends OpMode{
     AnalogInput FrontLine;
     AnalogInput RightLine;
     AnalogInput LeftLine;
+    GyroSensor Gyro1;
     //Declare the variables
     public double ReleasePosition;
     public double LeftPosition;
@@ -49,6 +52,9 @@ public abstract class HardwareMap extends OpMode{
     public double timer2 = getRuntime() - timer1;
     public boolean left = false;
     public boolean right = false;
+    public int degree = 0;
+    public boolean calibrated = false;
+    public boolean calibrate = false;
 
 
     @Override
@@ -95,6 +101,8 @@ public abstract class HardwareMap extends OpMode{
         LeftLine = hardwareMap.analogInput.get("L2");
         RightLine = hardwareMap.analogInput.get("L3");
 
+        //Gyro1
+        Gyro1 = hardwareMap.gyroSensor.get("G1");
     }
     //Classes
     void MoveMiddleDrive(double Power){
