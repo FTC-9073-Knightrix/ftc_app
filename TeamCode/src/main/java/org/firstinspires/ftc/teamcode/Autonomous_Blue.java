@@ -56,7 +56,7 @@ public class Autonomous_Blue extends Telemetry{
             if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
+                NextTimer();
             }
             //If timer is less than 1.35
             if (timer2 <= 1.35)
@@ -339,7 +339,7 @@ public class Autonomous_Blue extends Telemetry{
                 NextTimer();
             }
             //If the timer is less than or equal to 1.2
-            if (timer2 <= 0.8)
+            if (timer2 <= 1.2)
             {
                 //Move the robot at 0.8 on both wheels
                 MoveRobot(0.8, 0.8);
@@ -379,14 +379,14 @@ public class Autonomous_Blue extends Telemetry{
             }
             if (MyGyro > 180) {
                 //Spin the robot halfway
-                LeftPower = LeftPower + .2;
-                RightPower = RightPower - .2;
+                LeftPower = LeftPower - .075;
+                RightPower = RightPower + .075;
                 //Reset the timer that keeps up with changes in time
             }
             else if (MyGyro <= 180)
             {
-                LeftPower = LeftPower - .2;
-                RightPower = RightPower + .2;
+                LeftPower = LeftPower + .075;
+                RightPower = RightPower - .075;
 
             }
             MoveRobot(LeftPower,RightPower);
@@ -576,5 +576,6 @@ public class Autonomous_Blue extends Telemetry{
         telemetry.addLine("~Range Sensor~");
         telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
         telemetry.addLine("Gyro: " + degree);
+        telemetry.addLine("Middle wheel Pos: " + MiddleDrive.getCurrentPosition());
     }
 }
