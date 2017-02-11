@@ -62,8 +62,7 @@ public abstract class HardwareMap extends OpMode{
         //MiddleDrive
         MiddleDrive = hardwareMap.dcMotor.get("M1");
         MiddleDrive.setDirection(DcMotor.Direction.REVERSE);
-        MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+//
         //LeftDrive
         LeftDrive = hardwareMap.dcMotor.get("M2");
         LeftDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -107,6 +106,22 @@ public abstract class HardwareMap extends OpMode{
 
         //Gyro1
         Gyro1 = hardwareMap.gyroSensor.get("G1");
+        // reset gyro sensor
+        //Calibrate
+        while (calibrated == false)
+        {
+            if (calibrate == false)
+            {
+                Gyro1.calibrate();
+                calibrate = true;
+            }
+            if (Gyro1.isCalibrating() == false)
+            {
+                calibrated = true;
+            }
+        }
+
+
     }
     //Classes
     void MoveMiddleDrive(double Power){
