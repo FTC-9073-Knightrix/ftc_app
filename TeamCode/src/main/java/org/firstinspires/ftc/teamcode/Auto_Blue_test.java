@@ -75,16 +75,35 @@ public class Auto_Blue_test extends Telemetry{
         if (move_state == 2)
         {
             int MiddlePosition = -6000;
-            int ForwardPosition = -8000;
+            int ForwardPosition = 4000;
             LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-//            while ((MiddleDrive.getCurrentPosition() > MiddlePosition) && (LeftDrive.getCurrentPosition() < ForwardPosition)) {
-//                MiddleDrive.setPower(-1);
-//                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                MiddleDrive.setTargetPosition(MiddlePosition);
+            while ((MiddleDrive.getCurrentPosition() > MiddlePosition) && (LeftDrive.getCurrentPosition() < ForwardPosition)) {
+                MiddleDrive.setPower(-1);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                MiddleDrive.setTargetPosition(MiddlePosition);
+
+                LeftDrive.setPower(.3);
+                RightDrive.setPower(.3);
+
+                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LeftDrive.setTargetPosition(ForwardPosition);
+                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                RightDrive.setTargetPosition(ForwardPosition);
+
+            }
+
+//            // This section works!!
+//            ForwardPosition = 4000;
+//            LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//            while  (LeftDrive.getCurrentPosition() < ForwardPosition)) {
 //
 //                LeftDrive.setPower(.4);
 //                RightDrive.setPower(.4);
@@ -95,48 +114,6 @@ public class Auto_Blue_test extends Telemetry{
 //                RightDrive.setTargetPosition(ForwardPosition);
 //
 //            }
-
-            ForwardPosition = 4000;
-            LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            while  (LeftDrive.getCurrentPosition() < ForwardPosition)) {
-
-                LeftDrive.setPower(.4);
-                RightDrive.setPower(.4);
-
-                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LeftDrive.setTargetPosition(ForwardPosition);
-                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                RightDrive.setTargetPosition(ForwardPosition);
-
-            }
-//            ForwardPosition = 4000;
-//            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            while  (RightDrive.getCurrentPosition() < ForwardPosition) {
-//
-//                RightDrive.setPower(.4);
-//
-//                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                RightDrive.setTargetPosition(ForwardPosition);
-//
-//            }
-//
-//            ForwardPosition = -4000;
-//            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            while  (RightDrive.getCurrentPosition() > ForwardPosition) {
-//
-//                RightDrive.setPower(.4);
-//
-//                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                RightDrive.setTargetPosition(-ForwardPosition);
-//
-//            }
-
 
             //Move to the next state
             ChangeState(6.5);
