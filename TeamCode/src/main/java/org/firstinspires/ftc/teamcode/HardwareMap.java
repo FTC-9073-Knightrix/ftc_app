@@ -62,15 +62,19 @@ public abstract class HardwareMap extends OpMode{
         //MiddleDrive
         MiddleDrive = hardwareMap.dcMotor.get("M1");
         MiddleDrive.setDirection(DcMotor.Direction.REVERSE);
+        MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         //LeftDrive
         LeftDrive = hardwareMap.dcMotor.get("M2");
         LeftDrive.setDirection(DcMotor.Direction.REVERSE);
+
         //RightDrive
         RightDrive = hardwareMap.dcMotor.get("M3");
         RightDrive.setDirection(DcMotor.Direction.FORWARD);
         //PickupDrive
         PickupDrive = hardwareMap.dcMotor.get("M4");
         PickupDrive.setDirection(DcMotor.Direction.FORWARD);
+
         //BallShooter
         BallShooter = hardwareMap.dcMotor.get("M5");
         BallShooter.setDirection(DcMotor.Direction.FORWARD);
