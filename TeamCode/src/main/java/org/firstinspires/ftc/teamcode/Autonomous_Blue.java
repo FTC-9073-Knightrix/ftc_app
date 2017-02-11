@@ -127,7 +127,8 @@ public class Autonomous_Blue extends Telemetry{
             else if (timer2 > 1.3)
             {
                 //Move to the next state
-                NextState();
+                ChangeState(4);
+//                NextState();
             }
         }
         //If the state is 4
