@@ -81,20 +81,20 @@ public class Auto_Blue_test extends Telemetry{
             RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            while ((MiddleDrive.getCurrentPosition() > MiddlePosition) && (LeftDrive.getCurrentPosition() < ForwardPosition)) {
-                MiddleDrive.setPower(-1);
-                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                MiddleDrive.setTargetPosition(MiddlePosition);
-
-                LeftDrive.setPower(.4);
-                RightDrive.setPower(.4);
-
-                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LeftDrive.setTargetPosition(ForwardPosition);
-                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                RightDrive.setTargetPosition(ForwardPosition);
-
-            }
+//            while ((MiddleDrive.getCurrentPosition() > MiddlePosition) && (LeftDrive.getCurrentPosition() < ForwardPosition)) {
+//                MiddleDrive.setPower(-1);
+//                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                MiddleDrive.setTargetPosition(MiddlePosition);
+//
+//                LeftDrive.setPower(.4);
+//                RightDrive.setPower(.4);
+//
+//                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                LeftDrive.setTargetPosition(ForwardPosition);
+//                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                RightDrive.setTargetPosition(ForwardPosition);
+//
+//            }
 
             ForwardPosition = 4000;
             LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -105,37 +105,37 @@ public class Auto_Blue_test extends Telemetry{
             while  (LeftDrive.getCurrentPosition() < ForwardPosition)) {
 
                 LeftDrive.setPower(.4);
-//                RightDrive.setPower(.4);
+                RightDrive.setPower(.4);
 
                 LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 LeftDrive.setTargetPosition(ForwardPosition);
-//                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                RightDrive.setTargetPosition(-ForwardPosition);
-
-            }
-            ForwardPosition = 4000;
-            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            while  (RightDrive.getCurrentPosition() < ForwardPosition) {
-
-                RightDrive.setPower(.4);
-
-                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                RightDrive.setTargetPosition(ForwardPosition);
-
-            }
-
-            ForwardPosition = -4000;
-            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            while  (RightDrive.getCurrentPosition() > ForwardPosition) {
-
-                RightDrive.setPower(.4);
-
                 RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 RightDrive.setTargetPosition(-ForwardPosition);
 
             }
+//            ForwardPosition = 4000;
+//            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            while  (RightDrive.getCurrentPosition() < ForwardPosition) {
+//
+//                RightDrive.setPower(.4);
+//
+//                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                RightDrive.setTargetPosition(ForwardPosition);
+//
+//            }
+//
+//            ForwardPosition = -4000;
+//            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            while  (RightDrive.getCurrentPosition() > ForwardPosition) {
+//
+//                RightDrive.setPower(.4);
+//
+//                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                RightDrive.setTargetPosition(-ForwardPosition);
+//
+//            }
 
 
             //Move to the next state
