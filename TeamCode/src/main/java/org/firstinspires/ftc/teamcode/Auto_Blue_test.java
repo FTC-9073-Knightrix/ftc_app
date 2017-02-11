@@ -75,7 +75,7 @@ public class Auto_Blue_test extends Telemetry{
         if (move_state == 2)
         {
             int MiddlePosition = -6000;
-            int ForwardPosition = 4000;
+            int ForwardPosition = 12000;
             LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
