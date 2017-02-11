@@ -20,7 +20,7 @@ public class Auto_Blue_test extends Telemetry{
     @Override
     public void loop()
     {
-        // Move robot closer to center vortex
+        // State 0 = Move robot closer to center vortex
         if (move_state == 0)
         {
             //LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -37,14 +37,10 @@ public class Auto_Blue_test extends Telemetry{
 
             //If the timer is less that 1.5
             //If it does not apply
-            if (timer2 > 1.5)
-            {
-                //Move to the next state (NextState = 1)
-//                NextState();
-                ChangeState(20);
-            }
+                ChangeState(1);
         }
-        //If the state is 1
+
+        //State 1 = Shoot the ball twice
         if (move_state == 1)
         {
             //If timer is less than 1.35
@@ -52,19 +48,27 @@ public class Auto_Blue_test extends Telemetry{
             {
                 //Shoot the ball
                 MoveBallShooter(0.5);
-                //Reset the timer that keeps track of time change
-                Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 1.35)
+            else if (timer2 > 1.35 && timer2 < 2)
             {
-                //Move to the next state
-                ChangeState(2);
-                //              NextState();
                 //Open the release mechanism
+                MoveBallShooter(0);
                 MoveReleaseDrive(true);
             }
+            else if (timer2 > 2 && timer2 < 3)
+            {
+               // shoot second ball
+               MoveBallShooter(0.5);
+            }
+            else if (timer2 > 3)
+            {
+                MoveBallShooter(0);
+                //Move to the next state
+                ChangeState(20);
+            }
         }
+
         //If the state is 2
         if (move_state == 2)
         {
@@ -564,6 +568,10 @@ public class Auto_Blue_test extends Telemetry{
             }
 
         }
+
+        // Update variables
+        Timer2Reset();
+
         //Range Sensor & Optical Sensor
         degree = Gyro1.getHeading();
         telemetry.addLine("~Range Sensor~");
