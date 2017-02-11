@@ -399,15 +399,7 @@ public class Autonomous_Blue extends Telemetry{
                 NextTimer();
             }
             //If the front line tracker detects black
-            if (FrontLine.getVoltage() >= LineTrackerVoltage)
-            {
-                //Reset the timer that keeps track of the change in time
-                Timer2Reset();
-                //Move the middle motor by 32
-                MoveMiddleDrive(0.32);
-            }
-            //If the timer is less than or equal to half a second
-            else if (timer2 <= 0.5)
+            if ((FrontLine.getVoltage() >= LineTrackerVoltage || LeftLine.getVoltage() >= LineTrackerVoltage || RightLine.getVoltage() >= LineTrackerVoltage) && timer2 <= 0.5)
             {
                 //Reset the timer that keeps track of the change in time
                 Timer2Reset();
@@ -415,7 +407,7 @@ public class Autonomous_Blue extends Telemetry{
                 MoveMiddleDrive(0.32);
             }
             //If neither apply
-            else if (FrontLine.getVoltage() < LineTrackerVoltage && timer2 > 0.5)
+            else if ((FrontLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || RightLine.getVoltage() < LineTrackerVoltage) && timer2 > 0.5)
             {
                 //Move to the next state
                 NextState(1);
