@@ -30,11 +30,10 @@ public class Autonomous_Red extends Telemetry {
         if (move_state == 0)
         {
             //If the timer state is 0
-            if (timer_state == 0)
+            if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
-                timer_state++;
+                NextTimer();
             }
             //If the timer is less than or equal to 1.5 seconds
             if (timer2 <= 1.5)
@@ -48,18 +47,17 @@ public class Autonomous_Red extends Telemetry {
             else if (timer2 > 1.5)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
             }
         }
         //If the state is 1
         if (move_state == 1)
         {
             //If timer_state is 1
-            if (timer_state == 1)
+            if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
-                timer_state++;
+                NextTimer();
             }
             //If time timer is less than or equal to 1.35 seconds
             if (timer2 <= 1.35)
@@ -73,7 +71,7 @@ public class Autonomous_Red extends Telemetry {
             else if (timer2 > 1.35)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
                 //Open the release mechanism
                 MoveReleaseDrive(true);
             }
@@ -82,11 +80,10 @@ public class Autonomous_Red extends Telemetry {
         if (move_state == 2)
         {
             //If 'timer_state' is 2
-            if (timer_state == 2)
+            if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
-                timer_state++;
+                NextTimer();
             }
             //Wait 1 second for the ball to transition
             if (timer2 <= 1)
@@ -98,18 +95,17 @@ public class Autonomous_Red extends Telemetry {
             else if (timer2 > 1)
             {
                 //Move to the next state
-                move_state++;
+                NextState(1);
             }
         }
         //If the state is 3
         if (move_state == 3)
         {
             //If 'timer_state' is 3
-            if (timer_state == 3)
+            if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
-                timer_state++;
+                NextTimer();
             }
             //If the timer is less than or equal to 1.3
             if (timer2 <= 1.3)
@@ -125,18 +121,17 @@ public class Autonomous_Red extends Telemetry {
             else if (timer2 > 1.3)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
             }
         }
         //If the state is 4
         if (move_state == 4)
         {
             //If 'timer_state' is 4
-            if (timer_state == 4)
+            if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
-                timer_state++;
+                NextTimer();
             }
             //If the timer is less than or equal to 1.1 seconds
             if (timer2 <= 0.95)
@@ -150,18 +145,17 @@ public class Autonomous_Red extends Telemetry {
             else if (timer2 > 0.95)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
             }
         }
         //If the state is 5
         if (move_state == 5)
         {
             //If 'timer_state' is 5
-            if (timer_state == 5)
+            if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
-                timer_state = 6;
+                NextTimer();
             }
             //If the timer is less than or equal to 3.3
             if (timer2 <= 3.3)
@@ -175,8 +169,7 @@ public class Autonomous_Red extends Telemetry {
             else if (timer2 > 3.3)
             {
                 //Move to the next state
-                MoveRobot(0, 0);
-                move_state = 7;
+                NextState(2);
             }
         }
         //If the state is 7
@@ -186,7 +179,7 @@ public class Autonomous_Red extends Telemetry {
             if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
             }
             //If none have yet to see white
             else
@@ -233,7 +226,8 @@ public class Autonomous_Red extends Telemetry {
                 if (red && !blue)
                 {
                     //Move to the next state
-                    NextState();
+                    NextState(1);
+                    timer_state = move_state - 1;
                     //Move the right beacon presser up and leave the left beacon presser down
                     MoveRightBeacon(true);
                     MoveLeftBeacon(false);
@@ -242,7 +236,8 @@ public class Autonomous_Red extends Telemetry {
                 else if (blue && !red)
                 {
                     //Move to the next state
-                    NextState();
+                    NextState(1);
+                    timer_state = move_state - 1;
                     //Move the left beacon presser up and leave the right beacon presser down
                     MoveLeftBeacon(true);
                     MoveRightBeacon(false);
@@ -267,11 +262,10 @@ public class Autonomous_Red extends Telemetry {
         if (move_state == 9)
         {
             //If 'timer_state' is 6
-            if (timer_state == 6)
+            if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
-                timer_state++;
+                NextTimer();
             }
             //If the timer is less than or equal to 2
             if (timer2 <= 2)
@@ -285,18 +279,17 @@ public class Autonomous_Red extends Telemetry {
             else if (timer2 > 2)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
             }
         }
         //If the state is 10
         if (move_state == 10)
         {
             //If 'timer_state' is 7
-            if (timer_state == 7)
+            if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
-                timer_state++;
+                NextTimer();
             }
             //If the timer is less than or equal to 1.1
             if (timer2 <= 1.1)
@@ -310,18 +303,17 @@ public class Autonomous_Red extends Telemetry {
             else if (timer2 > 1.1)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
             }
         }
         //If the state is 11
         if (move_state == 11)
         {
             //If 'timer_state' is 8
-            if (timer_state == 8)
+            if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
-                timer_state++;
+                NextTimer();
             }
             //If the front line tracker detects black
             if (FrontLine.getVoltage() >= LineTrackerVoltage)
@@ -343,7 +335,7 @@ public class Autonomous_Red extends Telemetry {
             else if (FrontLine.getVoltage() < LineTrackerVoltage && timer2 > 0.5)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
             }
         }
         //If the state is 12
@@ -353,7 +345,7 @@ public class Autonomous_Red extends Telemetry {
             if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
             }
             //If none of the line trackers have yet to detect white
             else
@@ -400,7 +392,8 @@ public class Autonomous_Red extends Telemetry {
                 if (red && !blue)
                 {
                     //Move to the next state
-                    NextState();
+                    NextState(1);
+                    timer_state = move_state - 1;
                     //Move the right beacon presser up and leave the left beacon presser down
                     MoveRightBeacon(true);
                     MoveLeftBeacon(false);
@@ -409,7 +402,8 @@ public class Autonomous_Red extends Telemetry {
                 else if (blue && !red)
                 {
                     //Move to the next state
-                    NextState();
+                    NextState(1);
+                    timer_state = move_state - 1;
                     //Move the left beacon presser up and leave the right beacon presser down
                     MoveLeftBeacon(true);
                     MoveRightBeacon(false);
@@ -434,11 +428,10 @@ public class Autonomous_Red extends Telemetry {
         if (move_state == 14)
         {
             //If 'timer_state' is 9
-            if (timer_state == 9)
+            if (timer_state == move_state - 1)
             {
                 //Reset all timers
-                TimerReset();
-                timer_state++;
+                NextTimer();
             }
             //If the timer is less than or equal to 2.3
             if (timer2 <= 2.3)
@@ -452,13 +445,14 @@ public class Autonomous_Red extends Telemetry {
             else if (timer2 > 2.3)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
             }
         }
         /***/
         UpdateTelemetry();
         telemetry.addData("11", "Timer: " + timer2);
-        telemetry.addData("12", "State: " + move_state);
+        telemetry.addData("12", "Timer State: " + timer_state);
+        telemetry.addData("13", "Move State: " + move_state);
         if (Color1 != null){
             //If there is more blue than red
             if (Color1.blue() > Color1.red()){
@@ -497,5 +491,6 @@ public class Autonomous_Red extends Telemetry {
         //Range Sensor & Optical Sensor
         telemetry.addLine("~Range Sensor~");
         telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
+        telemetry.addLine("Gyro: " + degree);
     }
 }

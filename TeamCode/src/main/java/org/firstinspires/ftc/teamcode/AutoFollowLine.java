@@ -54,7 +54,7 @@ public class AutoFollowLine extends Telemetry{
 //            }
             if(RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
             {
-                NextState();
+                NextState(1);
             }
             else
             {
@@ -101,7 +101,7 @@ public class AutoFollowLine extends Telemetry{
             if (red && !blue && move_state == 8 && Range1.getDistance(DistanceUnit.CM) <= 15)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
                 //Move the left beacon presser up and leave the right beacon presser down
                 MoveRightBeacon(false);
                 MoveLeftBeacon(true);
@@ -110,7 +110,7 @@ public class AutoFollowLine extends Telemetry{
             else if(blue && !red && move_state == 8 && Range1.getDistance(DistanceUnit.CM) <= 15)
             {
                 //Move to the next state
-                NextState();
+                NextState(1);
                 //Move the right beacon presser up and leave the left beacon presser down
                 MoveLeftBeacon(false);
                 MoveRightBeacon(true);
