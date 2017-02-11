@@ -27,8 +27,8 @@ public class Auto_Blue_test extends Telemetry{
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            double MiddlePosition = MiddleDrive.setTargetPosition(-3970);
-            while (MiddleDrive.getCurrentPosition() < MiddlePosition) {
+            int MiddlePosition = -3970;
+            while (MiddleDrive.getCurrentPosition() > MiddlePosition) {
                 MiddleDrive.setPower(-1);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             }
@@ -212,7 +212,7 @@ public class Auto_Blue_test extends Telemetry{
             if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
             {
                 //Move to the next state
-                NextState();
+                //NextState();
             }
             //If none of the line trackers have yet to sense white
             else
@@ -260,7 +260,7 @@ public class Auto_Blue_test extends Telemetry{
                 if (red && !blue)
                 {
                     //Move to the next state
-                    NextState();
+                    //NextState();
                     //Move the left beacon presser up and leave the right beacon presser down
                     MoveRightBeacon(false);
                     MoveLeftBeacon(true);
@@ -269,7 +269,7 @@ public class Auto_Blue_test extends Telemetry{
                 else if (blue && !red)
                 {
                     //Move to the next state
-                    NextState();
+                    //NextState();
                     //Move the right beacon presser up and leave the left beacon presser down
                     MoveLeftBeacon(false);
                     MoveRightBeacon(true);
@@ -313,7 +313,7 @@ public class Auto_Blue_test extends Telemetry{
             else if (timer2 > 2)
             {
                 //Move to the next state
-                NextState();
+                //NextState();
             }
         }
         //If the state is 10
@@ -339,7 +339,7 @@ public class Auto_Blue_test extends Telemetry{
             else if (timer2 > 1.2)
             {
                 //Move to the next state
-                NextState();
+                //NextState();
             }
         }
         //If the state is 11
@@ -405,7 +405,7 @@ public class Auto_Blue_test extends Telemetry{
             else if (FrontLine.getVoltage() < LineTrackerVoltage && timer2 > 0.5)
             {
                 //Move to the next state
-                NextState();
+                //NextState();
             }
         }
         //If the robot is in state 12
@@ -415,7 +415,7 @@ public class Auto_Blue_test extends Telemetry{
             if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
             {
                 //Move to the next state
-                NextState();
+                //NextState();
             }
             //If none of the line trackers have yet to detect white
             else
@@ -462,7 +462,7 @@ public class Auto_Blue_test extends Telemetry{
                 if (red && !blue)
                 {
                     //Move to the next state
-                    NextState();
+                    //NextState();
                     //Move the left beacon presser up and leave the right beacon presser down
                     MoveRightBeacon(false);
                     MoveLeftBeacon(true);
@@ -471,7 +471,7 @@ public class Auto_Blue_test extends Telemetry{
                 else if (blue && !red)
                 {
                     //Move to the next state
-                    NextState();
+                    //NextState();
                     //Move the right beacon presser up and leave the left beacon presser down
                     MoveLeftBeacon(false);
                     MoveRightBeacon(true);
@@ -514,7 +514,7 @@ public class Auto_Blue_test extends Telemetry{
             else if (timer2 > 2.3)
             {
                 //Move to the next state
-                NextState();
+                //NextState();
             }
         }
         if (move_state == 20)
