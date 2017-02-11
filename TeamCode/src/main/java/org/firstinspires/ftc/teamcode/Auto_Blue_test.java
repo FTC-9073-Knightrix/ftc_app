@@ -63,43 +63,55 @@ public class Auto_Blue_test extends Telemetry{
             }
             else if (timer2 > 3)
             {
-                MoveBallShooter(0);
+                MoveReleaseDrive(false); // Close Ballservo
+                MoveBallShooter(0);      // Stop shooter
+
                 //Move to the next state
-                ChangeState(20);
+                ChangeState(2);
             }
         }
 
-        //If the state is 2
+        //State 2 = Get closer to
         if (move_state == 2)
         {
-            //Wait 1 second for the ball to transition
-            if (timer2 <= 1)
-            {
-                // reset gyro sensor
-                //Calibrate
-                while (calibrated == false)
-                {
-                    if (calibrate == false)
-                    {
-                        Gyro1.calibrate();
-                        calibrate = true;
-                    }
-                    if (Gyro1.isCalibrating() == false)
-                    {
-                        calibrated = true;
-                    }
-                }
+            int MiddlePosition = -6000;
+            int ForwardPosition = -8000;
+            LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                //Refresh the timer
-                Timer2Reset();
+            while ((MiddleDrive.getCurrentPosition() > MiddlePosition) && (LeftDrive.getCurrentPosition() < ForwardPosition)) {
+                MiddleDrive.setPower(-1);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                MiddleDrive.setTargetPosition(MiddlePosition);
+
+                LeftDrive.setPower(.4);
+                RightDrive.setPower(.4);
+
+                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LeftDrive.setTargetPosition(ForwardPosition);
+                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                RightDrive.setTargetPosition(ForwardPosition);
+
             }
-            //If the timer is above 1 second
-            else if (timer2 > 1)
-            {
-                //Move to the next state
-                move_state++;
-            }
+//            while (LeftDrive.getCurrentPosition() > ForwardPosition) {
+//                LeftDrive.setPower(-.5);
+//                RightDrive.setPower(-.5);
+//
+//                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                LeftDrive.setTargetPosition(MiddlePosition);
+//                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                RightDrive.setTargetPosition(MiddlePosition);
+//            }
+            //Move to the next state
+            ChangeState(6.5);
+            LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
         }
+
         //If the state is 3
         if (move_state == 3)
         {
@@ -181,6 +193,9 @@ public class Auto_Blue_test extends Telemetry{
                 move_state = 6.5;
             }
         }
+
+
+
         //If the state is 6.5
         // Turn until Gyro is 160 < 180 > 200
         if (move_state == 6.5) {
@@ -525,6 +540,9 @@ public class Auto_Blue_test extends Telemetry{
         }
         if (move_state == 20)
         {
+            LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
             MoveRobot(0,0);
             MoveMiddleDrive(0);
         }
