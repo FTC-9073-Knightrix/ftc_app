@@ -358,18 +358,35 @@ public class Autonomous_Blue extends Telemetry{
         if (move_state == 11)
         {
             double WallDistance = Range1.getDistance(DistanceUnit.CM);
+            double MyGyro = Gyro1.getHeading();
+            double LeftPower = 0;
+            double RightPower = 0;
 
-            MoveRobot(0,0);
+
+            // Keep robot at 30 to 50 cm from wall
+
             if (WallDistance < 30) //we are close
             {
                 // Moves away from the wall
-                MoveRobot(.3,.3);
+                LeftPower = .3;
+                RightPower = .3;
             }
             else if (WallDistance > 50) //we are far away
             {
                 // Moves towards from the wall
-                MoveRobot(-.3,-.3);
+                LeftPower = -.3;
+                RightPower = -.3;
             }
+
+            // Keep robot in correct heading
+            if (MyGyro > 160 && MyGyro < 200) {
+                //Spin the robot halfway
+                MoveRobot(0, 0);
+                //Reset the timer that keeps up with changes in time
+            }
+            MoveRobot(LeftPower,RightPower);
+
+
             //If 'timer_state' is 8
             if (timer_state == 8)
             {
