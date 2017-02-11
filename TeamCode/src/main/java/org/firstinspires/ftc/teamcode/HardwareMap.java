@@ -62,7 +62,7 @@ public abstract class HardwareMap extends OpMode{
         //MiddleDrive
         MiddleDrive = hardwareMap.dcMotor.get("M1");
         MiddleDrive.setDirection(DcMotor.Direction.REVERSE);
-//
+// vijay 3
         //LeftDrive
         LeftDrive = hardwareMap.dcMotor.get("M2");
         LeftDrive.setDirection(DcMotor.Direction.REVERSE);
