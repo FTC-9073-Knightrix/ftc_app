@@ -79,7 +79,7 @@ public class Auto_Blue_test extends Telemetry{
         //State 2 = Get closer to
         if (move_state == 2)
         {
-            int MiddlePosition = -6000;
+            int MiddlePosition = -6500;
             int ForwardPosition = 3500;
 
             while ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition)) {
@@ -87,8 +87,8 @@ public class Auto_Blue_test extends Telemetry{
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
 
-                LeftDrive.setPower(.3);
-                RightDrive.setPower(.3);
+                LeftDrive.setPower(.6);
+                RightDrive.setPower(.6);
 
                 LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 LeftDrive.setTargetPosition(ForwardPosition);
@@ -236,7 +236,7 @@ public class Auto_Blue_test extends Telemetry{
                 MoveRobot(-0.5, -0.5);
             }
             //If it no longer applies
-            else if (timer2 > 10)
+            else if (timer2 > 1)
             {
                 //Move to the next state
                 ChangeState(11);
