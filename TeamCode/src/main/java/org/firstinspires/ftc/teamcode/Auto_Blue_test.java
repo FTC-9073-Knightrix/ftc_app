@@ -25,6 +25,7 @@ public class Auto_Blue_test extends Telemetry{
         {
             //LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             //RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             int MiddlePosition = -3970;
