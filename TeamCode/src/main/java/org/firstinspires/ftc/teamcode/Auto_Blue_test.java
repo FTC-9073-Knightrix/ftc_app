@@ -80,7 +80,7 @@ public class Auto_Blue_test extends Telemetry{
         if (move_state == 2)
         {
             int MiddlePosition = -6000;
-            int ForwardPosition = 12000;
+            int ForwardPosition = 3500;
 
             while ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition)) {
                 MiddleDrive.setPower(-1);
@@ -120,104 +120,16 @@ public class Auto_Blue_test extends Telemetry{
             ChangeState(6.5);
             LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         }
-
-        //If the state is 3
-        if (move_state == 3)
-        {
-            // If 'timer_state' is 3
-            if (timer_state == 3)
-            {
-                //Reset all timers
-                TimerReset();
-                timer_state++;
-            }
-            //If the timer is less than or equal to 1.3
-            if (timer2 <= 1.3)
-            {
-                //Close the release mechanism
-                MoveReleaseDrive(false);
-                //Shoot the ball
-                MoveBallShooter(0.5);
-                //Reset the timer that keeps track of time change
-                Timer2Reset();
-            }
-            //If it no longer applies
-            else if (timer2 > 1.3)
-            {
-                //Move to the next state
-                ChangeState(4);
-//                NextState();
-            }
-        }
-        //If the state is 4
-        if (move_state == 4)
-        {
-            // If 'timer_state' is 4
-            if (timer_state == 4)
-            {
-                //Reset all timers
-                TimerReset();
-                timer_state = 5;
-            }
-            //If the timer is less than or equal to 0.95 seconds
-            if (timer2 <= 0.95)
-            {
-                //Move the middle wheel by -0.7
-                MoveMiddleDrive(-.7);
-                //Reset the timer that keeps track of time change
-                Timer2Reset();
-            }
-            //If it no longer applies
-            else if (timer2 > 0.95)
-            {
-                //Move to the next state
-                move_state = 5;
-                //Stop the middle wheel
-                MoveMiddleDrive(0);
-            }
-        }
-        //If the state is 5
-        if (move_state == 5)
-        {
-            // If 'timer_state' is 5
-            if (timer_state == 5)
-            {
-                //Reset all timers
-                TimerReset();
-                timer_state = 5.5;
-            }
-            //If the timer is less than or equal to 2.9
-            if (timer2 <= 2.9)
-            {
-                //Move the robot at 0.8
-                MoveRobot(0.8, 0.8);
-                //Reset the timer that keeps track of change in time
-                Timer2Reset();
-            }
-            //If it no longer applies
-            else if (timer2 > 2.9)
-            {
-                //Move to the next state
-                MoveRobot(0, 0);
-                move_state = 6.5;
-            }
-        }
-
 
 
         //If the state is 6.5
         // Turn until Gyro is 160 < 180 > 200
         if (move_state == 6.5) {
-            //If the timer state is in 5.5
-            if (timer_state == 5.5) {
-                //Reset all timers
-                TimerReset();
-                //Set timer state to 6
-                timer_state = 6;
-            }
+
             double MyGyro = Gyro1.getHeading();
             MoveRobot(0.7, -0.7);
             //If the timer is less than or equal to 1.4
@@ -235,7 +147,7 @@ public class Auto_Blue_test extends Telemetry{
             if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
             {
                 //Move to the next state
-                //NextState();
+                ChangeState(8);
             }
             //If none of the line trackers have yet to sense white
             else
@@ -317,28 +229,20 @@ public class Auto_Blue_test extends Telemetry{
         // Color is found, move forward to push beacon for TIME
         if (move_state == 9)
         {
-            //If 'timer_state' is 6
-            if (timer_state == 6)
-            {
-                //Reset all timers
-                TimerReset();
-                timer_state++;
-            }
             //If the timer is less than or equal to 2
-            if (timer2 <= 2)
+            if (timer2 <= 1)
             {
                 //Move the robot at -0.5 on both wheels
                 MoveRobot(-0.5, -0.5);
-                //Reset the timer that keeps up with change in time
-                Timer2Reset();
             }
             //If it no longer applies
-            else if (timer2 > 2)
+            else if (timer2 > 10)
             {
                 //Move to the next state
-                //NextState();
+                ChangeState(11);
             }
         }
+
         //If the state is 10
         // Move away from the wall for TIME
         if (move_state == 10)
