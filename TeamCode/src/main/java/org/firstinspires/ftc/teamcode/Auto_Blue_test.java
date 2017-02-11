@@ -82,21 +82,24 @@ public class Auto_Blue_test extends Telemetry{
             int MiddlePosition = -6500;
             int ForwardPosition = 3500;
 
-            while ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition)) {
-                MiddleDrive.setPower(-1);
-                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                MiddleDrive.setTargetPosition(MiddlePosition);
+            if (timer2 < 2)
+            {
+                if ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition))
+                {
+                    MiddleDrive.setPower(-1);
+                    MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    MiddleDrive.setTargetPosition(MiddlePosition);
 
-                LeftDrive.setPower(.6);
-                RightDrive.setPower(.6);
+                    LeftDrive.setPower(.3);
+                    RightDrive.setPower(.3);
 
-                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LeftDrive.setTargetPosition(ForwardPosition);
-                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                RightDrive.setTargetPosition(ForwardPosition);
+                    LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    LeftDrive.setTargetPosition(ForwardPosition);
+                    RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    RightDrive.setTargetPosition(ForwardPosition);
 
+                }
             }
-
 //            // This section works!!
 //            ForwardPosition = 4000;
 //            LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -116,12 +119,15 @@ public class Auto_Blue_test extends Telemetry{
 //
 //            }
 
-            //Move to the next state
-            ChangeState(6.5);
-            LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                //Move to the next state
+            else if (timer2 > 2)
+            {
+                LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                ChangeState(6.5);
 
+            }
 
         }
 
@@ -129,6 +135,10 @@ public class Auto_Blue_test extends Telemetry{
         //If the state is 6.5
         // Turn until Gyro is 160 < 180 > 200
         if (move_state == 6.5) {
+
+            LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
             double MyGyro = Gyro1.getHeading();
             MoveRobot(0.7, -0.7);
