@@ -87,20 +87,20 @@ public class Autonomous_Blue extends Telemetry{
             //Wait 1 second for the ball to transition
             if (timer2 <= 1)
             {
-                // reset gyro sensor
-                //Calibrate
-                while (calibrated == false)
-                {
-                    if (calibrate == false)
-                    {
-                        Gyro1.calibrate();
-                        calibrate = true;
-                    }
-                    if (Gyro1.isCalibrating() == false)
-                    {
-                        calibrated = true;
-                    }
-                }
+//                // reset gyro sensor
+//                //Calibrate
+//                while (calibrated == false)
+//                {
+//                    if (calibrate == false)
+//                    {
+//                        Gyro1.calibrate();
+//                        calibrate = true;
+//                    }
+//                    if (Gyro1.isCalibrating() == false)
+//                    {
+//                        calibrated = true;
+//                    }
+//                }
 
                 //Refresh the timer
                 Timer2Reset();
