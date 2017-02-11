@@ -278,11 +278,9 @@ public class Auto_Blue_test extends Telemetry{
             double WallDistance = Range1.getDistance(DistanceUnit.CM);
             double MyGyro = Gyro1.getHeading();
             double LeftPower = 0;
-            double RightPower = 0;
+            double RightPower =0;
 
-
-            // Keep robot at 30 to 50 cm from wall
-
+            // Keep robot at 30 - 50 cm from wall
             if (WallDistance < 30) //we are close
             {
                 // Moves away from the wall
@@ -295,12 +293,17 @@ public class Auto_Blue_test extends Telemetry{
                 LeftPower = -.3;
                 RightPower = -.3;
             }
-
-            // Keep robot in correct heading
-            if (MyGyro > 160 && MyGyro < 200) {
+            if (MyGyro > 180) {
                 //Spin the robot halfway
-                MoveRobot(0, 0);
+                LeftPower = LeftPower - .075;
+                RightPower = RightPower + .075;
                 //Reset the timer that keeps up with changes in time
+            }
+            else if (MyGyro <= 180)
+            {
+                LeftPower = LeftPower + .075;
+                RightPower = RightPower - .075;
+
             }
             MoveRobot(LeftPower,RightPower);
 
@@ -313,15 +316,7 @@ public class Auto_Blue_test extends Telemetry{
                 timer_state++;
             }
             //If the front line tracker detects black
-            if (FrontLine.getVoltage() >= LineTrackerVoltage)
-            {
-                //Reset the timer that keeps track of the change in time
-                Timer2Reset();
-                //Move the middle motor by 32
-                MoveMiddleDrive(0.32);
-            }
-            //If the timer is less than or equal to half a second
-            else if (timer2 <= 0.5)
+            if ((FrontLine.getVoltage() >= LineTrackerVoltage || LeftLine.getVoltage() >= LineTrackerVoltage || RightLine.getVoltage() >= LineTrackerVoltage) && timer2 <= 0.5)
             {
                 //Reset the timer that keeps track of the change in time
                 Timer2Reset();
@@ -329,10 +324,11 @@ public class Auto_Blue_test extends Telemetry{
                 MoveMiddleDrive(0.32);
             }
             //If neither apply
-            else if (FrontLine.getVoltage() < LineTrackerVoltage && timer2 > 0.5)
+            else if ((FrontLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || RightLine.getVoltage() < LineTrackerVoltage) && timer2 > 0.5)
             {
                 //Move to the next state
                 //NextState();
+                ChangeState(12);
             }
         }
         //If the robot is in state 12
