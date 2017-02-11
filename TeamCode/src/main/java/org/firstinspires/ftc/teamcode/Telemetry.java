@@ -16,7 +16,9 @@ public abstract class Telemetry extends HardwareMap{
         //Middle Wheel
         telemetry.addLine("~Middle Motor~");
         telemetry.addLine("Speed: " + (MiddleDrive.getPower() * 100) + "%");
-        telemetry.addLine("Encoder Position: " + MiddleDrive.getCurrentPosition());
+        telemetry.addLine("Encoder Middle: " + MiddleDrive.getCurrentPosition());
+        telemetry.addLine("Encoder Left: " + LeftDrive.getCurrentPosition());
+        telemetry.addLine("Encoder Right: " + RightDrive.getCurrentPosition());
         //Left Wheel
         telemetry.addLine("~Left Motor~");
         telemetry.addLine("Speed: " + (LeftDrive.getPower() * 100) + "%");

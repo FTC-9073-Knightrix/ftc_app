@@ -27,6 +27,11 @@ public class Auto_Blue_test extends Telemetry{
             //RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
             int MiddlePosition = -3970;
             while (MiddleDrive.getCurrentPosition() > MiddlePosition) {
@@ -76,10 +81,6 @@ public class Auto_Blue_test extends Telemetry{
         {
             int MiddlePosition = -6000;
             int ForwardPosition = 12000;
-            LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             while ((MiddleDrive.getCurrentPosition() > MiddlePosition) && (LeftDrive.getCurrentPosition() < ForwardPosition)) {
                 MiddleDrive.setPower(-1);
