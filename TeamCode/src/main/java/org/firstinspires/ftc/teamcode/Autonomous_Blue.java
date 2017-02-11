@@ -47,19 +47,13 @@ public class Autonomous_Blue extends Telemetry{
             else if (timer2 > 1.5)
             {
                 //Move to the next state (NextState = 1)
-                NextState();
+//                NextState();
+                ChangeState(1);
             }
         }
         //If the state is 1
         if (move_state == 1)
         {
-            // If timer_state is 1
-            if (timer_state == 1)
-            {
-                //Rest all timers
-                TimerReset();
-                timer_state++;
-            }
             //If timer is less than 1.35
             if (timer2 <= 1.35)
             {
@@ -72,7 +66,8 @@ public class Autonomous_Blue extends Telemetry{
             else if (timer2 > 1.35)
             {
                 //Move to the next state
-                NextState();
+                ChangeState(2);
+  //              NextState();
                 //Open the release mechanism
                 MoveReleaseDrive(true);
             }
@@ -80,13 +75,6 @@ public class Autonomous_Blue extends Telemetry{
         //If the state is 2
         if (move_state == 2)
         {
-            // If 'timer_state' is 2
-            if (timer_state == 2)
-            {
-                //Reset all timers
-                TimerReset();
-                timer_state++;
-            }
             //Wait 1 second for the ball to transition
             if (timer2 <= 1)
             {
@@ -368,13 +356,18 @@ public class Autonomous_Blue extends Telemetry{
 
         if (move_state == 11)
         {
-            if (Range1.getDistance(DistanceUnit.CM) < 16)
+            double WallDistance = Range1.getDistance(DistanceUnit.CM);
+
+            MoveRobot(0,0);
+            if (WallDistance < 30) //we are close
             {
-                MoveRobot(-.3,-.3);
-            }
-            else
-            {
+                // Moves away from the wall
                 MoveRobot(.3,.3);
+            }
+            else if (WallDistance > 50) //we are far away
+            {
+                // Moves towards from the wall
+                MoveRobot(-.3,-.3);
             }
             //If 'timer_state' is 8
             if (timer_state == 8)

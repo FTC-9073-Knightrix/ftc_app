@@ -237,6 +237,17 @@ public abstract class HardwareMap extends OpMode{
         timer1 = getRuntime();
         timer2 = getRuntime() - timer1;
     }
+    void ChangeState(double state){
+        move_state = state;
+        timer1 = getRuntime();
+        timer2 = getRuntime() - timer1;
+        timer_state = state;
+        //Stop the robot
+        MoveRobot(0,0);
+        MoveMiddleDrive(0);
+        MoveBallShooter(0);
+    }
+
     void Timer2Reset(){
         timer2 = getRuntime() - timer1;
     }
