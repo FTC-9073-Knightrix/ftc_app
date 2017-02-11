@@ -239,7 +239,7 @@ public class Auto_Blue_test extends Telemetry{
             else if (timer2 > 1)
             {
                 //Move to the next state
-                ChangeState(11);
+                ChangeState(10);
             }
         }
 
@@ -247,32 +247,23 @@ public class Auto_Blue_test extends Telemetry{
         // Move away from the wall for TIME
         if (move_state == 10)
         {
-            //If 'timer_state' is 7
-            if (timer_state == 7)
-            {
-                //Reset all timers
-                TimerReset();
-                timer_state++;
-            }
             //If the timer is less than or equal to 1.2
             if (timer2 <= 0.8)
             {
                 //Move the robot at 0.8 on both wheels
-                MoveRobot(0.8, 0.8);
-                //Reset the timer that keeps up with change in time
-                Timer2Reset();
+                MoveRobot(1, 1);
             }
             //If it no longer applies
             else if (timer2 > 1.2)
             {
                 //Move to the next state
-                //NextState();
+                ChangeState(11);
             }
         }
+
+
         //If the state is 11
         // Move left to next beacon
-
-
         if (move_state == 11)
         {
             double WallDistance = Range1.getDistance(DistanceUnit.CM);
@@ -307,19 +298,9 @@ public class Auto_Blue_test extends Telemetry{
             }
             MoveRobot(LeftPower,RightPower);
 
-
-            //If 'timer_state' is 8
-            if (timer_state == 8)
-            {
-                //Reset all timers
-                TimerReset();
-                timer_state++;
-            }
             //If the front line tracker detects black
             if ((FrontLine.getVoltage() >= LineTrackerVoltage || LeftLine.getVoltage() >= LineTrackerVoltage || RightLine.getVoltage() >= LineTrackerVoltage) && timer2 <= 0.5)
             {
-                //Reset the timer that keeps track of the change in time
-                Timer2Reset();
                 //Move the middle motor by 32
                 MoveMiddleDrive(0.32);
             }
@@ -331,6 +312,7 @@ public class Auto_Blue_test extends Telemetry{
                 ChangeState(12);
             }
         }
+
         //If the robot is in state 12
         if (move_state == 12)
         {
