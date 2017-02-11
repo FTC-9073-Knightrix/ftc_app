@@ -90,6 +90,21 @@ public class Autonomous_Blue extends Telemetry{
             //Wait 1 second for the ball to transition
             if (timer2 <= 1)
             {
+                // reset gyro sensor
+                //Calibrate
+                while (calibrated == false)
+                {
+                    if (calibrate == false)
+                    {
+                        Gyro1.calibrate();
+                        calibrate = true;
+                    }
+                    if (Gyro1.isCalibrating() == false)
+                    {
+                        calibrated = true;
+                    }
+                }
+
                 //Refresh the timer
                 Timer2Reset();
             }
@@ -181,34 +196,36 @@ public class Autonomous_Blue extends Telemetry{
             }
         }
         //If the state is 6.5
-        if (move_state == 6.5)
-        {
+        // Turn until Gyro is 160 < 180 > 200
+        if (move_state == 6.5) {
             //If the timer state is in 5.5
-            if (timer_state == 5.5)
-            {
+            if (timer_state == 5.5) {
                 //Reset all timers
                 TimerReset();
                 //Set timer state to 6
                 timer_state = 6;
             }
+            double MyGyro = Gyro1.getHeading();
+            MoveRobot(0.7, -0.7);
             //If the timer is less than or equal to 1.4
-            if (timer2 <= 1.4)
-            {
+            if (MyGyro > 160 && MyGyro < 200) {
                 //Spin the robot halfway
-                MoveRobot(1, -1);
+                MoveRobot(0, 0);
                 //Reset the timer that keeps up with changes in time
                 Timer2Reset();
+                move_state = 7;
             }
             //If it no longer applies
-            else if (timer2 > 1.4)
-            {
-                //Move to the next state
-                move_state = 7;
-                //Stop the motors
-                MoveRobot(0, 0);
-            }
+//            else if (Gyro1.getHeading() >= 180)
+//            {
+//                //Move to the next state
+//                move_state = 7;
+//                //Stop the motors
+//                MoveRobot(0, 0);
+//            }
         }
         //If the state is 7
+        // Go Left until finding white line
         if (move_state == 7)
         {
             //If at least one line tracker detects white
@@ -225,6 +242,7 @@ public class Autonomous_Blue extends Telemetry{
             }
         }
         //If the state is 8
+        // Once line is found, go forward and lift color beacon pressor
         if (move_state == 8)
         {
             //The right and left line trackers detect white
@@ -293,6 +311,7 @@ public class Autonomous_Blue extends Telemetry{
             }
         }
         //If the state is 9
+        // Color is found, move forward to push beacon for TIME
         if (move_state == 9)
         {
             //If 'timer_state' is 6
@@ -318,6 +337,7 @@ public class Autonomous_Blue extends Telemetry{
             }
         }
         //If the state is 10
+        // Move away from the wall for TIME
         if (move_state == 10)
         {
             //If 'timer_state' is 7
@@ -328,7 +348,7 @@ public class Autonomous_Blue extends Telemetry{
                 timer_state++;
             }
             //If the timer is less than or equal to 1.2
-            if (timer2 <= 1.2)
+            if (timer2 <= 0.8)
             {
                 //Move the robot at 0.8 on both wheels
                 MoveRobot(0.8, 0.8);
@@ -343,8 +363,19 @@ public class Autonomous_Blue extends Telemetry{
             }
         }
         //If the state is 11
+        // Move left to next beacon
+
+
         if (move_state == 11)
         {
+            if (Range1.getDistance(DistanceUnit.CM) < 16)
+            {
+                MoveRobot(-.3,-.3);
+            }
+            else
+            {
+                MoveRobot(.3,.3);
+            }
             //If 'timer_state' is 8
             if (timer_state == 8)
             {
@@ -524,7 +555,12 @@ public class Autonomous_Blue extends Telemetry{
 
         }
         //Range Sensor & Optical Sensor
+        degree = Gyro1.getHeading();
         telemetry.addLine("~Range Sensor~");
         telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
+        telemetry.addLine("Gyro: " + degree);
+        telemetry.addLine("X"+ Gyro1.rawX());
+        telemetry.addLine("X"+ Gyro1.rawY());
+        telemetry.addLine("X"+ Gyro1.rawZ());
     }
 }
