@@ -82,7 +82,7 @@ public class Auto_Blue_test extends Telemetry{
             int MiddlePosition = -6000;
             int ForwardPosition = 12000;
 
-            while ((MiddleDrive.getCurrentPosition() > MiddlePosition) && (LeftDrive.getCurrentPosition() < ForwardPosition)) {
+            while ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition)) {
                 MiddleDrive.setPower(-1);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
