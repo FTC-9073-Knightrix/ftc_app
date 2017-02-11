@@ -110,7 +110,7 @@ public class Auto_Blue_test extends Telemetry{
                 LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 LeftDrive.setTargetPosition(ForwardPosition);
                 RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                RightDrive.setTargetPosition(-ForwardPosition);
+                RightDrive.setTargetPosition(ForwardPosition);
 
             }
 //            ForwardPosition = 4000;
