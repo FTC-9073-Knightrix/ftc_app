@@ -224,18 +224,8 @@ public class Auto_Blue_test extends Telemetry{
             if (MyGyro > 160 && MyGyro < 200) {
                 //Spin the robot halfway
                 MoveRobot(0, 0);
-                //Reset the timer that keeps up with changes in time
-                Timer2Reset();
-                move_state = 7;
+                ChangeState(7);
             }
-            //If it no longer applies
-//            else if (Gyro1.getHeading() >= 180)
-//            {
-//                //Move to the next state
-//                move_state = 7;
-//                //Stop the motors
-//                MoveRobot(0, 0);
-//            }
         }
         //If the state is 7
         // Go Left until finding white line
@@ -293,7 +283,7 @@ public class Auto_Blue_test extends Telemetry{
                 if (red && !blue)
                 {
                     //Move to the next state
-                    //NextState();
+                    ChangeState(9);
                     //Move the left beacon presser up and leave the right beacon presser down
                     MoveRightBeacon(false);
                     MoveLeftBeacon(true);
@@ -302,7 +292,7 @@ public class Auto_Blue_test extends Telemetry{
                 else if (blue && !red)
                 {
                     //Move to the next state
-                    //NextState();
+                    ChangeState(9);
                     //Move the right beacon presser up and leave the left beacon presser down
                     MoveLeftBeacon(false);
                     MoveRightBeacon(true);
