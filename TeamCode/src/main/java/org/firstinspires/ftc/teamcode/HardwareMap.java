@@ -47,7 +47,7 @@ public abstract class HardwareMap extends OpMode{
     public boolean benny = false;
     public static final double LineTrackerVoltage = 2.8;
     public double move_state = 0;
-    public double timer_state = 0;
+    public double timer_state = -1;
     public double timer1 = getRuntime();
     public double timer2 = getRuntime() - timer1;
     public boolean left = false;
@@ -309,13 +309,18 @@ public abstract class HardwareMap extends OpMode{
             MoveMiddleDrive(0);
         }
     }
-    void NextState()
+    void NextState(double state)
     {
         //Stop the robot
         MoveRobot(0,0);
         MoveMiddleDrive(0);
         MoveBallShooter(0);
         //Move to the next state
-        move_state++;
+        move_state = move_state + state;
+    }
+    void NextTimer()
+    {
+        timer_state = move_state;
+        TimerReset();
     }
 }
