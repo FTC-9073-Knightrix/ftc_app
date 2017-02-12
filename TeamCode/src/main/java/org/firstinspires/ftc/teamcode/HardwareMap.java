@@ -55,6 +55,7 @@ public abstract class HardwareMap extends OpMode{
     public int degree = 0;
     public boolean calibrated = false;
     public boolean calibrate = false;
+    public int BeaconNum = 1;
 
 
     @Override

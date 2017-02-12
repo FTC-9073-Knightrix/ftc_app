@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Autonomous(name = "Auto Blue Test", group = "Autonomous")
 
 /**
- * Created by ibravo on 2/11/17.
+ * Created by Nicolas Bravo on 2/11/17.
  */
 public class Auto_Blue_test extends Telemetry{
     //Start
@@ -23,8 +23,10 @@ public class Auto_Blue_test extends Telemetry{
         // State 0 = Move robot closer to center vortex
         if (move_state == 0)
         {
-            //LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            //RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            // Reset variables
+            int MiddlePosition = 0;     // Encoder middle wheel
+
+            // Reset Left, Right and Middle wheels to run with encoders
             MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -32,57 +34,49 @@ public class Auto_Blue_test extends Telemetry{
             RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-
-            int MiddlePosition = -3970;
+            MiddlePosition = -3970;
             while (MiddleDrive.getCurrentPosition() > MiddlePosition) {
                 MiddleDrive.setPower(-1);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
             }
-
-            //If the timer is less that 1.5
-            //If it does not apply
                 ChangeState(1);
         }
 
         //State 1 = Shoot the ball twice
         if (move_state == 1)
         {
-            //If timer is less than 1.35
+            // Shoot the ball for the first 1.35 seconds
             if (timer2 <= 1.35)
             {
-                //Shoot the ball
-                MoveBallShooter(0.5);
+                MoveBallShooter(0.5);       // Shot first ball
             }
-            //If it no longer applies
+            // From 1.35 to 2, open the release mechanism
             else if (timer2 > 1.35 && timer2 < 2)
             {
-                //Open the release mechanism
-                MoveBallShooter(0);
-                MoveReleaseDrive(true);
+                MoveBallShooter(0);         //Stop the shooter
+                MoveReleaseDrive(true);     //Open the release mechanism
             }
             else if (timer2 > 2 && timer2 < 3)
             {
-               // shoot second ball
-               MoveBallShooter(0.5);
+               MoveBallShooter(0.5);          // shoot second ball for 1 second
             }
             else if (timer2 > 3)
             {
-                MoveReleaseDrive(false); // Close Ballservo
-                MoveBallShooter(0);      // Stop shooter
-
+                MoveReleaseDrive(false);    // Close Ball Servo
+                MoveBallShooter(0);         // Stop shooter
                 //Move to the next state
                 ChangeState(2);
             }
         }
 
-        //State 2 = Get closer to
+        //State 2 = Get closer to line for first beacon
         if (move_state == 2)
         {
             int MiddlePosition = -6500;
             int ForwardPosition = 3500;
 
-            if (timer2 < 2)
+            if (timer2 < 3)
             {
                 if ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition))
                 {
@@ -100,131 +94,105 @@ public class Auto_Blue_test extends Telemetry{
 
                 }
             }
-//            // This section works!!
-//            ForwardPosition = 4000;
-//            LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//            LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//
-//            while  (LeftDrive.getCurrentPosition() < ForwardPosition)) {
-//
-//                LeftDrive.setPower(.4);
-//                RightDrive.setPower(.4);
-//
-//                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                LeftDrive.setTargetPosition(ForwardPosition);
-//                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                RightDrive.setTargetPosition(ForwardPosition);
-//
-//            }
-
-                //Move to the next state
-            else if (timer2 > 2)
+            else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
             {
                 LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 ChangeState(6.5);
-
             }
-
         }
 
-
-        //If the state is 6.5
         // Turn until Gyro is 160 < 180 > 200
         if (move_state == 6.5) {
 
-            LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//            LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//            RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//            MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-            double MyGyro = Gyro1.getHeading();
-            MoveRobot(0.7, -0.7);
-            //If the timer is less than or equal to 1.4
-            if (MyGyro > 160 && MyGyro < 200) {
-                //Spin the robot halfway
+            double MyGyro = Gyro1.getHeading();     // Store Gyro Position
+            MoveRobot(0.7, -0.7);                   // Move Robot
+            if (MyGyro > 160 && MyGyro < 200)       // Stop robot when reaching position
+            {
                 MoveRobot(0, 0);
                 ChangeState(7);
             }
         }
-        //If the state is 7
+
         // Go Left until finding white line
         if (move_state == 7)
         {
-            //If at least one line tracker detects white
+            //If at least one line tracker detects white, we reached the line and go to next stage
             if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
             {
                 //Move to the next state
                 ChangeState(8);
             }
-            //If none of the line trackers have yet to sense white
+            //If none of the line trackers have yet to sense white, keep moving left
             else
             {
-                //Move the middle wheel 0.25
                 MoveMiddleDrive(0.25);
             }
         }
-        //If the state is 8
-        // Once line is found, go forward and lift color beacon pressor
+
+        // Follow the line forward and lower color beacon arm when reaching distance
         if (move_state == 8)
         {
-            //The right and left line trackers detect white
+
+            ///////// FOLLOW THE LINE CODE
+            // The right and left line trackers detect white -> Go Forward
             if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
             {
-                //Move the robot forwards by -0.65
                 MoveRobot(-0.65, -0.65);
             }
-            //If it does not apply
             else
             {
-                //If both the right and left line trackers detect black
+                // The right and left line trackers detect black -> Go Forward
                 if (RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
                 {
-                    //Move the robot forwards by -0.65
                     MoveRobot(-0.65, -0.65);
                 }
-                //Else if only the right line tracker is black
+                // Else if only the right line tracker is black -> Turn one side
                 else if (RightLine.getVoltage() >= LineTrackerVoltage)
                 {
-                    //Move the robot slightly to one side
                     MoveRobot(-0.2, -0.65);
                 }
-                //Else if only the left line tracker is black
+                // Else if only the left line tracker is black -> Turn the other side
                 else if (LeftLine.getVoltage() >= LineTrackerVoltage)
                 {
-                    //Move the robot slightly to one side
                     MoveRobot(-0.65, -0.2);
                 }
             }
-            //If the robot is less than 16 cm from the wall
+            ///////// END FOLLOW THE LINE CODE
+
+
+            // If the robot is less than 16 cm from the wall, detect color and lower ARM Servo
             if (Range1.getDistance(DistanceUnit.CM) < 16)
             {
-                //If the beacon is red
+                // If the beacon is RED
                 if (red && !blue)
                 {
+                    //Move the left beacon presser up and leave the right beacon presser down
+                    MoveRightBeacon(false);     // Right DOWN
+                    MoveLeftBeacon(true);       // Left UP
                     //Move to the next state
                     ChangeState(9);
-                    //Move the left beacon presser up and leave the right beacon presser down
-                    MoveRightBeacon(false);
-                    MoveLeftBeacon(true);
                 }
-                //If the beacon is blue
+                // If the beacon is BLUE
                 else if (blue && !red)
                 {
+                    //Move the right beacon presser up and leave the left beacon presser down
+                    MoveRightBeacon(true);      // Right UP
+                    MoveLeftBeacon(false);      // Left DOWN
                     //Move to the next state
                     ChangeState(9);
-                    //Move the right beacon presser up and leave the left beacon presser down
-                    MoveLeftBeacon(false);
-                    MoveRightBeacon(true);
                 }
-                //If neither or both colors are detected
+                // If neither or both colors are detected
                 else if ((!blue && !red) || (red && blue))
                 {
                     //Leave both of the beacon pressers up
-                    MoveLeftBeacon(true);
-                    MoveRightBeacon(true);
+                    MoveLeftBeacon(true);       // Right UP
+                    MoveRightBeacon(true);      // Left DOWN
                 }
             }
             //If the robot is greater than 16 cm from the wall
@@ -235,36 +203,37 @@ public class Auto_Blue_test extends Telemetry{
                 MoveRightBeacon(true);
             }
         }
-        //If the state is 9
+
         // Color is found, move forward to push beacon for TIME
         if (move_state == 9)
         {
-            //If the timer is less than or equal to 2
+            //If the timer is less than or equal to 1 -> Move Forwards
             if (timer2 <= 1)
             {
-                //Move the robot at -0.5 on both wheels
-                MoveRobot(-0.5, -0.5);
+                MoveRobot(-0.5, -0.5);      // Move Forwards
             }
-            //If it no longer applies
+            // After 1 second, move to next state
             else if (timer2 > 1)
             {
-                //Move to the next state
-                ChangeState(10);
+                if (BeaconNum == 1) {
+                    BeaconNum = 2;
+                    ChangeState(10);
+                } else {
+                    ChangeState(13);
+                }
             }
         }
 
-        //If the state is 10
         // Move away from the wall for TIME
         if (move_state == 10)
         {
-            //If the timer is less than or equal to 1.2
-            if (timer2 <= 0.8)
+            // Move Away from the wall for 1 seconds
+            if (timer2 <= 1)
             {
-                //Move the robot at 0.8 on both wheels
                 MoveRobot(1, 1);
             }
-            //If it no longer applies
-            else if (timer2 > 1.2)
+            // After 1 second, jump to next state
+            else if (timer2 > 1)
             {
                 //Move to the next state
                 ChangeState(11);
@@ -272,17 +241,22 @@ public class Auto_Blue_test extends Telemetry{
         }
 
 
-        //If the state is 11
-        // Move left to next beacon
+        // Move left to the next beacon adjusting for:
+        //      a. Distance to the wall
+        //      b. Heading from gyro sensor
+        //
+
         if (move_state == 11)
         {
+
+            // #########   Keep robot parallel to the wall ##########
             double WallDistance = Range1.getDistance(DistanceUnit.CM);
             double MyGyro = Gyro1.getHeading();
             double LeftPower = 0;
             double RightPower =0;
 
-            // Keep robot at 30 - 50 cm from wall
-            if (WallDistance < 30) //we are close
+            // (A) Keep robot at 30 - 50 cm from wall
+            if (WallDistance < 30)      //we are close
             {
                 // Moves away from the wall
                 LeftPower = .3;
@@ -294,148 +268,97 @@ public class Auto_Blue_test extends Telemetry{
                 LeftPower = -.3;
                 RightPower = -.3;
             }
+
+            // (B) Alight the Gyro to 180 degrees
             if (MyGyro > 180) {
-                //Spin the robot halfway
+                //  Spin the robot in one direction
                 LeftPower = LeftPower - .075;
                 RightPower = RightPower + .075;
-                //Reset the timer that keeps up with changes in time
             }
-            else if (MyGyro <= 180)
-            {
+            else if (MyGyro <= 180) {
+                //  Spin the robot in the other direction
                 LeftPower = LeftPower + .075;
                 RightPower = RightPower - .075;
 
             }
+            // (A) + (B) Values to move the left+right wheels to keep robot parallel to the wall
             MoveRobot(LeftPower,RightPower);
+            // #########   End Keep robot parallel to the wall ##########
 
-            //If the front line tracker detects black
-            if ((FrontLine.getVoltage() >= LineTrackerVoltage || LeftLine.getVoltage() >= LineTrackerVoltage || RightLine.getVoltage() >= LineTrackerVoltage) && timer2 <= 0.5)
+
+            // #########   Move the robot left until reaching white line   ###########
+            if (timer2 < 3)           // Go faster during the first 3 seconds
             {
-                //Move the middle motor by 32
-                MoveMiddleDrive(0.32);
+                MoveMiddleDrive(1);
             }
-            //If neither apply
-            else if ((FrontLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || RightLine.getVoltage() < LineTrackerVoltage) && timer2 > 0.5)
+            else                    // After 3 seconds, start searching for the line
             {
-                //Move to the next state
-                //NextState();
-                ChangeState(12);
+                // If at least one line tracker detects white, we reached the line and go to next stage
+                if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage) {
+                    //Move to the next state
+                    ChangeState(8);
+                }
+                //If none of the line trackers have yet to sense white, keep moving left
+                else
+                {
+                    MoveMiddleDrive(0.25);
+                }
             }
         }
 
-        //If the robot is in state 12
-        if (move_state == 12)
-        {
-            //If any of the line trackers detect white
-            if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
-            {
-                //Move to the next state
-                //NextState();
-            }
-            //If none of the line trackers have yet to detect white
-            else
-            {
-                //Move the middle wheel by 0.25
-                MoveMiddleDrive(0.25);
-            }
-        }
-        //If the state is 13
+
+        // Park Robot in center vortex, removing cap ball
         if (move_state == 13)
         {
-            //If the right and left line trackers both detect white
-            if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
+            // Reset Left, Right and Middle wheels to run with encoders
+            MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            // Select coordinates for center vortex parking
+            int MiddlePosition = -6500;
+            int ForwardPosition = 3500;
+
+            if (timer2 < 3)
             {
-                //Move the robot forwards by -0.65
-                MoveRobot(-0.65, -0.65);
-            }
-            //If either the right or left line tracker detects black
-            else
-            {
-                //If both the right and left line trackers detect black
-                if (RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
+                if ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition))
                 {
-                    //Move the robot forwards by -0.65
-                    MoveRobot(-0.65, -0.65);
-                }
-                //Else if only the right line tracker detects black
-                else if (RightLine.getVoltage() >= LineTrackerVoltage)
-                {
-                    //Move the robot slightly to one side
-                    MoveRobot(-0.2, -0.65);
-                }
-                //Else if only the left line tracker detects black
-                else if (LeftLine.getVoltage() >= LineTrackerVoltage)
-                {
-                    //Move the robot slightly to one side
-                    MoveRobot(-0.65, -0.2);
-                }
-            }
-            //If the robot is less than 16 cm from the wall
-            if (Range1.getDistance(DistanceUnit.CM) < 16)
-            {
-                //If the beacon is red
-                if (red && !blue)
-                {
-                    //Move to the next state
-                    //NextState();
-                    //Move the left beacon presser up and leave the right beacon presser down
-                    MoveRightBeacon(false);
-                    MoveLeftBeacon(true);
-                }
-                //If the beacon is blue
-                else if (blue && !red)
-                {
-                    //Move to the next state
-                    //NextState();
-                    //Move the right beacon presser up and leave the left beacon presser down
-                    MoveLeftBeacon(false);
-                    MoveRightBeacon(true);
-                }
-                //If the color sensor detects no color or both colors
-                else if ((!blue && !red) || (red && blue))
-                {
-                    //Leave both of the beacon pressers up
-                    MoveLeftBeacon(true);
-                    MoveRightBeacon(true);
+                    MiddleDrive.setPower(-1);
+                    MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    MiddleDrive.setTargetPosition(MiddlePosition);
+
+                    LeftDrive.setPower(.4);
+                    RightDrive.setPower(.4);
+
+                    LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    LeftDrive.setTargetPosition(ForwardPosition);
+                    RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    RightDrive.setTargetPosition(ForwardPosition);
+
                 }
             }
-            //If the robot is greater than or equal to 16 cm from the wall
-            else
+            else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
             {
-                //Keep both beacon pressers up
-                MoveLeftBeacon(true);
-                MoveRightBeacon(true);
+                LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                ChangeState(20);
             }
+
         }
-        //If the state is 14
-        if (move_state == 14)
-        {
-            //If 'timer_state' is 9
-            if (timer_state == 9)
-            {
-                //Reset all timers
-                TimerReset();
-                timer_state++;
-            }
-            //If the timer is less than or equal to 2.3
-            if (timer2 <= 2.3)
-            {
-                //Move the robot at -0.5 on both wheels
-                MoveRobot(-0.5, -0.5);
-                //Reset the timer that keeps up with change in time
-                Timer2Reset();
-            }
-            //If it no longer applies
-            else if (timer2 > 2.3)
-            {
-                //Move to the next state
-                //NextState();
-            }
-        }
+
+
+
+
+        // Last State -> Turn off Motors
         if (move_state == 20)
         {
             LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
             MoveRobot(0,0);
             MoveMiddleDrive(0);
