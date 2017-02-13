@@ -271,12 +271,12 @@ public class Auto_Red_test extends Telemetry{
             }
 
             // (B) Alight the Gyro to 0/360 degrees
-            if (MyGyro > 0) {
+            if (MyGyro > 180) {
                 //  Spin the robot in one direction
                 LeftPower = LeftPower - .075;
                 RightPower = RightPower + .075;
             }
-            else if (MyGyro <= 360) {
+            else if (MyGyro <= 180) {
                 //  Spin the robot in the other direction
                 LeftPower = LeftPower + .075;
                 RightPower = RightPower - .075;
