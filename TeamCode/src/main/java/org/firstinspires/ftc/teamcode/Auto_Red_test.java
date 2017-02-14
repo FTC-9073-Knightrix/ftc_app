@@ -11,12 +11,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Created by Nicolas Bravo
  * on 2/12/17.
  */
-public class Auto_Red_test extends Telemetry{
+public class Auto_Red_test extends Telemetry
+{
     //Start
     @Override
-    public void start() {
+    public void start()
+    {
         super.start();
     }
+
     //Main Loop
     @Override
     public void loop()
@@ -36,8 +39,9 @@ public class Auto_Red_test extends Telemetry{
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             MiddlePosition = -3970;
-            while (MiddleDrive.getCurrentPosition() > MiddlePosition) {
-                MiddleDrive.setPower(-1);
+            while (MiddleDrive.getCurrentPosition() > MiddlePosition)
+            {
+                MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
             }
@@ -57,67 +61,79 @@ public class Auto_Red_test extends Telemetry{
             {
                 MoveBallShooter(0);         //Stop the shooter
                 MoveReleaseDrive(true);     //Open the release mechanism
-            }
-            else if (timer2 > 2 && timer2 < 3)
+            } else if (timer2 > 2 && timer2 < 3)
             {
                 MoveBallShooter(0.5);          // shoot second ball for 1 second
-            }
-            else if (timer2 > 3)
+            } else if (timer2 > 3)
             {
                 MoveReleaseDrive(false);    // Close Ball Servo
                 MoveBallShooter(0);         // Stop shooter
                 //Move to the next state
                 ChangeState(2);
+                LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
             }
         }
 
         //State 2 = Get closer to line for first beacon
         if (move_state == 2)
         {
-            int MiddlePosition = -6500;
+            int MiddlePosition = -8000;
             int ForwardPosition = -3500;
 
             if (timer2 < 3)
             {
-                if ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition))
-                {
-                    MiddleDrive.setPower(-1);
-                    MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    MiddleDrive.setTargetPosition(MiddlePosition);
+//                if ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition))
+//                {
+                MiddleDrive.setPower(.7);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                MiddleDrive.setTargetPosition(MiddlePosition);
 
-                    LeftDrive.setPower(.3);
-                    RightDrive.setPower(.3);
+                LeftDrive.setPower(.3);  //Left wheel is more powerful on encoders than right
+                RightDrive.setPower(.4);
 
-                    LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    LeftDrive.setTargetPosition(ForwardPosition);
-                    RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    RightDrive.setTargetPosition(ForwardPosition);
+                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LeftDrive.setTargetPosition(ForwardPosition);
+                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                RightDrive.setTargetPosition(ForwardPosition);
 
-                }
-            }
-            else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
+//                }
+            } else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
             {
                 LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                ChangeState(7);
+                ChangeState(6.5);
             }
         }
 
-        // Turn until Gyro is 160 < 180 > 200
-        if (move_state == 6.5) {
-
-//            LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//            RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//            MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        // Turn until Gyro is aligned to 360 degrees (350 to compensate for speed)
+        if (move_state == 6.5)
+        {
 
             double MyGyro = Gyro1.getHeading();     // Store Gyro Position
-            MoveRobot(0.7, -0.7);                   // Move Robot
-            if (MyGyro > 160 && MyGyro < 200)       // Stop robot when reaching position
+            if (MyGyro < 90 )       // Adjust heading to be between lower 90 to 450
             {
-                MoveRobot(0, 0);
+                MyGyro = MyGyro + 360;
+            }
+
+            // (B) Alight the Gyro to 360 degrees
+            double LeftPower = 0;
+            double RightPower = 0;
+
+            if (MyGyro < 350)
+            {
+                //  Spin the robot in one direction
+                LeftPower = LeftPower + .5;
+                RightPower = RightPower - .5;
+                MoveRobot(LeftPower, RightPower);
+            }
+            else {
+                MoveRobot(0,0);
                 ChangeState(7);
             }
+
         }
 
         // Go Left until finding white line
@@ -145,8 +161,7 @@ public class Auto_Red_test extends Telemetry{
             if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
             {
                 MoveRobot(-0.65, -0.65);
-            }
-            else
+            } else
             {
                 // The right and left line trackers detect black -> Go Forward
                 if (RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
@@ -174,8 +189,8 @@ public class Auto_Red_test extends Telemetry{
                 if (red && !blue)
                 {
                     //Move the left beacon presser up and leave the right beacon presser down
-                    MoveRightBeacon(false);     // Right DOWN
-                    MoveLeftBeacon(true);       // Left UP
+                    MoveRightBeacon(true);     // Right UP
+                    MoveLeftBeacon(false);       // Left DOWN
                     //Move to the next state
                     ChangeState(9);
                 }
@@ -183,8 +198,8 @@ public class Auto_Red_test extends Telemetry{
                 else if (blue && !red)
                 {
                     //Move the right beacon presser up and leave the left beacon presser down
-                    MoveRightBeacon(true);      // Right UP
-                    MoveLeftBeacon(false);      // Left DOWN
+                    MoveRightBeacon(false);      // Right DOWN
+                    MoveLeftBeacon(true);      // Left UP
                     //Move to the next state
                     ChangeState(9);
                 }
@@ -216,11 +231,20 @@ public class Auto_Red_test extends Telemetry{
             // After 1 second, move to next state
             else if (timer2 > 1)
             {
-                if (BeaconNum == 1) {
+                if (BeaconNum == 1)
+                {
                     BeaconNum = 2;
                     ChangeState(10);
-                } else {
+                } else
+                {
                     ChangeState(13);
+                    // Reset Left, Right and Middle wheels to run with encoders
+                    MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
             }
         }
@@ -229,7 +253,7 @@ public class Auto_Red_test extends Telemetry{
         if (move_state == 10)
         {
             // Move Away from the wall for 1 seconds
-            if (timer2 <= 1)
+            if (timer2 <= .8)
             {
                 MoveRobot(1, 1);
             }
@@ -246,15 +270,13 @@ public class Auto_Red_test extends Telemetry{
         //      a. Distance to the wall
         //      b. Heading from gyro sensor
         //
-
         if (move_state == 11)
         {
-
             // #########   Keep robot parallel to the wall ##########
             double WallDistance = Range1.getDistance(DistanceUnit.CM);
             double MyGyro = Gyro1.getHeading();
             double LeftPower = 0;
-            double RightPower =0;
+            double RightPower = 0;
 
             // (A) Keep robot at 30 - 50 cm from wall
             if (WallDistance < 30)      //we are close
@@ -262,8 +284,7 @@ public class Auto_Red_test extends Telemetry{
                 // Moves away from the wall
                 LeftPower = .3;
                 RightPower = .3;
-            }
-            else if (WallDistance > 50) //we are far away
+            } else if (WallDistance > 50) //we are far away
             {
                 // Moves towards from the wall
                 LeftPower = -.3;
@@ -271,31 +292,31 @@ public class Auto_Red_test extends Telemetry{
             }
 
             // (B) Alight the Gyro to 0/360 degrees
-            if (MyGyro > 180) {
+            if (MyGyro > 180)
+            {
                 //  Spin the robot in one direction
-                LeftPower = LeftPower - .075;
-                RightPower = RightPower + .075;
-            }
-            else if (MyGyro <= 180) {
-                //  Spin the robot in the other direction
                 LeftPower = LeftPower + .075;
                 RightPower = RightPower - .075;
+            } else if (MyGyro <= 180)
+            {
+                //  Spin the robot in the other direction
+                LeftPower = LeftPower - .075;
+                RightPower = RightPower + .075;
 
             }
             // (A) + (B) Values to move the left+right wheels to keep robot parallel to the wall
-            MoveRobot(LeftPower,RightPower);
+            MoveRobot(LeftPower, RightPower);
             // #########   End Keep robot parallel to the wall ##########
-
 
             // #########   Move the robot left until reaching white line   ###########
             if (timer2 < 3)           // Go faster during the first 3 seconds
             {
                 MoveMiddleDrive(-1);
-            }
-            else                    // After 3 seconds, start searching for the line
+            } else                    // After 3 seconds, start searching for the line
             {
                 // If at least one line tracker detects white, we reached the line and go to next stage
-                if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage) {
+                if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
+                {
                     //Move to the next state
                     ChangeState(8);
                 }
@@ -311,47 +332,33 @@ public class Auto_Red_test extends Telemetry{
         // Park Robot in center vortex, removing cap ball
         if (move_state == 13)
         {
-            // Reset Left, Right and Middle wheels to run with encoders
-            MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // Select coordinates for center vortex parking
             int MiddlePosition = 6500;
             int ForwardPosition = 3500;
 
-            if (timer2 < 3)
+            if (timer2 < 5)
             {
-                if ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition))
-                {
-                    MiddleDrive.setPower(-1);
-                    MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    MiddleDrive.setTargetPosition(MiddlePosition);
+//                if ((MiddleDrive.getCurrentPosition() != MiddlePosition) || (LeftDrive.getCurrentPosition() != ForwardPosition))
+//                {
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                MiddleDrive.setTargetPosition(MiddlePosition);
+                MiddleDrive.setPower(.7);
 
-                    LeftDrive.setPower(.4);
-                    RightDrive.setPower(.4);
+                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LeftDrive.setTargetPosition(ForwardPosition);
+                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                RightDrive.setTargetPosition(ForwardPosition);
+                LeftDrive.setPower(.3);
+                RightDrive.setPower(.3);
 
-                    LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    LeftDrive.setTargetPosition(ForwardPosition);
-                    RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    RightDrive.setTargetPosition(ForwardPosition);
 
-                }
-            }
-            else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
+//                }
+            } else if (timer2 > 5)        // After 3 seconds, robot should be in position. Move to next stage
             {
-                LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 ChangeState(20);
             }
-
         }
-
-
 
 
         // Last State -> Turn off Motors
@@ -361,7 +368,7 @@ public class Auto_Red_test extends Telemetry{
             RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-            MoveRobot(0,0);
+            MoveRobot(0, 0);
             MoveMiddleDrive(0);
         }
 
@@ -369,9 +376,11 @@ public class Auto_Red_test extends Telemetry{
         UpdateTelemetry();
         telemetry.addData("11", "Timer: " + timer2);
         telemetry.addData("12", "State: " + move_state);
-        if (Color1 != null){
+        if (Color1 != null)
+        {
             //If there is more blue than red
-            if (Color1.blue() > Color1.red()){
+            if (Color1.blue() > Color1.red())
+            {
                 //Displays the color of the beacon as blue
                 telemetry.addLine("Beacon Color: Blue");
                 //Sets 'blue' as true and 'red' as false
@@ -379,7 +388,8 @@ public class Auto_Red_test extends Telemetry{
                 red = false;
             }
             //Else if there is more red than blue
-            else if (Color1.red() > Color1.blue()){
+            else if (Color1.red() > Color1.blue())
+            {
                 //Displays the color of the beacon as red
                 telemetry.addLine("Beacon Color: Red");
                 //Sets 'blue' as false and 'red' as true
@@ -387,7 +397,8 @@ public class Auto_Red_test extends Telemetry{
                 red = true;
             }
             //Else if they are the same value but not zero
-            else if (Color1.blue() == Color1.red() && Color1.blue() != 0 && Color1.red() != 0){
+            else if (Color1.blue() == Color1.red() && Color1.blue() != 0 && Color1.red() != 0)
+            {
                 //Displays the color of the beacons as both
                 telemetry.addLine("Beacon Color: Both");
                 //Sets 'blue' as false and 'red' as false
@@ -395,7 +406,8 @@ public class Auto_Red_test extends Telemetry{
                 red = false;
             }
             //Else (if none apply)
-            else{
+            else
+            {
                 //Display the color of the beacon as neither
                 telemetry.addLine("Beacon Color: Neither");
                 //Sets 'blue' as false and 'red' as false
@@ -413,8 +425,9 @@ public class Auto_Red_test extends Telemetry{
         telemetry.addLine("~Range Sensor~");
         telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
         telemetry.addLine("Gyro: " + degree);
-        telemetry.addLine("X"+ Gyro1.rawX());
-        telemetry.addLine("X"+ Gyro1.rawY());
-        telemetry.addLine("X"+ Gyro1.rawZ());
+        telemetry.addLine("X" + Gyro1.rawX());
+        telemetry.addLine("X" + Gyro1.rawY());
+        telemetry.addLine("X" + Gyro1.rawZ());
     }
 }
+

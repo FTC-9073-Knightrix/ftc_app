@@ -36,7 +36,7 @@ public class Auto_Blue_test extends Telemetry{
 
             MiddlePosition = -3970;
             while (MiddleDrive.getCurrentPosition() > MiddlePosition) {
-                MiddleDrive.setPower(-1);
+                MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
             }
@@ -80,12 +80,12 @@ public class Auto_Blue_test extends Telemetry{
             {
                 if ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition))
                 {
-                    MiddleDrive.setPower(-1);
+                    MiddleDrive.setPower(-.7);
                     MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     MiddleDrive.setTargetPosition(MiddlePosition);
 
-                    LeftDrive.setPower(.3);
-                    RightDrive.setPower(.3);
+                    LeftDrive.setPower(.4);
+                    RightDrive.setPower(.4);
 
                     LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     LeftDrive.setTargetPosition(ForwardPosition);
@@ -112,7 +112,7 @@ public class Auto_Blue_test extends Telemetry{
 
             double MyGyro = Gyro1.getHeading();     // Store Gyro Position
             MoveRobot(0.7, -0.7);                   // Move Robot
-            if (MyGyro > 160 && MyGyro < 200)       // Stop robot when reaching position
+            if (MyGyro > 155 && MyGyro < 205)       // Stop robot when reaching position
             {
                 MoveRobot(0, 0);
                 ChangeState(7);
@@ -208,7 +208,7 @@ public class Auto_Blue_test extends Telemetry{
         if (move_state == 9)
         {
             //If the timer is less than or equal to 1 -> Move Forwards
-            if (timer2 <= 1)
+            if (timer2 <= .8)
             {
                 MoveRobot(-0.5, -0.5);      // Move Forwards
             }
@@ -324,8 +324,8 @@ public class Auto_Blue_test extends Telemetry{
 
             if (timer2 < 3)
             {
-                if ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition))
-                {
+//                if ((MiddleDrive.getCurrentPosition() != MiddlePosition) || (LeftDrive.getCurrentPosition() != ForwardPosition))
+//                {
                     MiddleDrive.setPower(-1);
                     MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     MiddleDrive.setTargetPosition(MiddlePosition);
@@ -338,7 +338,7 @@ public class Auto_Blue_test extends Telemetry{
                     RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     RightDrive.setTargetPosition(ForwardPosition);
 
-                }
+//                }
             }
             else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
             {
