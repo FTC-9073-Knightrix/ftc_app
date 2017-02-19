@@ -131,7 +131,7 @@ public class Auto_Blue_test extends Telemetry{
             //If none of the line trackers have yet to sense white, keep moving left
             else
             {
-                MoveMiddleDrive(0.25);
+                MoveMiddleDrive(0.3);
             }
         }
 
@@ -319,14 +319,15 @@ public class Auto_Blue_test extends Telemetry{
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // Select coordinates for center vortex parking
-            int MiddlePosition = -6500;
-            int ForwardPosition = 3500;
+            int MiddlePosition = -3000;
+            int ForwardPosition = 6000;
 
             if (timer2 < 3)
             {
-//                if ((MiddleDrive.getCurrentPosition() != MiddlePosition) || (LeftDrive.getCurrentPosition() != ForwardPosition))
-//                {
-                    MiddleDrive.setPower(-1);
+                if (MiddleDrive.getCurrentPosition() > MiddlePosition || LeftDrive.getCurrentPosition() < ForwardPosition)
+                {
+
+                    MiddleDrive.setPower(-0.7);
                     MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     MiddleDrive.setTargetPosition(MiddlePosition);
 
@@ -338,7 +339,8 @@ public class Auto_Blue_test extends Telemetry{
                     RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     RightDrive.setTargetPosition(ForwardPosition);
 
-//                }
+
+                }
             }
             else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
             {
