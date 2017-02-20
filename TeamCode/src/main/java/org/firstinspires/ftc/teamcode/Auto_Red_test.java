@@ -69,14 +69,16 @@ public class Auto_Red_test extends Telemetry
                 MoveReleaseDrive(false);    // Close Ball Servo
                 MoveBallShooter(0);         // Stop shooter
                 //Move to the next state
-                ChangeState(2);
+                // State Option A: Diagonal         -> ChangeState(2)
+                // State Option B: Side & Forward   -> ChangeState(3)
+                ChangeState(3);
                 LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
             }
         }
 
-        //State 2 = Get closer to line for first beacon
+        //State 2 = Get closer to line for first beacon (Option A: Move diagonal)
         if (move_state == 2)
         {
             int MiddlePosition = -8000;
@@ -84,8 +86,6 @@ public class Auto_Red_test extends Telemetry
 
             if (timer2 < 3)
             {
-//                if ((MiddleDrive.getCurrentPosition() > MiddlePosition) || (LeftDrive.getCurrentPosition() < ForwardPosition))
-//                {
                 MiddleDrive.setPower(.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
@@ -98,7 +98,6 @@ public class Auto_Red_test extends Telemetry
                 RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 RightDrive.setTargetPosition(ForwardPosition);
 
-//                }
             } else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
             {
                 LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -108,12 +107,55 @@ public class Auto_Red_test extends Telemetry
             }
         }
 
-        // Turn until Gyro is aligned to 360 degrees (350 to compensate for speed)
+        //State 3 = Get closer to line for first beacon (Option B: Move Sideways)
+        if (move_state == 3)
+        {
+            int MiddlePosition = -8000;
+
+            if ((MiddleDrive.getCurrentPosition() > MiddlePosition) )
+            {
+                MiddleDrive.setPower(.7);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                MiddleDrive.setTargetPosition(MiddlePosition);
+
+            } else
+            {
+                ChangeState(4);
+            }
+        }
+
+        //State 4 = Get closer to line for first beacon (Option B: Move Forward)
+        if (move_state == 4)
+        {
+            int MiddlePosition = -8000;
+            int ForwardPosition = -3500;
+
+            if ((LeftDrive.getCurrentPosition() < ForwardPosition))
+            {
+
+                LeftDrive.setPower(.4);  //Left wheel is more powerful on encoders than right
+                RightDrive.setPower(.4);
+
+                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LeftDrive.setTargetPosition(ForwardPosition);
+                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                RightDrive.setTargetPosition(ForwardPosition);
+
+            } else
+            {
+                LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                ChangeState(6.5);
+            }
+        }
+
+        // Align to wall: Turn until Gyro is aligned to 360 degrees (350 to compensate for speed)
         if (move_state == 6.5)
         {
 
             double MyGyro = Gyro1.getHeading();     // Store Gyro Position
-            if (MyGyro < 90 )       // Adjust heading to be between lower 90 to 450
+            if (MyGyro < 90 )                       // Adjust heading to be between lower 90 to 450
             {
                 MyGyro = MyGyro + 360;
             }
