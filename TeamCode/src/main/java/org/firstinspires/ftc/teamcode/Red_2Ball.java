@@ -8,9 +8,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Autonomous(name = "Red 2 Ball", group = "Autonomous")
 
 /**
- * Created by nicolasbravo on 2/20/17.
- * For use in the [Driver Controlled/Autonomous] Portion of the match
- * [Description]
+ * Created by Nicolas Bravo on 2/20/17.
+ * For use in the Autonomous Portion of the match
+ * Gets 2 balls into the center vortex
  */
 
 public class Red_2Ball extends Telemetry
@@ -80,15 +80,13 @@ public class Red_2Ball extends Telemetry
             int ForwardPosition = -4000;
             while (LeftDrive.getCurrentPosition() > ForwardPosition)
             {
-
-                LeftDrive.setPower(.4);
+                LeftDrive.setPower(.3);
                 RightDrive.setPower(.4);
 
                 LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 LeftDrive.setTargetPosition(ForwardPosition);
                 RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 RightDrive.setTargetPosition(ForwardPosition);
-
             }
 
             LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -112,10 +110,12 @@ public class Red_2Ball extends Telemetry
             {
                 MoveBallShooter(0);         //Stop the shooter
                 MoveReleaseDrive(true);     //Open the release mechanism
-            } else if (timer2 > 2 && timer2 < 3)
+            }
+            else if (timer2 > 2 && timer2 < 3)
             {
                 MoveBallShooter(0.5);          // shoot second ball for 1 second
-            } else if (timer2 > 3)
+            }
+            else if (timer2 > 3)
             {
                 MoveReleaseDrive(false);    // Close Ball Servo
                 MoveBallShooter(0);         // Stop shooter
@@ -148,6 +148,5 @@ public class Red_2Ball extends Telemetry
         telemetry.addLine("X" + Gyro1.rawX());
         telemetry.addLine("X" + Gyro1.rawY());
         telemetry.addLine("X" + Gyro1.rawZ());
-
     }
 }

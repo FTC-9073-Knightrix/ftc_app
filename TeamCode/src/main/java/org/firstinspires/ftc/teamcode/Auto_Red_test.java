@@ -300,7 +300,7 @@ public class Auto_Red_test extends Telemetry
                 MoveRobot(1, 1);
             }
             // After 1 second, jump to next state
-            else if (timer2 > 1)
+            else if (timer2 > .8)
             {
                 //Move to the next state
                 ChangeState(11);
@@ -377,7 +377,7 @@ public class Auto_Red_test extends Telemetry
 
             // Select coordinates for center vortex parking
             int MiddlePosition = 6500;
-            int ForwardPosition = 3500;
+            int ForwardPosition = 4500;
 
             if (timer2 < 5)
             {

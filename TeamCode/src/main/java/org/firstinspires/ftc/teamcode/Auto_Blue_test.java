@@ -280,12 +280,12 @@ public class Auto_Blue_test extends Telemetry{
         if (move_state == 10)
         {
             // Move Away from the wall for 1 seconds
-            if (timer2 <= 1)
+            if (timer2 <= .8)
             {
                 MoveRobot(1, 1);
             }
             // After 1 second, jump to next state
-            else if (timer2 > 1)
+            else if (timer2 > .8)
             {
                 //Move to the next state
                 ChangeState(11);
@@ -376,8 +376,8 @@ public class Auto_Blue_test extends Telemetry{
                     MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     MiddleDrive.setTargetPosition(MiddlePosition);
 
-                    LeftDrive.setPower(.4);
-                    RightDrive.setPower(.4);
+                    LeftDrive.setPower(1);
+                    RightDrive.setPower(1);
 
                     LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     LeftDrive.setTargetPosition(ForwardPosition);
