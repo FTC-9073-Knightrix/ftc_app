@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "Auto Red Test", group = "Autonomous")
+@Autonomous(name = "Red 2 Ball 2 Beacon", group = "Autonomous")
 
 /**
  * Created by Nicolas Bravo
@@ -128,7 +128,7 @@ public class Auto_Red_test extends Telemetry
         //State 4 = Get closer to line for first beacon (Option B: Move Forward)
         if (move_state == 4)
         {
-            int ForwardPosition = -3500;
+            int ForwardPosition = -4000;
 
             if ((LeftDrive.getCurrentPosition() > ForwardPosition))
             {
@@ -391,8 +391,8 @@ public class Auto_Red_test extends Telemetry
                 LeftDrive.setTargetPosition(ForwardPosition);
                 RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 RightDrive.setTargetPosition(ForwardPosition);
-                LeftDrive.setPower(.3);
-                RightDrive.setPower(.3);
+                LeftDrive.setPower(1);
+                RightDrive.setPower(1);
 
 
 //                }

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "Auto Blue Test", group = "Autonomous")
+@Autonomous(name = "Blue 2 Ball 2 Beacon", group = "Autonomous")
 
 /**
  * Created by Nicolas Bravo on 2/11/17.
