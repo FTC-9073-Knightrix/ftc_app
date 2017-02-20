@@ -110,7 +110,7 @@ public class Auto_Red_test extends Telemetry
         //State 3 = Get closer to line for first beacon (Option B: Move Sideways)
         if (move_state == 3)
         {
-            int MiddlePosition = -8000;
+            int MiddlePosition = -7000;
 
             if ((MiddleDrive.getCurrentPosition() > MiddlePosition) )
             {
@@ -118,7 +118,8 @@ public class Auto_Red_test extends Telemetry
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
 
-            } else
+            }
+            else
             {
                 ChangeState(4);
             }
@@ -127,10 +128,9 @@ public class Auto_Red_test extends Telemetry
         //State 4 = Get closer to line for first beacon (Option B: Move Forward)
         if (move_state == 4)
         {
-            int MiddlePosition = -8000;
             int ForwardPosition = -3500;
 
-            if ((LeftDrive.getCurrentPosition() < ForwardPosition))
+            if ((LeftDrive.getCurrentPosition() > ForwardPosition))
             {
 
                 LeftDrive.setPower(.4);  //Left wheel is more powerful on encoders than right
@@ -351,7 +351,7 @@ public class Auto_Red_test extends Telemetry
             // #########   End Keep robot parallel to the wall ##########
 
             // #########   Move the robot left until reaching white line   ###########
-            if (timer2 < 3)           // Go faster during the first 3 seconds
+            if (timer2 < 2)           // Go faster during the first 2 seconds
             {
                 MoveMiddleDrive(-1);
             } else                    // After 3 seconds, start searching for the line

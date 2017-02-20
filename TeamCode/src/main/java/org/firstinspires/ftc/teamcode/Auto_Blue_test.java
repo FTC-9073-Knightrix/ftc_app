@@ -265,6 +265,13 @@ public class Auto_Blue_test extends Telemetry{
                     ChangeState(10);
                 } else {
                     ChangeState(13);
+                    // Reset Left, Right and Middle wheels to run with encoders
+                    MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
             }
         }
@@ -332,7 +339,7 @@ public class Auto_Blue_test extends Telemetry{
 
 
             // #########   Move the robot left until reaching white line   ###########
-            if (timer2 < 3)           // Go faster during the first 3 seconds
+            if (timer2 < 2)           // Go faster during the first 2 seconds
             {
                 MoveMiddleDrive(1);
             }
@@ -355,13 +362,6 @@ public class Auto_Blue_test extends Telemetry{
         // Park Robot in center vortex, removing cap ball
         if (move_state == 13)
         {
-            // Reset Left, Right and Middle wheels to run with encoders
-            MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // Select coordinates for center vortex parking
             int MiddlePosition = -3000;
