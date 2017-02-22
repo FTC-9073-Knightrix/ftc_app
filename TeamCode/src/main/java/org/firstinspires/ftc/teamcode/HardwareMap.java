@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 
 /**
@@ -208,6 +209,7 @@ public abstract class HardwareMap extends OpMode{
         }
     }
     */
+
     void MoveReleaseDrive(boolean Move){
         //If 'ReleaseDrive' is not null
         if (ReleaseDrive != null){

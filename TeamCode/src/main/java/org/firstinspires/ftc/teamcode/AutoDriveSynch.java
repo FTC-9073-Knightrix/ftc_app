@@ -1,11 +1,13 @@
+
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+        import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "Red 2 Ball", group = "Autonomous")
+@Autonomous(name = "AutoDriveSynch", group = "Autonomous")
 
 /**
  * Created by Nicolas Bravo on 2/20/17.
@@ -13,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Gets 2 balls into the center vortex
  */
 
-public class Red_2Ball extends Telemetry
+public class AutoDriveSynch extends Telemetry
 {
     //Start
     @Override
@@ -32,7 +34,6 @@ public class Red_2Ball extends Telemetry
         //3 forward
         //4 shoot
 
-
         // State 0 = Move robot closer to center vortex
         if (move_state == 0)
         {
@@ -47,7 +48,7 @@ public class Red_2Ball extends Telemetry
             RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            ChangeState(1);
+            ChangeState(3);
         }
 
         // State 1 = wait 10 seconds
@@ -55,7 +56,12 @@ public class Red_2Ball extends Telemetry
         {
             if (timer2 > 10)
             {
-                ChangeState(2);
+                ChangeState(3.5);
+                LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
             }
         }
 
@@ -64,42 +70,79 @@ public class Red_2Ball extends Telemetry
         // State 2 = Move middle wheel
         if (move_state == 2)
         {
-            int MiddlePosition = -3970;
-            if (MiddleDrive.getCurrentPosition() > MiddlePosition)
+            int MiddlePosition = 3970;
+            while (MiddleDrive.getCurrentPosition() < MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
             }
-            else {
-                ChangeState(3);
-            }
+            ChangeState(3);
         }
 
         // State 3 = Move Forward
         if (move_state == 3)
         {
-            int ForwardPosition = -4000;
-            int LeftPosition = LeftDrive.getCurrentPosition();
-            int RightPosition = RightDrive.getCurrentPosition();
 
-            // Define Driving mode using encoders
+            // Set destination position
+            int ForwardPosition = -4000; // Used to be a negative number
+            int LeftPosition = LeftDrive.getCurrentPosition();
+            if (LeftPosition == 0) {LeftPosition = -1;}
+            int RightPosition = RightDrive.getCurrentPosition();
+            if (RightPosition == 0) {RightPosition = -1;}
+
+            // Set Driving mode
             LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+            // Calculate the power as ratio of differential between wheels
+            LeftDrive.setPower(Range.clip(.5 * RightPosition/LeftPosition, -1,1));
+            RightDrive.setPower(Range.clip(.5 * LeftPosition/RightPosition,-1,1));
+
+            // If not reached the position, keep moving
             if (LeftPosition > ForwardPosition)
             {
-                LeftDrive.setPower(.4);
-                RightDrive.setPower(.4);
-
                 LeftDrive.setTargetPosition(ForwardPosition);
-                RightDrive.setTargetPosition(LeftPosition);
+                RightDrive.setTargetPosition(ForwardPosition);
             }
             else {
                 LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                ChangeState(4);
+                ChangeState(1);
+            }
+        }
+
+        // State 3 = Move Backward
+        if (move_state == 3.5)
+        {
+
+            // Set destination position
+            int ForwardPosition = 4000; // Used to be a negative number
+            int LeftPosition = LeftDrive.getCurrentPosition();
+            if (LeftPosition == 0) {LeftPosition = 1;}
+            int RightPosition = RightDrive.getCurrentPosition();
+            if (RightPosition == 0) {RightPosition = 1;}
+
+            // Set Driving mode
+            LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Calculate the power as ratio of differential between wheels
+            LeftDrive.setPower(Range.clip(.5 * RightPosition/LeftPosition, -1,1));
+            RightDrive.setPower(Range.clip(.5 * LeftPosition/RightPosition,-1,1));
+
+            // If not reached the position, keep moving
+            if (LeftPosition < ForwardPosition)
+            {
+                LeftDrive.setTargetPosition(ForwardPosition);
+                RightDrive.setTargetPosition(ForwardPosition);
+            }
+            else {
+                LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                ChangeState(20);
             }
         }
 
@@ -144,16 +187,15 @@ public class Red_2Ball extends Telemetry
 
 
         // Update variables
-        Timer2Reset();
         UpdateTelemetry();
+        Timer2Reset();
+
+        telemetry.addData("11", "Timer: " + timer2);
+        telemetry.addData("12", "State: " + move_state);
 
         //Range Sensor & Optical Sensor
         degree = Gyro1.getHeading();
         telemetry.addLine("~Range Sensor~");
-        telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
         telemetry.addLine("Gyro: " + degree);
-        telemetry.addLine("X" + Gyro1.rawX());
-        telemetry.addLine("X" + Gyro1.rawY());
-        telemetry.addLine("X" + Gyro1.rawZ());
     }
 }

@@ -64,7 +64,7 @@ public class Blue_2Ball extends Telemetry
         if (move_state == 2)
         {
             int MiddlePosition = 3970;
-            while (MiddleDrive.getCurrentPosition() > MiddlePosition)
+            while (MiddleDrive.getCurrentPosition() < MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -77,22 +77,26 @@ public class Blue_2Ball extends Telemetry
         if (move_state == 3)
         {
             int ForwardPosition = -4000;
-            while (LeftDrive.getCurrentPosition() > ForwardPosition)
+            int LeftPosition = LeftDrive.getCurrentPosition();
+
+            // Set Driving mode
+            LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            if (LeftPosition > ForwardPosition)
             {
-                LeftDrive.setPower(.3);
+                LeftDrive.setPower(.4);     // Left drive is faster
                 RightDrive.setPower(.4);
 
-                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 LeftDrive.setTargetPosition(ForwardPosition);
-                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                RightDrive.setTargetPosition(ForwardPosition);
+                RightDrive.setTargetPosition(LeftPosition);
             }
-
-            LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            ChangeState(4);
-
+            else {
+                LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                ChangeState(4);
+            }
         }
 
 
@@ -136,8 +140,8 @@ public class Blue_2Ball extends Telemetry
 
 
         // Update variables
-        Timer2Reset();
         UpdateTelemetry();
+        Timer2Reset();
 
         //Range Sensor & Optical Sensor
         degree = Gyro1.getHeading();
