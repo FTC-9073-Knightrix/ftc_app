@@ -63,7 +63,7 @@ public class Blue_2Ball extends Telemetry
         // State 2 = Move middle wheel
         if (move_state == 2)
         {
-            int MiddlePosition = 3970;
+            int MiddlePosition = -3970;
             while (MiddleDrive.getCurrentPosition() < MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
@@ -76,7 +76,7 @@ public class Blue_2Ball extends Telemetry
         // State 3 = Move Forward
         if (move_state == 3)
         {
-            int ForwardPosition = -4000;
+            int ForwardPosition = 4000;
             int LeftPosition = LeftDrive.getCurrentPosition();
 
             // Set Driving mode
