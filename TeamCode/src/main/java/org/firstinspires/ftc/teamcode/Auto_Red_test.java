@@ -38,7 +38,7 @@ public class Auto_Red_test extends Telemetry
             RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            MiddlePosition = -3970;
+            MiddlePosition = -3900;
             while (MiddleDrive.getCurrentPosition() > MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
@@ -81,7 +81,7 @@ public class Auto_Red_test extends Telemetry
         //State 2 = Get closer to line for first beacon (Option A: Move diagonal)
         if (move_state == 2)
         {
-            int MiddlePosition = -8000;
+            int MiddlePosition = -8350;
             int ForwardPosition = -3500;
 
             if (timer2 < 3)
@@ -190,7 +190,7 @@ public class Auto_Red_test extends Telemetry
             //If none of the line trackers have yet to sense white, keep moving left
             else
             {
-                MoveMiddleDrive(-0.25);
+                MoveMiddleDrive(-0.4);
             }
         }
 
@@ -224,8 +224,8 @@ public class Auto_Red_test extends Telemetry
             ///////// END FOLLOW THE LINE CODE
 
 
-            // If the robot is less than 16 cm from the wall, detect color and lower ARM Servo
-            if (Range1.getDistance(DistanceUnit.CM) < 16)
+            // If the robot is less than 18 cm from the wall, detect color and lower ARM Servo
+            if (Range1.getDistance(DistanceUnit.CM) < 18)
             {
                 // If the beacon is RED
                 if (red && !blue)
@@ -253,7 +253,7 @@ public class Auto_Red_test extends Telemetry
                     MoveRightBeacon(true);      // Left DOWN
                 }
             }
-            //If the robot is greater than 16 cm from the wall
+            //If the robot is greater than 18 cm from the wall
             else
             {
                 //Keep both of the beacon pressers up
@@ -365,7 +365,7 @@ public class Auto_Red_test extends Telemetry
                 //If none of the line trackers have yet to sense white, keep moving left
                 else
                 {
-                    MoveMiddleDrive(-0.25);
+                    MoveMiddleDrive(-0.4);
                 }
             }
         }
@@ -410,8 +410,14 @@ public class Auto_Red_test extends Telemetry
             RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-            MoveRobot(0, 0);
-            MoveMiddleDrive(0);
+            if (timer2 < 0.7)
+            {
+                MoveRobot(0,0.7);
+            }
+            else
+            {
+                MoveRobot(0, 0);
+            }
         }
 
         /***/

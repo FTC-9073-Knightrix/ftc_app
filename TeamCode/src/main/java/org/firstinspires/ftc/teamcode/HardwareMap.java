@@ -46,7 +46,7 @@ public abstract class HardwareMap extends OpMode{
     public boolean blue;
     public boolean red;
     public boolean benny = false;
-    public static final double LineTrackerVoltage = 2.8;
+    public static final double LineTrackerVoltage = 2;
     public double move_state = 0;
     public double timer_state = -1;
     public double timer1 = getRuntime();

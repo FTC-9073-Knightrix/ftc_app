@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "Red Beacon", group = "Beacon Push")
+//@Autonomous(name = "Red Beacon", group = "Beacon Push")
 
 /**
  * Created by nicolasbravo on 11/14/16.

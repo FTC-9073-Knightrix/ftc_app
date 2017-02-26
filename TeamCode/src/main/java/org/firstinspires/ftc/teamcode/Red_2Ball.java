@@ -79,8 +79,8 @@ public class Red_2Ball extends Telemetry
         // State 3 = Move Forward
         if (move_state == 3)
         {
-            int ForwardPosition = -4000;
-            int LeftPosition = LeftDrive.getCurrentPosition();
+            int ForwardPosition = -500;
+            int LeftPosition = 0;
             int RightPosition = RightDrive.getCurrentPosition();
 
             // Define Driving mode using encoders

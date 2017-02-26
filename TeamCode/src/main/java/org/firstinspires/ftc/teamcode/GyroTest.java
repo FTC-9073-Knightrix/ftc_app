@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * [Description]
  */
 
-@TeleOp(name = "Gyro", group = "Test Programs")
+//@TeleOp(name = "Gyro", group = "Test Programs")
 
 public class GyroTest extends Telemetry
 {

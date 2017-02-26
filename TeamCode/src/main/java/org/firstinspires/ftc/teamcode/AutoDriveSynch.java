@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode;
 
         import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "AutoDriveSynch", group = "Autonomous")
+//@Autonomous(name = "AutoDriveSynch", group = "Autonomous")
 
 /**
  * Created by Nicolas Bravo on 2/20/17.

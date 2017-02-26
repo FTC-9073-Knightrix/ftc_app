@@ -6,7 +6,7 @@ package org.firstinspires.ftc.teamcode;
         import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
         import java.util.Timer;
 
-@Autonomous(name = "Autonomous Line Testing", group = "Autonomous")
+//@Autonomous(name = "Autonomous Line Testing", group = "Autonomous")
 
 /**
  * Created by Vijay Rudraraju on 11/19/2016.

@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 //adds the file to the FtcOpmodeRegister
-@TeleOp(name = "Test (Encoder)", group = "Test Programs")
+//@TeleOp(name = "Test (Encoder)", group = "Test Programs")
 
 /**
  * Created by Nicolas Bravo on 10/15/16.

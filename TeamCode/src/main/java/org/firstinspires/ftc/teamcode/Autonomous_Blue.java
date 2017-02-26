@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import java.util.Timer;
 
-@Autonomous(name = "Old Blue", group = "Autonomous")
+//@Autonomous(name = "Old Blue", group = "Autonomous")
 
 /**
  * Created by Vijay Rudraraju on 11/19/2016.

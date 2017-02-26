@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "Red Testing", group = "Autonomous")
+//@Autonomous(name = "Red Testing", group = "Autonomous")
 /**
  * Created by Vijay Rudraraju on 12/3/16.
  * For use in the Autonomous Portion of the match

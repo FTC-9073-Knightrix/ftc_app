@@ -37,7 +37,7 @@ public class Auto_Blue_test extends Telemetry{
             RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            MiddlePosition = -3970;
+            MiddlePosition = -3900;
             while (MiddleDrive.getCurrentPosition() > MiddlePosition) {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -214,8 +214,8 @@ public class Auto_Blue_test extends Telemetry{
             ///////// END FOLLOW THE LINE CODE
 
 
-            // If the robot is less than 16 cm from the wall, detect color and lower ARM Servo
-            if (Range1.getDistance(DistanceUnit.CM) < 16)
+            // If the robot is less than 18 cm from the wall, detect color and lower ARM Servo
+            if (Range1.getDistance(DistanceUnit.CM) < 18)
             {
                 // If the beacon is RED
                 if (red && !blue)
@@ -243,7 +243,7 @@ public class Auto_Blue_test extends Telemetry{
                     MoveRightBeacon(true);      // Left DOWN
                 }
             }
-            //If the robot is greater than 16 cm from the wall
+            //If the robot is greater than 18 cm from the wall
             else
             {
                 //Keep both of the beacon pressers up
@@ -267,7 +267,8 @@ public class Auto_Blue_test extends Telemetry{
                     BeaconNum = 2;
                     ChangeState(10);
                 } else {
-                    ChangeState(13);
+                    /***/ChangeState(13);/***/
+                    /**ChangeState(20);*/
                     // Reset Left, Right and Middle wheels to run with encoders
                     MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                     MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -317,7 +318,7 @@ public class Auto_Blue_test extends Telemetry{
                 LeftPower = .3;
                 RightPower = .3;
             }
-            else if (WallDistance > 50) //we are far away
+            else if (WallDistance > 45) //we are far away
             {
                 // Moves towards from the wall
                 LeftPower = -.3;
@@ -362,12 +363,12 @@ public class Auto_Blue_test extends Telemetry{
         }
 
 
-        // Park Robot in center vortex, removing cap ball
+        /***/ // Park Robot in center vortex, removing cap ball
         if (move_state == 13)
         {
 
             // Select coordinates for center vortex parking
-            int MiddlePosition = -3000;
+            int MiddlePosition = -5000;
             int ForwardPosition = 6000;
 
             if (timer2 < 3)
@@ -398,7 +399,7 @@ public class Auto_Blue_test extends Telemetry{
                 ChangeState(20);
             }
 
-        }
+         }/***/
 
 
 
