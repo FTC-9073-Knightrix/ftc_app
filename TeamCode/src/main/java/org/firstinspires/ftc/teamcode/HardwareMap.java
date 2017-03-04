@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.Range;
 
 
@@ -31,11 +32,14 @@ public abstract class HardwareMap extends OpMode{
     Servo LeftBeacon;
     //Declare the sensors
     ModernRoboticsI2cRangeSensor Range1;
+   // ModernRoboticsI2cRangeSensor Range2wall;
+    UltrasonicSensor LegoRange;
     ColorSensor Color1;
     AnalogInput FrontLine;
     AnalogInput RightLine;
     AnalogInput LeftLine;
     GyroSensor Gyro1;
+
     //Declare the variables
     public double ReleasePosition;
     public double LeftPosition;
@@ -96,6 +100,9 @@ public abstract class HardwareMap extends OpMode{
 
         //Range1
         Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
+       // Range2wall = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R2");
+        LegoRange = hardwareMap.get(UltrasonicSensor.class,"LR1");
+
 
         //Color1
         Color1 = hardwareMap.colorSensor.get("C1");
@@ -172,7 +179,8 @@ public abstract class HardwareMap extends OpMode{
         }
     }
     void MovePickupDrive(double Power){
-        //If 'PickupDrive' is not null
+        //If 'PickupDrive
+        // ' is not null
         if (PickupDrive != null){
             //Set the power of 'PickupDrive' to 'Power'
             PickupDrive.setPower (Power);

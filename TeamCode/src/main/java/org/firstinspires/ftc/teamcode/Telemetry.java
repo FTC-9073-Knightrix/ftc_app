@@ -32,6 +32,9 @@ public abstract class Telemetry extends HardwareMap{
         //Range Sensor & Optical Sensor
         telemetry.addLine("~Range Sensor~");
         telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
+//        telemetry.addLine("~Wall Range Sensor~");
+//        telemetry.addLine("Distance:" + Range2wall.getDistance(DistanceUnit.CM) + " cm");
+        telemetry.addData("lego distance: ", LegoRange.getUltrasonicLevel());
 
         //Color Sensor
         telemetry.addLine("~Color Sensor~");
@@ -106,5 +109,6 @@ public abstract class Telemetry extends HardwareMap{
             telemetry.addLine("Color 3: Black");
         }
         telemetry.addLine("Value 3: " + RightLine.getVoltage());
+
     }
 }
