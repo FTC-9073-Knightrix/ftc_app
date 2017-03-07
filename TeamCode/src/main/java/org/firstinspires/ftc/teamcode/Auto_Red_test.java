@@ -32,21 +32,30 @@ public class Auto_Red_test extends Telemetry
             hardwareMap.deviceInterfaceModule.get("dim").setLED(2,false); //1-red, 2-blue
 
             // Reset Left, Right and Middle wheels to run with encoders
-            MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            /**MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);*/
             LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            MiddlePosition = -3900;
+            /**MiddlePosition = -3900;
             while (MiddleDrive.getCurrentPosition() > MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
             }
-            ChangeState(1);
+            ChangeState(1);*/
+            if (LegoRange.getUltrasonicLevel() < 46)
+            {
+                MoveMiddleDrive(-1);
+            }
+            else
+            {
+                MoveMiddleDrive(0);
+                ChangeState(1);
+            }
         }
 
         //State 1 = Shoot the ball twice
@@ -75,7 +84,8 @@ public class Auto_Red_test extends Telemetry
                 ChangeState(3);
                 LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+                MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
         }
 

@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name = "Lego Range Testing", group = "Autonomous")
 
 /**
- * Cr eated by vijay on 3/4/2017.
+ * Created by vijay on 3/4/2017.
+ * What will replace the first step of the Autonomous Programs
  */
 
 public class LegoRangeTest extends Telemetry {
