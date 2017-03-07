@@ -51,6 +51,8 @@ public abstract class HardwareMap extends OpMode{
     public boolean red;
     public boolean benny = false;
     public static final double LineTrackerVoltage = 2;
+    public static final int ShooterEncoderRotation = 2900;
+    public int ShooterEncoderPosition;
     public double move_state = 0;
     public double timer_state = -1;
     public double timer1 = getRuntime();
@@ -83,11 +85,9 @@ public abstract class HardwareMap extends OpMode{
         //BallShooter
         BallShooter = hardwareMap.dcMotor.get("M5");
         BallShooter.setDirection(DcMotor.Direction.FORWARD);
-        /*
+        BallShooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BallShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        */
 
-        BallShooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //ReleaseDrive
         ReleaseDrive = hardwareMap.servo.get("S1");
         ReleaseDrive.setPosition(1);

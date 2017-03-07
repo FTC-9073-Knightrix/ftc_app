@@ -28,8 +28,8 @@ public class Auto_Red_test extends Telemetry
         {
             // Reset variables
             int MiddlePosition = 0;     // Encoder middle wheel
-            hardwareMap.deviceInterfaceModule.get("dim").setLED(1,true); //1-red, 2-blue
-            hardwareMap.deviceInterfaceModule.get("dim").setLED(2,false); //1-red, 2-blue
+            /**hardwareMap.deviceInterfaceModule.get("dim").setLED(1,true); //1-red, 2-blue
+            hardwareMap.deviceInterfaceModule.get("dim").setLED(2,false); //1-red, 2-blue*/
 
             // Reset Left, Right and Middle wheels to run with encoders
             /**MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
