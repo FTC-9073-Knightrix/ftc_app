@@ -47,7 +47,7 @@ public class Auto_Red_test extends Telemetry
                 MiddleDrive.setTargetPosition(MiddlePosition);
             }
             ChangeState(1);*/
-            if (LegoRange.getUltrasonicLevel() < 46)
+            if (LegoRangeValue < 46)
             {
                 MoveMiddleDrive(-1);
             }
@@ -123,7 +123,7 @@ public class Auto_Red_test extends Telemetry
         {
             int MiddlePosition = -7000;
 
-            if ((MiddleDrive.getCurrentPosition() > MiddlePosition) )
+            if ((MiddleDrivePosition > MiddlePosition) )
             {
                 MiddleDrive.setPower(.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -141,7 +141,7 @@ public class Auto_Red_test extends Telemetry
         {
             int ForwardPosition = -4000;
 
-            if ((LeftDrive.getCurrentPosition() > ForwardPosition))
+            if ((LeftDrivePosition > ForwardPosition))
             {
 
                 LeftDrive.setPower(.4);  //Left wheel is more powerful on encoders than right
@@ -164,9 +164,8 @@ public class Auto_Red_test extends Telemetry
         // Align to wall: Turn until Gyro is aligned to 360 degrees (350 to compensate for speed)
         if (move_state == 6.5)
         {
-
-            double MyGyro = Gyro1.getHeading();     // Store Gyro Position
-            if (MyGyro < 90 )                       // Adjust heading to be between lower 90 to 450
+            int MyGyro = Gyro1Heading;             // Store Gyro Position
+            if (MyGyro < 90)                       // Adjust heading to be between lower 90 to 450
             {
                 MyGyro = MyGyro + 360;
             }
@@ -326,18 +325,16 @@ public class Auto_Red_test extends Telemetry
         if (move_state == 11)
         {
             // #########   Keep robot parallel to the wall ##########
-            double WallDistance = Range1.getDistance(DistanceUnit.CM);
-            double MyGyro = Gyro1.getHeading();
             double LeftPower = 0;
             double RightPower = 0;
 
             // (A) Keep robot at 30 - 50 cm from wall
-            if (WallDistance < 30)      //we are close
+            if (Range1Value < 30)      //we are close
             {
                 // Moves away from the wall
                 LeftPower = .3;
                 RightPower = .3;
-            } else if (WallDistance > 50) //we are far away
+            } else if (Range1Value > 50) //we are far away
             {
                 // Moves towards from the wall
                 LeftPower = -.3;
@@ -345,12 +342,12 @@ public class Auto_Red_test extends Telemetry
             }
 
             // (B) Alight the Gyro to 0/360 degrees
-            if (MyGyro > 180)
+            if (Gyro1Heading > 180)
             {
                 //  Spin the robot in one direction
                 LeftPower = LeftPower + .075;
                 RightPower = RightPower - .075;
-            } else if (MyGyro <= 180)
+            } else if (Gyro1Heading <= 180)
             {
                 //  Spin the robot in the other direction
                 LeftPower = LeftPower - .075;
@@ -368,7 +365,7 @@ public class Auto_Red_test extends Telemetry
             } else                    // After 3 seconds, start searching for the line
             {
                 // If at least one line tracker detects white, we reached the line and go to next stage
-                if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
+                if (RightLineVoltage < LineTrackerVoltage || LeftLineVoltage < LineTrackerVoltage || FrontLineVoltage < LineTrackerVoltage)
                 {
                     //Move to the next state
                     ChangeState(8);
@@ -418,9 +415,8 @@ public class Auto_Red_test extends Telemetry
         }
         if (move_state == 14)
         {
-            double MyGyro = Gyro1.getHeading();
             MoveRobot(1, -1);                   // Move Robot
-            if (MyGyro > 70 && MyGyro < 100)       // Stop robot when reaching position
+            if (Gyro1Heading > 70 && Gyro1Heading < 100)       // Stop robot when reaching position
             {
                 MoveRobot(0, 0);
                 ChangeState(15);
@@ -428,11 +424,10 @@ public class Auto_Red_test extends Telemetry
         }
         if (move_state == 15)
         {
-            double OppRobotDistance = Range1.getDistance(DistanceUnit.CM); //Uses side range sensor to sense robot***CHnage sensor
-            if (OppRobotDistance > 150)
+            if (Range1Value > 150)
             {
                 //If at least one line tracker detects white, we reached the line and go to next stage
-                if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
+                if (RightLineVoltage < LineTrackerVoltage || LeftLineVoltage < LineTrackerVoltage || FrontLineVoltage < LineTrackerVoltage)
                 {
                     //Move to the next state
                     ChangeState(16);
@@ -449,23 +444,23 @@ public class Auto_Red_test extends Telemetry
         {
             ///////// FOLLOW THE LINE CODE
             // The right and left line trackers detect white -> Go Forward
-            if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
+            if (RightLineVoltage < LineTrackerVoltage && LeftLineVoltage < LineTrackerVoltage)
             {
                 MoveRobot(-0.65, -0.65);
             } else
             {
                 // The right and left line trackers detect black -> Go Forward
-                if (RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
+                if (RightLineVoltage >= LineTrackerVoltage && LeftLineVoltage >= LineTrackerVoltage)
                 {
                     MoveRobot(-0.65, -0.65);
                 }
                 // Else if only the right line tracker is black -> Turn one side
-                else if (RightLine.getVoltage() >= LineTrackerVoltage)
+                else if (RightLineVoltage >= LineTrackerVoltage)
                 {
                     MoveRobot(-0.2, -0.65);
                 }
                 // Else if only the left line tracker is black -> Turn the other side
-                else if (LeftLine.getVoltage() >= LineTrackerVoltage)
+                else if (LeftLineVoltage >= LineTrackerVoltage)
                 {
                     MoveRobot(-0.65, -0.2);
                 }
@@ -474,7 +469,7 @@ public class Auto_Red_test extends Telemetry
 
 
             // If the robot is less than 18 cm from the wall, detect color and lower ARM Servo
-            if (Range1.getDistance(DistanceUnit.CM) < 18)
+            if (Range1Value < 18)
             {
                 // If the beacon is RED
                 if (red && !blue)
@@ -537,7 +532,7 @@ public class Auto_Red_test extends Telemetry
         if (Color1 != null)
         {
             //If there is more blue than red
-            if (Color1.blue() > Color1.red())
+            if (Color1Blue > Color1Red)
             {
                 //Displays the color of the beacon as blue
                 telemetry.addLine("Beacon Color: Blue");
@@ -546,7 +541,7 @@ public class Auto_Red_test extends Telemetry
                 red = false;
             }
             //Else if there is more red than blue
-            else if (Color1.red() > Color1.blue())
+            else if (Color1Red > Color1Blue)
             {
                 //Displays the color of the beacon as red
                 telemetry.addLine("Beacon Color: Red");
@@ -555,7 +550,7 @@ public class Auto_Red_test extends Telemetry
                 red = true;
             }
             //Else if they are the same value but not zero
-            else if (Color1.blue() == Color1.red() && Color1.blue() != 0 && Color1.red() != 0)
+            else if (Color1Blue == Color1Red && Color1Blue != 0 && Color1Red != 0)
             {
                 //Displays the color of the beacons as both
                 telemetry.addLine("Beacon Color: Both");
@@ -574,17 +569,7 @@ public class Auto_Red_test extends Telemetry
             }
 
         }
-
         // Update variables
         Timer2Reset();
-
-        //Range Sensor & Optical Sensor
-        degree = Gyro1.getHeading();
-        telemetry.addLine("~Range Sensor~");
-        telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
-        telemetry.addLine("Gyro: " + degree);
-        telemetry.addLine("X" + Gyro1.rawX());
-        telemetry.addLine("X" + Gyro1.rawY());
-        telemetry.addLine("X" + Gyro1.rawZ());
     }
 }

@@ -65,7 +65,7 @@ public class Red_2Ball extends Telemetry
         if (move_state == 2)
         {
             int MiddlePosition = -3970;
-            if (MiddleDrive.getCurrentPosition() > MiddlePosition)
+            if (MiddleDrivePosition > MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -81,7 +81,6 @@ public class Red_2Ball extends Telemetry
         {
             int ForwardPosition = -500;
             int LeftPosition = 0;
-            int RightPosition = RightDrive.getCurrentPosition();
 
             // Define Driving mode using encoders
             LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -146,14 +145,5 @@ public class Red_2Ball extends Telemetry
         // Update variables
         Timer2Reset();
         UpdateTelemetry();
-
-        //Range Sensor & Optical Sensor
-        degree = Gyro1.getHeading();
-        telemetry.addLine("~Range Sensor~");
-        telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
-        telemetry.addLine("Gyro: " + degree);
-        telemetry.addLine("X" + Gyro1.rawX());
-        telemetry.addLine("X" + Gyro1.rawY());
-        telemetry.addLine("X" + Gyro1.rawZ());
     }
 }

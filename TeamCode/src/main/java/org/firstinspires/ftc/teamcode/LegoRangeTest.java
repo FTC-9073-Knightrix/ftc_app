@@ -20,7 +20,7 @@ public class LegoRangeTest extends Telemetry {
     //Main Loop
     @Override
     public void loop() {
-        if (LegoRange.getUltrasonicLevel() < 46) {
+        if (LegoRangeValue < 46) {
             MoveMiddleDrive(-1);
         }
         else

@@ -12,6 +12,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 
 /**
  * Created by Nicolas Bravo on 10/8/16.
@@ -64,29 +66,57 @@ public abstract class HardwareMap extends OpMode{
     public boolean calibrate = false;
     public int BeaconNum = 1;
 
+    //Sensor Values
+    public double LegoRangeValue;
+    public double Range1Value;
+    public int Color1Red;
+    public int Color1Green;
+    public int Color1Blue;
+    public double FrontLineVoltage;
+    public double LeftLineVoltage;
+    public double RightLineVoltage;
+    public int Gyro1Heading;
+    //Motor Powers
+    public double MiddleDrivePower;
+    public double LeftDrivePower;
+    public double RightDrivePower;
+    public double PickupDrivePower;
+    //Motor Positions
+    public int MiddleDrivePosition;
+    public int LeftDrivePosition;
+    public int RightDrivePosition;
+    public int BallShooterPosition;
 
     @Override
     public void init(){
         //MiddleDrive
         MiddleDrive = hardwareMap.dcMotor.get("M1");
         MiddleDrive.setDirection(DcMotor.Direction.REVERSE);
-// vijay 3
+        MiddleDrivePower = MiddleDrive.getPower();
+        MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+        //vijay 3
         //LeftDrive
         LeftDrive = hardwareMap.dcMotor.get("M2");
         LeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        LeftDrivePosition = LeftDrive.getCurrentPosition();
+        LeftDrivePower = LeftDrive.getPower();
 
         //RightDrive
         RightDrive = hardwareMap.dcMotor.get("M3");
         RightDrive.setDirection(DcMotor.Direction.FORWARD);
+        RightDrivePosition = RightDrive.getCurrentPosition();
+        RightDrivePower = RightDrive.getPower();
         //PickupDrive
         PickupDrive = hardwareMap.dcMotor.get("M4");
         PickupDrive.setDirection(DcMotor.Direction.FORWARD);
+        PickupDrivePower = PickupDrive.getPower();
 
         //BallShooter
         BallShooter = hardwareMap.dcMotor.get("M5");
         BallShooter.setDirection(DcMotor.Direction.FORWARD);
         BallShooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BallShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BallShooterPosition = BallShooter.getCurrentPosition();
 
         //ReleaseDrive
         ReleaseDrive = hardwareMap.servo.get("S1");
@@ -100,18 +130,26 @@ public abstract class HardwareMap extends OpMode{
 
         //Range1
         Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
-       // Range2wall = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R2");
+        Range1Value = Range1.getDistance(DistanceUnit.CM);
+        // Range2wall = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R2");
         LegoRange = hardwareMap.get(UltrasonicSensor.class,"LR1");
+
 
 
         //Color1
         Color1 = hardwareMap.colorSensor.get("C1");
         Color1.enableLed(false);
+        Color1Red = Color1.red();
+        Color1Green = Color1.green();
+        Color1Blue = Color1.blue();
 
         //Line Trackers
         FrontLine = hardwareMap.analogInput.get("L1");
+        FrontLineVoltage = FrontLine.getVoltage();
         LeftLine = hardwareMap.analogInput.get("L2");
+        LeftLineVoltage = LeftLine.getVoltage();
         RightLine = hardwareMap.analogInput.get("L3");
+        RightLineVoltage = RightLine.getVoltage();
 
         //Gyro1
         Gyro1 = hardwareMap.gyroSensor.get("G1");
@@ -129,6 +167,7 @@ public abstract class HardwareMap extends OpMode{
                 calibrated = true;
             }
         }
+        Gyro1Heading = Gyro1.getHeading();
 
 
     }
@@ -352,5 +391,28 @@ public abstract class HardwareMap extends OpMode{
     {
         timer_state = move_state;
         TimerReset();
+    }
+    void GetValues()
+    {
+        //Sensor Values
+        LegoRangeValue = LegoRange.getUltrasonicLevel();
+        Range1Value = Range1.getDistance(DistanceUnit.CM);
+        Color1Red = Color1.red();
+        Color1Green = Color1.green();
+        Color1Blue = Color1.blue();
+        FrontLineVoltage = FrontLine.getVoltage();
+        LeftLineVoltage = LeftLine.getVoltage();
+        RightLineVoltage = RightLine.getVoltage();
+        Gyro1Heading = Gyro1.getHeading();
+        //Motor Powers
+        MiddleDrivePower = MiddleDrive.getPower();
+        LeftDrivePower = LeftDrive.getPower();
+        RightDrivePower = RightDrive.getPower();
+        PickupDrivePower = PickupDrive.getPower();
+        //Motor Encoder Positions
+        MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+        LeftDrivePosition = LeftDrive.getCurrentPosition();
+        RightDrivePosition = RightDrive.getCurrentPosition();
+        BallShooterPosition = BallShooter.getCurrentPosition();
     }
 }

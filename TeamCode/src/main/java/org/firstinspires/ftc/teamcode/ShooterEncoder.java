@@ -24,12 +24,11 @@ public class ShooterEncoder extends Telemetry
     public void loop()
     {
         BallShooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ShooterEncoderPosition = BallShooter.getCurrentPosition();
-        if ((gamepad1.right_bumper || gamepad2.right_bumper) && (BallShooter.getCurrentPosition() == ShooterEncoderPosition || BallShooter.getCurrentPosition() == ShooterEncoderPosition + ShooterEncoderRotation))
+        if ((gamepad1.right_bumper || gamepad2.right_bumper) && (BallShooterPosition == ShooterEncoderPosition || BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation))
         {
             /**BallShooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
             BallShooter.setPower(1);
-            BallShooter.setTargetPosition(ShooterEncoderRotation + BallShooter.getCurrentPosition());
+            BallShooter.setTargetPosition(ShooterEncoderRotation + BallShooterPosition);
         }
 
         UpdateTelemetry();

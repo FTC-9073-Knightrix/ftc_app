@@ -64,7 +64,7 @@ public class Blue_2Ball extends Telemetry
         if (move_state == 2)
         {
             int MiddlePosition = -3970;
-            while (MiddleDrive.getCurrentPosition() < MiddlePosition)
+            while (MiddleDrivePosition < MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -77,19 +77,18 @@ public class Blue_2Ball extends Telemetry
         if (move_state == 3)
         {
             int ForwardPosition = 4000;
-            int LeftPosition = LeftDrive.getCurrentPosition();
 
             // Set Driving mode
             LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            if (LeftPosition > ForwardPosition)
+            if (LeftDrivePosition > ForwardPosition)
             {
                 LeftDrive.setPower(.4);     // Left drive is faster
                 RightDrive.setPower(.4);
 
                 LeftDrive.setTargetPosition(ForwardPosition);
-                RightDrive.setTargetPosition(LeftPosition);
+                RightDrive.setTargetPosition(LeftDrivePosition);
             }
             else {
                 LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -142,14 +141,5 @@ public class Blue_2Ball extends Telemetry
         // Update variables
         UpdateTelemetry();
         Timer2Reset();
-
-        //Range Sensor & Optical Sensor
-        degree = Gyro1.getHeading();
-        telemetry.addLine("~Range Sensor~");
-        telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
-        telemetry.addLine("Gyro: " + degree);
-        telemetry.addLine("X" + Gyro1.rawX());
-        telemetry.addLine("X" + Gyro1.rawY());
-        telemetry.addLine("X" + Gyro1.rawZ());
     }
 }

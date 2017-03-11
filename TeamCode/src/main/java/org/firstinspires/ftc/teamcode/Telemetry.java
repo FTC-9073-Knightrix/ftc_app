@@ -11,38 +11,41 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public abstract class Telemetry extends HardwareMap{
     public void UpdateTelemetry (){
+        GetValues();
         //telemetry data goes here
         telemetry.addLine("Time: " + Double.toString(getRuntime()));
         //Middle Wheel
         telemetry.addLine("~Middle Motor~");
-        telemetry.addLine("Speed: " + (MiddleDrive.getPower() * 100) + "%");
-        telemetry.addLine("Encoder Middle: " + MiddleDrive.getCurrentPosition());
-        telemetry.addLine("Encoder Left: " + LeftDrive.getCurrentPosition());
-        telemetry.addLine("Encoder Right: " + RightDrive.getCurrentPosition());
-        telemetry.addLine("Encoder Shooter: " + BallShooter.getCurrentPosition());
+        telemetry.addLine("Speed: " + (MiddleDrivePower * 100) + "%");
+        telemetry.addLine("Encoder Middle: " + MiddleDrivePosition);
+        telemetry.addLine("Encoder Left: " + LeftDrivePosition);
+        telemetry.addLine("Encoder Right: " + RightDrivePosition);
+        telemetry.addLine("Encoder Shooter: " + BallShooterPosition);
         //Left Wheel
         telemetry.addLine("~Left Motor~");
-        telemetry.addLine("Speed: " + (LeftDrive.getPower() * 100) + "%");
+        telemetry.addLine("Speed: " + (LeftDrivePower * 100) + "%");
         //Right Wheel
         telemetry.addLine("~Right Motor~");
-        telemetry.addLine("Speed: " + (RightDrive.getPower() * 100) + "%");
+        telemetry.addLine("Speed: " + (RightDrivePower * 100) + "%");
         //Ball Pickup
         telemetry.addLine("~Ball Pickup~");
-        telemetry.addLine("Speed: " + (PickupDrive.getPower() * 100) + "%");
+        telemetry.addLine("Speed: " + (PickupDrivePower * 100) + "%");
 
         //Range Sensor & Optical Sensor
         telemetry.addLine("~Range Sensor~");
-        telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
-//        telemetry.addLine("~Wall Range Sensor~");
-//        telemetry.addLine("Distance:" + Range2wall.getDistance(DistanceUnit.CM) + " cm");
-        telemetry.addData("lego distance: ", LegoRange.getUltrasonicLevel());
+        telemetry.addLine("Distance: " + Range1Value + " cm");
+//      telemetry.addLine("~Wall Range Sensor~");
+//      telemetry.addLine("Distance:" + Range2wall.getDistance(DistanceUnit.CM) + " cm");
+        telemetry.addData("lego distance: ", LegoRangeValue);
+        //Gyro
+        telemetry.addLine("Gyro: " + Gyro1Heading);
 
         //Color Sensor
         telemetry.addLine("~Color Sensor~");
         //If 'Color1' is not null
         if (Color1 != null){
             //If there is more blue than red
-            if (Color1.blue() > Color1.red()){
+            if (Color1Blue > Color1Red){
                 //Displays the color of the beacon as blue
                 telemetry.addLine("Beacon Color: Blue");
                 //Sets 'blue' as true and 'red' as false
@@ -50,7 +53,7 @@ public abstract class Telemetry extends HardwareMap{
                 red = false;
             }
             //Else if there is more red than blue
-            else if (Color1.red() > Color1.blue()){
+            else if (Color1Red > Color1Blue){
                 //Displays the color of the beacon as red
                 telemetry.addLine("Beacon Color: Red");
                 //Sets 'blue' as false and 'red' as true
@@ -58,7 +61,7 @@ public abstract class Telemetry extends HardwareMap{
                 red = true;
             }
             //Else if they are the same value but not zero
-            else if (Color1.blue() == Color1.red() && Color1.blue() != 0 && Color1.red() != 0){
+            else if (Color1Blue == Color1Red && Color1Blue != 0 && Color1Red != 0){
                 //Displays the color of the beacons as both
                 telemetry.addLine("Beacon Color: Both");
                 //Sets 'blue' as false and 'red' as false
@@ -78,7 +81,7 @@ public abstract class Telemetry extends HardwareMap{
         //Line Trackers
         telemetry.addLine("~Line Tracker~");
         //If FrontLine's voltage is below 4 (0-3.999)
-        if (FrontLine.getVoltage() < LineTrackerVoltage){
+        if (FrontLineVoltage < LineTrackerVoltage){
             //Display the color as white
             telemetry.addLine("Color 1: White");
         }
@@ -87,9 +90,9 @@ public abstract class Telemetry extends HardwareMap{
             //Display the color as black
             telemetry.addLine("Color 1: Black");
         }
-        telemetry.addLine("Value 1: " + FrontLine.getVoltage());
+        telemetry.addLine("Value 1: " + FrontLineVoltage);
         //If LeftLine's voltage is below 4 (0-3.999)
-        if (LeftLine.getVoltage() < LineTrackerVoltage){
+        if (LeftLineVoltage < LineTrackerVoltage){
             //Display the color as white
             telemetry.addLine("Color 2: White");
         }
@@ -98,9 +101,9 @@ public abstract class Telemetry extends HardwareMap{
             //Display the color as black
             telemetry.addLine("Color 2: Black");
         }
-        telemetry.addLine("Value 2: " + LeftLine.getVoltage());
+        telemetry.addLine("Value 2: " + LeftLineVoltage);
         //If RightLine's voltage is below 4 (0-3.999)
-        if (RightLine.getVoltage() < LineTrackerVoltage){
+        if (RightLineVoltage < LineTrackerVoltage){
             //Display the color as white
             telemetry.addLine("Color 3: White");
         }
@@ -109,7 +112,7 @@ public abstract class Telemetry extends HardwareMap{
             //Display the color as black
             telemetry.addLine("Color 3: Black");
         }
-        telemetry.addLine("Value 3: " + RightLine.getVoltage());
+        telemetry.addLine("Value 3: " + RightLineVoltage);
 
     }
 }
