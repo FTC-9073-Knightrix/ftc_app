@@ -52,32 +52,37 @@ public class Auto_Blue_test extends Telemetry{
         //State 1 = Shoot the ball twice
         if (move_state == 1)
         {
-            // Shoot the ball for the first 1.35 seconds
-            if (timer2 <= 1.35)
+            if (ShootState == 0)
             {
-                MoveBallShooter(0.5);       // Shot first ball
+                ShooterEncoderPosition = BallShooterPosition;
+                BallShooter.setPower(1);
+                BallShooter.setTargetPosition(ShooterEncoderRotation + BallShooterPosition);
+                ShootState = 1;
             }
-            // From 1.35 to 2, open the release mechanism
-            else if (timer2 > 1.35 && timer2 < 2)
+            else if (ShootState == 1 && BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation && BallShooterPosition != ShooterEncoderPosition)
             {
-                MoveBallShooter(0);         //Stop the shooter
+                TimerReset();
+                ShootState = 2;
+
                 MoveReleaseDrive(true);     //Open the release mechanism
             }
-            else if (timer2 > 2 && timer2 < 3)
+            else if (timer2 > 1 && ShootState == 2)
             {
-               MoveBallShooter(0.5);          // shoot second ball for 1 second
+                ShooterEncoderPosition = BallShooterPosition;
+                BallShooter.setPower(1);
+                BallShooter.setTargetPosition(ShooterEncoderRotation + BallShooterPosition);
+                ShootState = 3;
             }
-            else if (timer2 > 3)
+            else if (ShootState == 3 && BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation && BallShooterPosition != ShooterEncoderPosition)
             {
                 MoveReleaseDrive(false);    // Close Ball Servo
-                MoveBallShooter(0);         // Stop shooter
                 //Move to the next state
                 // State Option A: Diagonal         -> ChangeState(2)
                 // State Option B: Side & Forward   -> ChangeState(3)
                 ChangeState(3);
                 LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+                ShootState = 0;
             }
         }
 

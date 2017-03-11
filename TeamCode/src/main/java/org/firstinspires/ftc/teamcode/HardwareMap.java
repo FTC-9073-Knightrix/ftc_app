@@ -53,8 +53,8 @@ public abstract class HardwareMap extends OpMode{
     public boolean red;
     public boolean benny = false;
     public static final double LineTrackerVoltage = 2;
-    public static final int ShooterEncoderRotation = 2900;
-    public int ShooterEncoderPosition;
+    public static final int ShooterEncoderRotation = 2870;
+    public int ShooterEncoderPosition = 0;
     public double move_state = 0;
     public double timer_state = -1;
     public double timer1 = getRuntime();
@@ -65,6 +65,7 @@ public abstract class HardwareMap extends OpMode{
     public boolean calibrated = false;
     public boolean calibrate = false;
     public int BeaconNum = 1;
+    public int ShootState = 0;
 
     //Sensor Values
     public double LegoRangeValue;
@@ -116,6 +117,7 @@ public abstract class HardwareMap extends OpMode{
         BallShooter.setDirection(DcMotor.Direction.FORWARD);
         BallShooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BallShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BallShooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         BallShooterPosition = BallShooter.getCurrentPosition();
 
         //ReleaseDrive
