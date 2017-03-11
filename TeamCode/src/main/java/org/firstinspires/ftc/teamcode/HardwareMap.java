@@ -8,9 +8,13 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.I2cDevice;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -33,8 +37,13 @@ public abstract class HardwareMap extends OpMode{
     Servo RightBeacon;
     Servo LeftBeacon;
     //Declare the sensors
-    ModernRoboticsI2cRangeSensor Range1;
-    ModernRoboticsI2cRangeSensor Range2;
+    I2cDevice Range1;
+    I2cDevice Range2;
+    //I2cDeviceSynch Range1Reader;
+    //I2cDeviceSynch Range2Reader;
+
+//    ModernRoboticsI2cRangeSensor Range1;
+//    ModernRoboticsI2cRangeSensor Range2;
     UltrasonicSensor LegoRange;
     ColorSensor Color1;
     AnalogInput FrontLine;
@@ -69,8 +78,8 @@ public abstract class HardwareMap extends OpMode{
 
     //Sensor Values
     public double LegoRangeValue;
-    public double Range1Value;
-    public double Range2Value;
+    public I2cDeviceSynch Range1Value;
+    public I2cDeviceSynch Range2Value;
     public int Color1Red;
     public int Color1Green;
     public int Color1Blue;
@@ -132,10 +141,18 @@ public abstract class HardwareMap extends OpMode{
         LeftBeacon.setPosition(0);
 
         //Range1
-        Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
-        Range1Value = Range1.getDistance(DistanceUnit.CM);
-        Range2 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R2");
-        Range2Value = Range2.getDistance(DistanceUnit.CM);
+        Range1 = hardwareMap.i2cDevice.get("R1");
+        Range2 = hardwareMap.i2cDevice.get("R2");
+
+        Range1Value = new I2cDeviceSynchImpl(Range1, I2cAddr.create8bit(0x28), false);
+        Range2Value = new I2cDeviceSynchImpl(Range2, I2cAddr.create8bit(0x16), false);
+
+//        Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
+//        Range1.setI2cAddress(I2cAddr.create8bit(0x28));
+//        Range1Value = Range1.getDistance(DistanceUnit.CM);
+//        Range2 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R2");
+//        Range2.setI2cAddress(I2cAddr.create8bit(0x16));
+//        Range2Value = Range2.getDistance(DistanceUnit.CM);
         LegoRange = hardwareMap.get(UltrasonicSensor.class,"LR1");
 
 
@@ -400,8 +417,10 @@ public abstract class HardwareMap extends OpMode{
     {
         //Sensor Values
         LegoRangeValue = LegoRange.getUltrasonicLevel();
-        Range1Value = Range1.getDistance(DistanceUnit.CM);
-        Range2Value = Range2.getDistance(DistanceUnit.CM);
+        /***Range1Value = Range1.getDistance(DistanceUnit.CM);
+        Range2Value = Range2.getDistance(DistanceUnit.CM);*/
+        Range1Value = new I2cDeviceSynchImpl(Range1, I2cAddr.create8bit(0x28), false);
+        Range2Value = new I2cDeviceSynchImpl(Range2, I2cAddr.create8bit(0x16), false);
         Color1Red = Color1.red();
         Color1Green = Color1.green();
         Color1Blue = Color1.blue();
