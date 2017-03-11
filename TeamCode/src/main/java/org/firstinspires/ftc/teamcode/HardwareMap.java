@@ -34,7 +34,7 @@ public abstract class HardwareMap extends OpMode{
     Servo LeftBeacon;
     //Declare the sensors
     ModernRoboticsI2cRangeSensor Range1;
-   // ModernRoboticsI2cRangeSensor Range2wall;
+    ModernRoboticsI2cRangeSensor Range2;
     UltrasonicSensor LegoRange;
     ColorSensor Color1;
     AnalogInput FrontLine;
@@ -70,6 +70,7 @@ public abstract class HardwareMap extends OpMode{
     //Sensor Values
     public double LegoRangeValue;
     public double Range1Value;
+    public double Range2Value;
     public int Color1Red;
     public int Color1Green;
     public int Color1Blue;
@@ -133,7 +134,8 @@ public abstract class HardwareMap extends OpMode{
         //Range1
         Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
         Range1Value = Range1.getDistance(DistanceUnit.CM);
-        // Range2wall = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R2");
+        Range2 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R2");
+        Range2Value = Range2.getDistance(DistanceUnit.CM);
         LegoRange = hardwareMap.get(UltrasonicSensor.class,"LR1");
 
 
@@ -399,6 +401,7 @@ public abstract class HardwareMap extends OpMode{
         //Sensor Values
         LegoRangeValue = LegoRange.getUltrasonicLevel();
         Range1Value = Range1.getDistance(DistanceUnit.CM);
+        Range2Value = Range2.getDistance(DistanceUnit.CM);
         Color1Red = Color1.red();
         Color1Green = Color1.green();
         Color1Blue = Color1.blue();

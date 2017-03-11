@@ -35,7 +35,7 @@ public abstract class Telemetry extends HardwareMap{
         telemetry.addLine("~Range Sensor~");
         telemetry.addLine("Distance: " + Range1Value + " cm");
 //      telemetry.addLine("~Wall Range Sensor~");
-//      telemetry.addLine("Distance:" + Range2wall.getDistance(DistanceUnit.CM) + " cm");
+        telemetry.addLine("Wall:" + Range2Value + " cm");
         telemetry.addData("lego distance: ", LegoRangeValue);
         //Gyro
         telemetry.addLine("Gyro: " + Gyro1Heading);
