@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/**package org.firstinspires.ftc.teamcode;
 
         import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
         import com.qualcomm.robotcore.util.Range;
@@ -12,7 +12,7 @@ package org.firstinspires.ftc.teamcode;
  * Created by Vijay Rudraraju on 11/19/2016.
  * Testing
  * Moves towards the hoop and shoots two balls at it and then presses the beacons
- */
+ *
 
 public class AutoFollowLine extends Telemetry{
     //Start
@@ -68,7 +68,7 @@ public class AutoFollowLine extends Telemetry{
          {
          //Move the robot in a straight line, going left or right based on what the voltage of the line trackers are
          MoveRobot(-1 * (LeftLine.getVoltage() * 0.2 * 0.3), -1 * (RightLine.getVoltage() * 0.2 * 0.3));
-         }*/
+         }*
         // Move_state = 8
         // Line track 1st line
         if (move_state == 8)
@@ -179,7 +179,7 @@ public class AutoFollowLine extends Telemetry{
             }
 
         }
-  */      /***/
+  */      /***
         UpdateTelemetry();
         telemetry.addData("11", "Timer: " + timer2);
         telemetry.addData("12", "State: " + move_state);
@@ -223,4 +223,4 @@ public class AutoFollowLine extends Telemetry{
         telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
 
     }
-}
+}*/

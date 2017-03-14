@@ -23,6 +23,47 @@ public class Auto_Blue_test extends Telemetry{
     @Override
     public void loop()
     {
+        UpdateTelemetry();
+        telemetry.addData("11", "Timer: " + timer2);
+        telemetry.addData("12", "State: " + move_state);
+        if (Color1 != null){
+            //If there is more blue than red
+            if (Color1Blue > Color1Red){
+                //Displays the color of the beacon as blue
+                telemetry.addLine("Beacon Color: Blue");
+                //Sets 'blue' as true and 'red' as false
+                blue = true;
+                red = false;
+            }
+            //Else if there is more red than blue
+            else if (Color1Red > Color1Blue){
+                //Displays the color of the beacon as red
+                telemetry.addLine("Beacon Color: Red");
+                //Sets 'blue' as false and 'red' as true
+                blue = false;
+                red = true;
+            }
+            //Else if they are the same value but not zero
+            else if (Color1Blue == Color1Red && Color1Blue != 0 && Color1Red != 0){
+                //Displays the color of the beacons as both
+                telemetry.addLine("Beacon Color: Both");
+                //Sets 'blue' as false and 'red' as false
+                blue = false;
+                red = false;
+            }
+            //Else (if none apply)
+            else{
+                //Display the color of the beacon as neither
+                telemetry.addLine("Beacon Color: Neither");
+                //Sets 'blue' as false and 'red' as false
+                blue = false;
+                red = false;
+            }
+
+        }
+        // Update variables
+        Timer2Reset();
+
         // State 0 = Move robot closer to center vortex
         if (move_state == 0)
         {
@@ -418,48 +459,5 @@ public class Auto_Blue_test extends Telemetry{
             MoveRobot(0,0);
             MoveMiddleDrive(0);
         }
-
-        /***/
-        UpdateTelemetry();
-        telemetry.addData("11", "Timer: " + timer2);
-        telemetry.addData("12", "State: " + move_state);
-        if (Color1 != null){
-            //If there is more blue than red
-            if (Color1Blue > Color1Red){
-                //Displays the color of the beacon as blue
-                telemetry.addLine("Beacon Color: Blue");
-                //Sets 'blue' as true and 'red' as false
-                blue = true;
-                red = false;
-            }
-            //Else if there is more red than blue
-            else if (Color1Red > Color1Blue){
-                //Displays the color of the beacon as red
-                telemetry.addLine("Beacon Color: Red");
-                //Sets 'blue' as false and 'red' as true
-                blue = false;
-                red = true;
-            }
-            //Else if they are the same value but not zero
-            else if (Color1Blue == Color1Red && Color1Blue != 0 && Color1Red != 0){
-                //Displays the color of the beacons as both
-                telemetry.addLine("Beacon Color: Both");
-                //Sets 'blue' as false and 'red' as false
-                blue = false;
-                red = false;
-            }
-            //Else (if none apply)
-            else{
-                //Display the color of the beacon as neither
-                telemetry.addLine("Beacon Color: Neither");
-                //Sets 'blue' as false and 'red' as false
-                blue = false;
-                red = false;
-            }
-
-        }
-
-        // Update variables
-        Timer2Reset();
     }
 }

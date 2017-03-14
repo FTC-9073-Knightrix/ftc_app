@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/**package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * Created by Vijay Rudraraju on 12/3/16.
  * For use in the Autonomous Portion of the match
  * Stops at the white line after going sideways
- */
+ *
 
 public class AutonomousLineTesting extends Telemetry {
 
@@ -27,7 +27,7 @@ public class AutonomousLineTesting extends Telemetry {
             MoveMiddleDrive(-1);
         }
 
-        MoveMiddleDrive(0);*/
+        MoveMiddleDrive(0);*
 
         switch (move_state){
             case 0:
@@ -81,4 +81,4 @@ public class AutonomousLineTesting extends Telemetry {
         telemetry.addLine("Case: " + move_state);
         UpdateTelemetry();
     }
-}
+}*/

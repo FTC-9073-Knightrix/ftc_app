@@ -75,11 +75,16 @@ public abstract class HardwareMap extends OpMode{
     public boolean calibrate = false;
     public int BeaconNum = 1;
     public int ShootState = 0;
+    public double Range1Value;
+    public double Range2Value;
+    public boolean TeleOp = false;
 
     //Sensor Values
     public double LegoRangeValue;
-    public I2cDeviceSynch Range1Value;
-    public I2cDeviceSynch Range2Value;
+    public I2cDeviceSynch Range1Reader;
+    public I2cDeviceSynch Range2Reader;
+    public byte[] Range1Cache;
+    public byte[] Range2Cache;
     public int Color1Red;
     public int Color1Green;
     public int Color1Blue;
@@ -100,27 +105,21 @@ public abstract class HardwareMap extends OpMode{
 
     @Override
     public void init(){
+        //this.msStuckDetectInit = 10000;
         //MiddleDrive
         MiddleDrive = hardwareMap.dcMotor.get("M1");
         MiddleDrive.setDirection(DcMotor.Direction.REVERSE);
-        MiddleDrivePower = MiddleDrive.getPower();
-        MiddleDrivePosition = MiddleDrive.getCurrentPosition();
         //vijay 3
         //LeftDrive
         LeftDrive = hardwareMap.dcMotor.get("M2");
         LeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        LeftDrivePosition = LeftDrive.getCurrentPosition();
-        LeftDrivePower = LeftDrive.getPower();
 
         //RightDrive
         RightDrive = hardwareMap.dcMotor.get("M3");
         RightDrive.setDirection(DcMotor.Direction.FORWARD);
-        RightDrivePosition = RightDrive.getCurrentPosition();
-        RightDrivePower = RightDrive.getPower();
         //PickupDrive
         PickupDrive = hardwareMap.dcMotor.get("M4");
         PickupDrive.setDirection(DcMotor.Direction.FORWARD);
-        PickupDrivePower = PickupDrive.getPower();
 
         //BallShooter
         BallShooter = hardwareMap.dcMotor.get("M5");
@@ -128,7 +127,6 @@ public abstract class HardwareMap extends OpMode{
         BallShooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BallShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         BallShooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        BallShooterPosition = BallShooter.getCurrentPosition();
 
         //ReleaseDrive
         ReleaseDrive = hardwareMap.servo.get("S1");
@@ -140,12 +138,12 @@ public abstract class HardwareMap extends OpMode{
         LeftBeacon = hardwareMap.servo.get("S3");
         LeftBeacon.setPosition(0);
 
-        //Range1
+        //Range1 & Range2
         Range1 = hardwareMap.i2cDevice.get("R1");
         Range2 = hardwareMap.i2cDevice.get("R2");
 
-        Range1Value = new I2cDeviceSynchImpl(Range1, I2cAddr.create8bit(0x28), false);
-        Range2Value = new I2cDeviceSynchImpl(Range2, I2cAddr.create8bit(0x16), false);
+        Range1Reader = new I2cDeviceSynchImpl(Range1, I2cAddr.create8bit(0x28), false);
+        Range2Reader = new I2cDeviceSynchImpl(Range2, I2cAddr.create8bit(0x16), false);
 
 //        Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
 //        Range1.setI2cAddress(I2cAddr.create8bit(0x28));
@@ -160,38 +158,29 @@ public abstract class HardwareMap extends OpMode{
         //Color1
         Color1 = hardwareMap.colorSensor.get("C1");
         Color1.enableLed(false);
-        Color1Red = Color1.red();
-        Color1Green = Color1.green();
-        Color1Blue = Color1.blue();
 
         //Line Trackers
         FrontLine = hardwareMap.analogInput.get("L1");
-        FrontLineVoltage = FrontLine.getVoltage();
         LeftLine = hardwareMap.analogInput.get("L2");
-        LeftLineVoltage = LeftLine.getVoltage();
         RightLine = hardwareMap.analogInput.get("L3");
-        RightLineVoltage = RightLine.getVoltage();
 
         //Gyro1
         Gyro1 = hardwareMap.gyroSensor.get("G1");
         // reset gyro sensor
         //Calibrate
-        while (calibrated == false)
-        {
-            if (calibrate == false)
-            {
-                Gyro1.calibrate();
-                calibrate = true;
-            }
-            if (Gyro1.isCalibrating() == false)
-            {
-                calibrated = true;
-            }
-        }
-        Gyro1Heading = Gyro1.getHeading();
-
-
     }
+    public void init_loop(){
+        if (calibrate == false)
+        {
+            Gyro1.calibrate();
+            calibrate = true;
+        }
+        if (Gyro1.isCalibrating() == false)
+        {
+            calibrated = true;
+        }
+    }
+
     //Classes
     void MoveMiddleDrive(double Power){
         //If 'MiddleDrive' is not null
@@ -415,28 +404,33 @@ public abstract class HardwareMap extends OpMode{
     }
     void GetValues()
     {
-        //Sensor Values
-        LegoRangeValue = LegoRange.getUltrasonicLevel();
-        /***Range1Value = Range1.getDistance(DistanceUnit.CM);
-        Range2Value = Range2.getDistance(DistanceUnit.CM);*/
-        Range1Value = new I2cDeviceSynchImpl(Range1, I2cAddr.create8bit(0x28), false);
-        Range2Value = new I2cDeviceSynchImpl(Range2, I2cAddr.create8bit(0x16), false);
-        Color1Red = Color1.red();
-        Color1Green = Color1.green();
-        Color1Blue = Color1.blue();
-        FrontLineVoltage = FrontLine.getVoltage();
-        LeftLineVoltage = LeftLine.getVoltage();
-        RightLineVoltage = RightLine.getVoltage();
-        Gyro1Heading = Gyro1.getHeading();
-        //Motor Powers
-        MiddleDrivePower = MiddleDrive.getPower();
-        LeftDrivePower = LeftDrive.getPower();
-        RightDrivePower = RightDrive.getPower();
-        PickupDrivePower = PickupDrive.getPower();
-        //Motor Encoder Positions
-        MiddleDrivePosition = MiddleDrive.getCurrentPosition();
-        LeftDrivePosition = LeftDrive.getCurrentPosition();
-        RightDrivePosition = RightDrive.getCurrentPosition();
+        if(TeleOp == false)
+        {
+            //Sensor Values
+            LegoRangeValue = LegoRange.getUltrasonicLevel();
+            /***Range1Value = Range1.getDistance(DistanceUnit.CM);
+             Range2Value = Range2.getDistance(DistanceUnit.CM);*/
+            Range1Cache = Range1Reader.read(0x04, 2);
+            Range2Cache = Range2Reader.read(0x04, 2);
+            Range1Value = Range1Cache[0] & 0xFF;
+            Range2Value = Range2Cache[0] & 0xFF;
+            Color1Red = Color1.red();
+            Color1Green = Color1.green();
+            Color1Blue = Color1.blue();
+            FrontLineVoltage = FrontLine.getVoltage();
+            LeftLineVoltage = LeftLine.getVoltage();
+            RightLineVoltage = RightLine.getVoltage();
+            Gyro1Heading = Gyro1.getHeading();
+            //Motor Powers
+            MiddleDrivePower = MiddleDrive.getPower();
+            LeftDrivePower = LeftDrive.getPower();
+            RightDrivePower = RightDrive.getPower();
+            PickupDrivePower = PickupDrive.getPower();
+            //Motor Encoder Positions
+            MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+            LeftDrivePosition = LeftDrive.getCurrentPosition();
+            RightDrivePosition = RightDrive.getCurrentPosition();
+        }
         BallShooterPosition = BallShooter.getCurrentPosition();
     }
 }

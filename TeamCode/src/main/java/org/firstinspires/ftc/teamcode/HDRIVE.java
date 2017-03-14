@@ -21,6 +21,10 @@ public class HDRIVE extends Telemetry{
     //Main loop
     @Override
     public void loop(){
+        TeleOp = true;
+        //Displays telemetry data
+        UpdateTelemetry();
+
         //If gamepad 2's left bumper is pressed
         if(gamepad2.left_bumper){
             //Stop the ball release
@@ -120,9 +124,6 @@ public class HDRIVE extends Telemetry{
             //Move the middle wheel at the speed of the right trigger minus the left trigger (the right trigger being a positive value and the left being negative)
             MoveMiddleDrive(gamepad1.right_trigger - gamepad1.left_trigger);
         }
-
-        //Displays telemetry data
-        UpdateTelemetry();
     }
 }
 

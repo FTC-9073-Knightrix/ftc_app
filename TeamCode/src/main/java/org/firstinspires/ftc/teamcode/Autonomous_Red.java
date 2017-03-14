@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/**package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.Range;
@@ -14,7 +14,7 @@ import java.util.Timer;
  * Testing patch
  * Testing
  * Moves towards the hoop and shoots two balls at it and then presses the beacons
- */
+ *
 
 public class Autonomous_Red extends Telemetry {
     //Start
@@ -448,7 +448,7 @@ public class Autonomous_Red extends Telemetry {
                 NextState(1);
             }
         }
-        /***/
+        /***
         UpdateTelemetry();
         telemetry.addData("11", "Timer: " + timer2);
         telemetry.addData("12", "Timer State: " + timer_state);
@@ -493,4 +493,4 @@ public class Autonomous_Red extends Telemetry {
         telemetry.addLine("Distance: " + Range1.getDistance(DistanceUnit.CM) + " cm");
         telemetry.addLine("Gyro: " + degree);
     }
-}
+}*/
