@@ -69,25 +69,34 @@ public class Auto_Blue_test extends Telemetry{
         {
             // Reset variables
             int MiddlePosition = 0;     // Encoder middle wheel
-            hardwareMap.deviceInterfaceModule.get("dim").setLED(1,false); //1-red, 2-blue
-            hardwareMap.deviceInterfaceModule.get("dim").setLED(2,true); //1-red, 2-blue
+            //hardwareMap.deviceInterfaceModule.get("dim").setLED(1,false); //1-red, 2-blue
+           // hardwareMap.deviceInterfaceModule.get("dim").setLED(2,true); //1-red, 2-blue
 
 
             // Reset Left, Right and Middle wheels to run with encoders
-            MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             MiddlePosition = -3900;
-            while (MiddleDrivePosition > MiddlePosition) {
-                MiddleDrive.setPower(-.7);
-                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                MiddleDrive.setTargetPosition(MiddlePosition);
+//            while (MiddleDrivePosition > MiddlePosition) {
+//                MiddleDrive.setPower(-.7);
+//                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                MiddleDrive.setTargetPosition(MiddlePosition);
+//            }
+//                ChangeState(1);
+            if (LegoRangeValue < 46)
+            {
+                MoveMiddleDrive(-1);
             }
+            else
+            {
+                MoveMiddleDrive(0);
                 ChangeState(1);
+            }
         }
 
         //State 1 = Shoot the ball twice
@@ -100,7 +109,7 @@ public class Auto_Blue_test extends Telemetry{
                 BallShooter.setTargetPosition(ShooterEncoderRotation + BallShooterPosition);
                 ShootState = 1;
             }
-            else if (ShootState == 1 && BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation && BallShooterPosition != ShooterEncoderPosition)
+            else if (ShootState == 1 && (BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation || BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 12 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 12) && BallShooterPosition != ShooterEncoderPosition)
             {
                 TimerReset();
                 ShootState = 2;
@@ -114,7 +123,7 @@ public class Auto_Blue_test extends Telemetry{
                 BallShooter.setTargetPosition(ShooterEncoderRotation + BallShooterPosition);
                 ShootState = 3;
             }
-            else if (ShootState == 3 && BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation && BallShooterPosition != ShooterEncoderPosition)
+            else if (ShootState == 3 && (BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation || BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 12 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 12) && BallShooterPosition != ShooterEncoderPosition)
             {
                 MoveReleaseDrive(false);    // Close Ball Servo
                 //Move to the next state
@@ -225,7 +234,7 @@ public class Auto_Blue_test extends Telemetry{
             //If none of the line trackers have yet to sense white, keep moving left
             else
             {
-                MoveMiddleDrive(0.3);
+                MoveMiddleDrive(0.2);
             }
         }
 
@@ -302,9 +311,9 @@ public class Auto_Blue_test extends Telemetry{
         if (move_state == 9)
         {
             //If the timer is less than or equal to 1 -> Move Forwards
-            if (timer2 <= .8)
+            if (timer2 <= 1)
             {
-                MoveRobot(-0.5, -0.5);      // Move Forwards
+                MoveRobot(-1, -1);      // Move Forwards
             }
             // After 1 second, move to next state
             else if (timer2 > 1)
@@ -330,12 +339,12 @@ public class Auto_Blue_test extends Telemetry{
         if (move_state == 10)
         {
             // Move Away from the wall for 1 seconds
-            if (timer2 <= .8)
+            if (timer2 <= 1)
             {
                 MoveRobot(1, 1);
             }
             // After 1 second, jump to next state
-            else if (timer2 > .8)
+            else if (timer2 > 1)
             {
                 //Move to the next state
                 ChangeState(11);
@@ -402,7 +411,7 @@ public class Auto_Blue_test extends Telemetry{
                 //If none of the line trackers have yet to sense white, keep moving left
                 else
                 {
-                    MoveMiddleDrive(0.25);
+                    MoveMiddleDrive(0.2);
                 }
             }
         }

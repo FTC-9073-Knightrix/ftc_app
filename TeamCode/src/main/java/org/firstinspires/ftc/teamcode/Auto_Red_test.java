@@ -114,7 +114,7 @@ public class Auto_Red_test extends Telemetry
                 BallShooter.setTargetPosition(ShooterEncoderRotation + BallShooterPosition);
                 ShootState = 1;
             }
-            else if (ShootState == 1 && BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation && BallShooterPosition != ShooterEncoderPosition)
+            else if (ShootState == 1 && (BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation || BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 12 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 12) && BallShooterPosition != ShooterEncoderPosition)
             {
                 TimerReset();
                 ShootState = 2;
@@ -128,7 +128,7 @@ public class Auto_Red_test extends Telemetry
                 BallShooter.setTargetPosition(ShooterEncoderRotation + BallShooterPosition);
                 ShootState = 3;
             }
-            else if (ShootState == 3 && BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation && BallShooterPosition != ShooterEncoderPosition)
+            else if (ShootState == 3 && (BallShooterPosition == ShooterEncoderPosition + ShooterEncoderRotation || BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 12 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 12) && BallShooterPosition != ShooterEncoderPosition)
             {
                 MoveReleaseDrive(false);    // Close Ball Servo
                 //Move to the next state
@@ -218,7 +218,7 @@ public class Auto_Red_test extends Telemetry
         // Align to wall: Turn until Gyro is aligned to 360 degrees (350 to compensate for speed)
         if (move_state == 6.5)
         {
-            int MyGyro = Gyro1Heading;             // Store Gyro Position
+            float MyGyro = Gyro1Heading;             // Store Gyro Position
             if (MyGyro < 90)                       // Adjust heading to be between lower 90 to 450
             {
                 MyGyro = MyGyro + 360;
@@ -254,7 +254,7 @@ public class Auto_Red_test extends Telemetry
             //If none of the line trackers have yet to sense white, keep moving left
             else
             {
-                MoveMiddleDrive(-0.4);
+                MoveMiddleDrive(-0.2);
             }
         }
 
@@ -332,7 +332,7 @@ public class Auto_Red_test extends Telemetry
             //If the timer is less than or equal to 1 -> Move Forwards
             if (timer2 <= 1)
             {
-                MoveRobot(-0.5, -0.5);      // Move Forwards
+                MoveRobot(-1, -1);      // Move Forwards
             }
             // After 1 second, move to next state
             else if (timer2 > 1)
@@ -359,12 +359,12 @@ public class Auto_Red_test extends Telemetry
         if (move_state == 10)
         {
             // Move Away from the wall for 1 seconds
-            if (timer2 <= .8)
+            if (timer2 <= 1)
             {
                 MoveRobot(1, 1);
             }
             // After 1 second, jump to next state
-            else if (timer2 > .8)
+            else if (timer2 > 1)
             {
                 //Move to the next state
                 ChangeState(11);
@@ -427,7 +427,7 @@ public class Auto_Red_test extends Telemetry
                 //If none of the line trackers have yet to sense white, keep moving left
                 else
                 {
-                    MoveMiddleDrive(-0.4);
+                    MoveMiddleDrive(-0.2);
                 }
             }
         }

@@ -36,7 +36,7 @@ public class HDRIVE extends Telemetry{
             MoveReleaseDrive(false);
         }
 
-        if(gamepad2.right_bumper && (BallShooterPosition == ShooterEncoderPosition || (BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 5 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 5)))
+        if(gamepad2.right_bumper && (BallShooterPosition == ShooterEncoderPosition || (BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 12 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 12)))
         {
             ShooterEncoderPosition = BallShooterPosition;
             BallShooter.setPower(1);

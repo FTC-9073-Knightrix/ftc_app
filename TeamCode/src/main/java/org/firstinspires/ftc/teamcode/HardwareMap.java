@@ -91,7 +91,7 @@ public abstract class HardwareMap extends OpMode{
     public double FrontLineVoltage;
     public double LeftLineVoltage;
     public double RightLineVoltage;
-    public int Gyro1Heading;
+    public float Gyro1Heading;
     //Motor Powers
     public double MiddleDrivePower;
     public double LeftDrivePower;
@@ -145,6 +145,9 @@ public abstract class HardwareMap extends OpMode{
         Range1Reader = new I2cDeviceSynchImpl(Range1, I2cAddr.create8bit(0x28), false);
         Range2Reader = new I2cDeviceSynchImpl(Range2, I2cAddr.create8bit(0x16), false);
 
+        Range1Reader.engage();
+        Range2Reader.engage();
+
 //        Range1 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "R1");
 //        Range1.setI2cAddress(I2cAddr.create8bit(0x28));
 //        Range1Value = Range1.getDistance(DistanceUnit.CM);
@@ -170,15 +173,7 @@ public abstract class HardwareMap extends OpMode{
         //Calibrate
     }
     public void init_loop(){
-        if (calibrate == false)
-        {
-            Gyro1.calibrate();
-            calibrate = true;
-        }
-        if (Gyro1.isCalibrating() == false)
-        {
-            calibrated = true;
-        }
+        Gyro1.calibrate();
     }
 
     //Classes
