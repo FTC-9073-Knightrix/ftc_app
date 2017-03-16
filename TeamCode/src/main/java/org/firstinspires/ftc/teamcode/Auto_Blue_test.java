@@ -412,6 +412,13 @@ public class Auto_Blue_test extends Telemetry{
                 else
                 {
                     MoveMiddleDrive(0.2);
+                    if (LegoRangeValue < 80)
+                    {
+                        ChangeState(14);
+                        LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                    }
                 }
             }
         }
@@ -452,10 +459,129 @@ public class Auto_Blue_test extends Telemetry{
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 ChangeState(20);
             }
+        }/***/
 
-         }/***/
-
-
+        if (move_state == 14)
+        {
+            if (Range1Value <= 150)
+            {
+                MoveRobot(0.8, 0.8);
+            }
+            else
+            {
+                MoveRobot(0,0);
+                ChangeState(15);
+            }
+        }
+        if (move_state == 15)
+        {
+            MoveRobot(-0.7, 0.7);
+            if (Gyro1Heading < 132)       // Stop robot when reaching position
+            {
+                MoveRobot(0, 0);
+                ChangeState(16);
+            }
+        }
+        if(move_state == 16)
+        {
+            if(Range1Value > 46)
+            {
+                MoveRobot(-0.8, -0.8);
+            }
+            else
+            {
+                MoveRobot(0, 0);
+                ChangeState(17);
+            }
+        }
+        if (move_state == 17)
+        {
+            //If at least one line tracker detects white, we reached the line and go to next stage
+            if (RightLineVoltage < LineTrackerVoltage || LeftLineVoltage < LineTrackerVoltage || FrontLineVoltage < LineTrackerVoltage)
+            {
+                //Move to the next state
+                ChangeState(18);
+            }
+            else
+            {
+                MoveMiddleDrive(-0.2);
+            }
+        }
+        if (move_state == 18)
+        {
+            ///////// FOLLOW THE LINE CODE
+            // The right and left line trackers detect white -> Go Forward
+            if (RightLineVoltage < LineTrackerVoltage && LeftLineVoltage < LineTrackerVoltage)
+            {
+                MoveRobot(-0.65, -0.65);
+            } else
+            {
+                // The right and left line trackers detect black -> Go Forward
+                if (RightLineVoltage >= LineTrackerVoltage && LeftLineVoltage >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.65, -0.65);
+                }
+                // Else if only the right line tracker is black -> Turn one side
+                else if (RightLineVoltage >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.2, -0.65);
+                }
+                // Else if only the left line tracker is black -> Turn the other side
+                else if (LeftLineVoltage >= LineTrackerVoltage)
+                {
+                    MoveRobot(-0.65, -0.2);
+                }
+            }
+            ///////// END FOLLOW THE LINE CODE
+            // If the robot is less than 18 cm from the wall, detect color and lower ARM Servo
+            if (Range1Value < 18)
+            {
+                // If the beacon is RED
+                if (red && !blue)
+                {
+                    //Move the left beacon presser up and leave the right beacon presser down
+                    MoveRightBeacon(false);     // Right UP
+                    MoveLeftBeacon(true);       // Left DOWN
+                    //Move to the next state
+                    ChangeState(19);
+                }
+                // If the beacon is BLUE
+                else if (blue && !red)
+                {
+                    //Move the right beacon presser up and leave the left beacon presser down
+                    MoveRightBeacon(true);      // Right DOWN
+                    MoveLeftBeacon(false);      // Left UP
+                    //Move to the next state
+                    ChangeState(19);
+                }
+                // If neither or both colors are detected
+                else if ((!blue && !red) || (red && blue))
+                {
+                    //Leave both of the beacon pressers up
+                    MoveLeftBeacon(true);       // Right UP
+                    MoveRightBeacon(true);      // Left DOWN
+                }
+            }
+            //If the robot is greater than 18 cm from the wall
+            else
+            {
+                //Keep both of the beacon pressers up
+                MoveLeftBeacon(true);
+                MoveRightBeacon(true);
+            }
+        }
+        if (move_state == 19)
+        {
+            if (timer2 <= 1)
+            {
+                MoveRobot(-1, -1);      // Move Forwards
+            }
+            // After 1 second, move to next state
+            else if (timer2 > 1)
+            {
+                ChangeState(20);
+            }
+        }
 
 
         // Last State -> Turn off Motors

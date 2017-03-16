@@ -489,7 +489,7 @@ public class Auto_Red_test extends Telemetry
                 //If none of the line trackers have yet to sense white, keep moving left
                 else
                 {
-                    MoveMiddleDrive(20);
+                    MoveMiddleDrive(0.2);
                 }
             }
         }
