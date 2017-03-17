@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 //adds the file to the FtcOpmodeRegister
 @TeleOp(name = "H Drive", group = "H Drive Programs")
@@ -38,10 +39,16 @@ public class HDRIVE extends Telemetry{
 
         if(gamepad2.right_bumper && (BallShooterPosition == ShooterEncoderPosition || (BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 12 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 12)))
         {
+            BallShooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             ShooterEncoderPosition = BallShooterPosition;
             BallShooter.setPower(1);
             BallShooter.setTargetPosition(ShooterEncoderRotation + BallShooterPosition);
         }
+        else if (BallShooterPosition == ShooterEncoderPosition || (BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 12 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 12))
+        {
+            BallShooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+
         /*
         //If gamepad 2's right bumper is pressed and 'rightBumperBoolean' is false
         if(gamepad2.right_bumper && rightBumperBoolean == false){

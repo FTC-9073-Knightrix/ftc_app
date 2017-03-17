@@ -318,7 +318,8 @@ public class Auto_Blue_test extends Telemetry{
             // After 1 second, move to next state
             else if (timer2 > 1)
             {
-                if (BeaconNum == 1) {
+                if (BeaconNum == 1)
+                {
                     BeaconNum = 2;
                     ChangeState(10);
                 } else {
@@ -427,7 +428,6 @@ public class Auto_Blue_test extends Telemetry{
         /***/ // Park Robot in center vortex, removing cap ball
         if (move_state == 13)
         {
-
             // Select coordinates for center vortex parking
             int MiddlePosition = -5000;
             int ForwardPosition = 6000;
@@ -459,8 +459,44 @@ public class Auto_Blue_test extends Telemetry{
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 ChangeState(20);
             }
-        }/***/
+        }
 
+        if (move_state == 14)
+        {
+            // Select coordinates for center vortex parking
+            int MiddlePosition = -4000;
+            int ForwardPosition = 6000;
+
+            if (timer2 < 3)
+            {
+                if (MiddleDrivePosition > MiddlePosition || LeftDrivePosition < ForwardPosition)
+                {
+
+                    MiddleDrive.setPower(-0.7);
+                    MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    MiddleDrive.setTargetPosition(MiddlePosition);
+
+                    LeftDrive.setPower(1);
+                    RightDrive.setPower(1);
+
+                    LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    LeftDrive.setTargetPosition(ForwardPosition);
+                    RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    RightDrive.setTargetPosition(ForwardPosition);
+
+
+                }
+            }
+            else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
+            {
+                LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                ChangeState(20);
+            }
+        }
+
+        /**
         if (move_state == 14)
         {
             if (Range1Value <= 150)
@@ -582,7 +618,7 @@ public class Auto_Blue_test extends Telemetry{
                 ChangeState(20);
             }
         }
-
+        */
 
         // Last State -> Turn off Motors
         if (move_state == 20)

@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -175,7 +176,7 @@ public class Auto_Red_test extends Telemetry
         //State 3 = Get closer to line for first beacon (Option B: Move Sideways)
         if (move_state == 3)
         {
-            int MiddlePosition = -7000;
+            int MiddlePosition = -6500;
 
             if ((MiddleDrivePosition > MiddlePosition) )
             {
@@ -193,7 +194,7 @@ public class Auto_Red_test extends Telemetry
         //State 4 = Get closer to line for first beacon (Option B: Move Forward)
         if (move_state == 4)
         {
-            int ForwardPosition = -4000;
+            int ForwardPosition = -3500;
 
             if ((LeftDrivePosition > ForwardPosition))
             {
@@ -246,7 +247,7 @@ public class Auto_Red_test extends Telemetry
         if (move_state == 7)
         {
             //If at least one line tracker detects white, we reached the line and go to next stage
-            if (RightLine.getVoltage() < LineTrackerVoltage || LeftLine.getVoltage() < LineTrackerVoltage || FrontLine.getVoltage() < LineTrackerVoltage)
+            if (RightLineVoltage < LineTrackerVoltage || LeftLineVoltage < LineTrackerVoltage || FrontLineVoltage < LineTrackerVoltage)
             {
                 //Move to the next state
                 ChangeState(8);
@@ -264,23 +265,23 @@ public class Auto_Red_test extends Telemetry
 
             ///////// FOLLOW THE LINE CODE
             // The right and left line trackers detect white -> Go Forward
-            if (RightLine.getVoltage() < LineTrackerVoltage && LeftLine.getVoltage() < LineTrackerVoltage)
+            if (RightLineVoltage < LineTrackerVoltage && LeftLineVoltage < LineTrackerVoltage)
             {
                 MoveRobot(-0.65, -0.65);
             } else
             {
                 // The right and left line trackers detect black -> Go Forward
-                if (RightLine.getVoltage() >= LineTrackerVoltage && LeftLine.getVoltage() >= LineTrackerVoltage)
+                if (RightLineVoltage >= LineTrackerVoltage && LeftLineVoltage >= LineTrackerVoltage)
                 {
                     MoveRobot(-0.65, -0.65);
                 }
                 // Else if only the right line tracker is black -> Turn one side
-                else if (RightLine.getVoltage() >= LineTrackerVoltage)
+                else if (RightLineVoltage >= LineTrackerVoltage)
                 {
                     MoveRobot(-0.2, -0.65);
                 }
                 // Else if only the left line tracker is black -> Turn the other side
-                else if (LeftLine.getVoltage() >= LineTrackerVoltage)
+                else if (LeftLineVoltage >= LineTrackerVoltage)
                 {
                     MoveRobot(-0.65, -0.2);
                 }
@@ -388,7 +389,8 @@ public class Auto_Red_test extends Telemetry
                 // Moves away from the wall
                 LeftPower = .3;
                 RightPower = .3;
-            } else if (Range1Value > 50) //we are far away
+            }
+            else if (Range1Value > 45) //we are far away
             {
                 // Moves towards from the wall
                 LeftPower = -.3;
@@ -401,7 +403,8 @@ public class Auto_Red_test extends Telemetry
                 //  Spin the robot in one direction
                 LeftPower = LeftPower + .075;
                 RightPower = RightPower - .075;
-            } else if (Gyro1Heading <= 180)
+            }
+            else if (Gyro1Heading <= 180)
             {
                 //  Spin the robot in the other direction
                 LeftPower = LeftPower - .075;
@@ -428,6 +431,13 @@ public class Auto_Red_test extends Telemetry
                 else
                 {
                     MoveMiddleDrive(-0.2);
+                    if (Range2Value < 80)
+                    {
+                        ChangeState(14);
+                        LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                    }
                 }
             }
         }
@@ -462,11 +472,48 @@ public class Auto_Red_test extends Telemetry
 
 //                }
             }
-            else if (timer2 >= 2)        // After 3 seconds, robot should be in position. Move to next stage
+            else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
             {
-                ChangeState(14);
+                ChangeState(20);
             }
         }
+
+        if (move_state == 14)
+        {
+            // Select coordinates for center vortex parking
+            int MiddlePosition = 4000;
+            int ForwardPosition = 6000;
+
+            if (timer2 < 3)
+            {
+                if (MiddleDrivePosition < MiddlePosition || LeftDrivePosition < ForwardPosition)
+                {
+
+                    MiddleDrive.setPower(0.7);
+                    MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    MiddleDrive.setTargetPosition(MiddlePosition);
+
+                    LeftDrive.setPower(1);
+                    RightDrive.setPower(1);
+
+                    LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    LeftDrive.setTargetPosition(ForwardPosition);
+                    RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    RightDrive.setTargetPosition(ForwardPosition);
+
+
+                }
+            }
+            else if (timer2 > 3)        // After 3 seconds, robot should be in position. Move to next stage
+            {
+                LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                ChangeState(20);
+            }
+        }
+
+        /**
         if (move_state == 14)
         {
             MoveRobot(1, -1);                   // Move Robot
@@ -557,8 +604,8 @@ public class Auto_Red_test extends Telemetry
                 //Keep both of the beacon pressers up
                 MoveLeftBeacon(true);
                 MoveRightBeacon(true);
-            }
-        }
+            }}
+         */
         // Last State -> Turn off Motors
         if (move_state == 20)
         {
