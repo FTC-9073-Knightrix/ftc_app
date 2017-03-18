@@ -12,20 +12,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public abstract class Telemetry extends HardwareMap{
     public void UpdateTelemetry (){
         GetValues();
-        //telemetry data goes here
-        telemetry.addLine("Time: " + Double.toString(getRuntime()));
         if(TeleOp == false)
         {
+            //Time
+            telemetry.addLine("Time: " + Double.toString(getRuntime()));
             //Middle Wheel
             telemetry.addLine("~Middle Motor~");
             telemetry.addLine("Speed: " + (MiddleDrivePower * 100) + "%");
             telemetry.addLine("Encoder Middle: " + MiddleDrivePosition);
             telemetry.addLine("Encoder Left: " + LeftDrivePosition);
             telemetry.addLine("Encoder Right: " + RightDrivePosition);
-        }
-        telemetry.addLine("Encoder Shooter: " + BallShooterPosition);
-        if(TeleOp == false)
-        {
+            telemetry.addLine("Encoder Shooter: " + BallShooterPosition);
             //Left Wheel
             telemetry.addLine("~Left Motor~");
             telemetry.addLine("Speed: " + (LeftDrivePower * 100) + "%");
@@ -129,6 +126,13 @@ public abstract class Telemetry extends HardwareMap{
                 telemetry.addLine("Color 3: Black");
             }
             telemetry.addLine("Value 3: " + RightLineVoltage);
+        }
+        else
+        {
+            //Time
+            telemetry.addLine("Time: " + Double.toString(getRuntime()));
+            //Encoder
+            telemetry.addLine("Encoder Shooter: " + BallShooterPosition);
         }
     }
 }

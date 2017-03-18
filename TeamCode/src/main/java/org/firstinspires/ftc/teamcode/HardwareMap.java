@@ -61,7 +61,7 @@ public abstract class HardwareMap extends OpMode{
     public boolean blue;
     public boolean red;
     public boolean benny = false;
-    public static final double LineTrackerVoltage = 2;
+    public static final double LineTrackerVoltage = 3.7;
     public static final int ShooterEncoderRotation = 2870;
     public int ShooterEncoderPosition = 0;
     public double move_state = 0;
@@ -78,6 +78,10 @@ public abstract class HardwareMap extends OpMode{
     public double Range1Value;
     public double Range2Value;
     public boolean TeleOp = false;
+    public boolean BlueAuto = false;
+    public boolean BlueDefense = false;
+    public boolean RedAuto = false;
+    public boolean RedDefense = false;
 
     //Sensor Values
     public double LegoRangeValue;
@@ -401,31 +405,221 @@ public abstract class HardwareMap extends OpMode{
     {
         if(TeleOp == false)
         {
-            //Sensor Values
-            LegoRangeValue = LegoRange.getUltrasonicLevel();
-            /***Range1Value = Range1.getDistance(DistanceUnit.CM);
-             Range2Value = Range2.getDistance(DistanceUnit.CM);*/
-            Range1Cache = Range1Reader.read(0x04, 2);
-            Range2Cache = Range2Reader.read(0x04, 2);
-            Range1Value = Range1Cache[0] & 0xFF;
-            Range2Value = Range2Cache[0] & 0xFF;
-            Color1Red = Color1.red();
-            Color1Green = Color1.green();
-            Color1Blue = Color1.blue();
-            FrontLineVoltage = FrontLine.getVoltage();
-            LeftLineVoltage = LeftLine.getVoltage();
-            RightLineVoltage = RightLine.getVoltage();
-            Gyro1Heading = Gyro1.getHeading();
-            //Motor Powers
-            MiddleDrivePower = MiddleDrive.getPower();
-            LeftDrivePower = LeftDrive.getPower();
-            RightDrivePower = RightDrive.getPower();
-            PickupDrivePower = PickupDrive.getPower();
-            //Motor Encoder Positions
-            MiddleDrivePosition = MiddleDrive.getCurrentPosition();
-            LeftDrivePosition = LeftDrive.getCurrentPosition();
-            RightDrivePosition = RightDrive.getCurrentPosition();
+            if (BlueAuto)
+            {
+                if (move_state == 0.5)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+                if (move_state == 1)
+                {
+                    BallShooterPosition = BallShooter.getCurrentPosition();
+                }
+                if (move_state == 2)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+                if (move_state == 3)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+                if (move_state == 4)
+                {
+                    LeftDrivePower = LeftDrive.getPower();
+                    LeftDrivePosition = LeftDrive.getCurrentPosition();
+                }
+                if (move_state == 6.5)
+                {
+                    Gyro1Heading = Gyro1.getHeading();
+                }
+                if (move_state == 7)
+                {
+                    FrontLineVoltage = FrontLine.getVoltage();
+                    LeftLineVoltage = LeftLine.getVoltage();
+                    RightLineVoltage = RightLine.getVoltage();
+                }
+                if (move_state == 8)
+                {
+                    LeftLineVoltage = LeftLine.getVoltage();
+                    RightLineVoltage = RightLine.getVoltage();
+                    Range1Cache = Range1Reader.read(0x04, 2);
+                    Range1Value = Range1Cache[0] & 0xFF;
+                    Color1Red = Color1.red();
+                    Color1Green = Color1.green();
+                    Color1Blue = Color1.blue();
+                }
+                if (move_state == 11)
+                {
+                    Range1Cache = Range1Reader.read(0x04, 2);
+                    Range1Value = Range1Cache[0] & 0xFF;
+                    Gyro1Heading = Gyro1.getHeading();
+                    FrontLineVoltage = FrontLine.getVoltage();
+                    LeftLineVoltage = LeftLine.getVoltage();
+                    RightLineVoltage = RightLine.getVoltage();
+                    LegoRangeValue = LegoRange.getUltrasonicLevel();
+                }
+                if (move_state == 13)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    LeftDrivePower = LeftDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                    LeftDrivePosition = LeftDrive.getCurrentPosition();
+                }
+                if (move_state == 14)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    LeftDrivePower = LeftDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                    LeftDrivePosition = LeftDrive.getCurrentPosition();
+                }
+            }
+            if (RedAuto)
+            {
+                if (move_state == 0.5)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+                if (move_state == 1)
+                {
+                    BallShooterPosition = BallShooter.getCurrentPosition();
+                }
+                if (move_state == 3)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+                if (move_state == 4)
+                {
+                    LeftDrivePower = LeftDrive.getPower();
+                    LeftDrivePosition = LeftDrive.getCurrentPosition();
+                }
+                if (move_state == 6.5)
+                {
+                    Gyro1Heading = Gyro1.getHeading();
+                }
+                if (move_state == 7)
+                {
+                    FrontLineVoltage = FrontLine.getVoltage();
+                    LeftLineVoltage = LeftLine.getVoltage();
+                    RightLineVoltage = RightLine.getVoltage();
+                }
+                if (move_state == 8)
+                {
+                    LeftLineVoltage = LeftLine.getVoltage();
+                    RightLineVoltage = RightLine.getVoltage();
+                    Color1Red = Color1.red();
+                    Color1Green = Color1.green();
+                    Color1Blue = Color1.blue();
+                }
+                if (move_state == 11)
+                {
+                    Range1Cache = Range1Reader.read(0x04, 2);
+                    Range1Value = Range1Cache[0] & 0xFF;
+                    Gyro1Heading = Gyro1.getHeading();
+                    FrontLineVoltage = FrontLine.getVoltage();
+                    LeftLineVoltage = LeftLine.getVoltage();
+                    RightLineVoltage = RightLine.getVoltage();
+                    Range2Cache = Range2Reader.read(0x04, 2);
+                    Range2Value = Range2Cache[0] & 0xFF;
+                }
+                if (move_state == 14)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+            }
+            if (BlueDefense)
+            {
+                if (move_state == 0)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+                if (move_state == 1)
+                {
+                    BallShooterPosition = BallShooter.getCurrentPosition();
+                }
+                if (move_state == 3)
+                {
+                    Gyro1Heading = Gyro1.getHeading();
+                }
+                if (move_state == 4)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+                if (move_state == 5)
+                {
+                    LeftDrivePower = LeftDrive.getPower();
+                    LeftDrivePosition = LeftDrive.getCurrentPosition();
+                }
+                if (move_state == 6)
+                {
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+                if (move_state == 7)
+                {
+                    Range1Cache = Range1Reader.read(0x04, 2);
+                    Range1Value = Range1Cache[0] & 0xFF;
+                }
+            }
+            if (RedDefense)
+            {
+                if (move_state == 0)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+                if (move_state == 1)
+                {
+                    BallShooterPosition = BallShooter.getCurrentPosition();
+                }
+                if (move_state == 3)
+                {
+                    Gyro1Heading = Gyro1.getHeading();
+                }
+                if (move_state == 4)
+                {
+                    MiddleDrivePower = MiddleDrive.getPower();
+                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                }
+            }
+            else
+            {
+                //Sensor Values
+                LegoRangeValue = LegoRange.getUltrasonicLevel();
+                //Range1Value = Range1.getDistance(DistanceUnit.CM);
+                //Range2Value = Range2.getDistance(DistanceUnit.CM);
+                Range1Cache = Range1Reader.read(0x04, 2);
+                Range2Cache = Range2Reader.read(0x04, 2);
+                Range1Value = Range1Cache[0] & 0xFF;
+                Range2Value = Range2Cache[0] & 0xFF;
+                Color1Red = Color1.red();
+                Color1Green = Color1.green();
+                Color1Blue = Color1.blue();
+                FrontLineVoltage = FrontLine.getVoltage();
+                LeftLineVoltage = LeftLine.getVoltage();
+                RightLineVoltage = RightLine.getVoltage();
+                Gyro1Heading = Gyro1.getHeading();
+                //Motor Powers
+                MiddleDrivePower = MiddleDrive.getPower();
+                LeftDrivePower = LeftDrive.getPower();
+                RightDrivePower = RightDrive.getPower();
+                PickupDrivePower = PickupDrive.getPower();
+                //Motor Encoder Positions
+                MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                LeftDrivePosition = LeftDrive.getCurrentPosition();
+                RightDrivePosition = RightDrive.getCurrentPosition();
+                BallShooterPosition = BallShooter.getCurrentPosition();
+            }
         }
-        BallShooterPosition = BallShooter.getCurrentPosition();
+        else
+        {
+            BallShooterPosition = BallShooter.getCurrentPosition();
+        }
     }
 }

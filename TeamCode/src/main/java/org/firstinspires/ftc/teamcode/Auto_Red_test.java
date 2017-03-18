@@ -25,6 +25,7 @@ public class Auto_Red_test extends Telemetry
     public void loop()
     {
         UpdateTelemetry();
+        RedAuto = true;
         telemetry.addData("11", "Timer: " + timer2);
         telemetry.addData("12", "State: " + move_state);
         if (Color1 != null)
@@ -74,27 +75,23 @@ public class Auto_Red_test extends Telemetry
         if (move_state == 0)
         {
             // Reset variables
-            int MiddlePosition = 0;     // Encoder middle wheel
+            // Encoder middle wheel
             /**hardwareMap.deviceInterfaceModule.get("dim").setLED(1,true); //1-red, 2-blue
             hardwareMap.deviceInterfaceModule.get("dim").setLED(2,false); //1-red, 2-blue*/
 
             // Reset Left, Right and Middle wheels to run with encoders
-            /**MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);*/
+            MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             LeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             RightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BallShooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            BallShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BallShooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            /**MiddlePosition = -3900;
-            while (MiddleDrive.getCurrentPosition() > MiddlePosition)
-            {
-                MiddleDrive.setPower(-.7);
-                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                MiddleDrive.setTargetPosition(MiddlePosition);
-            }
-            ChangeState(1);*/
-            if (LegoRangeValue < 46)
+
+            /**if (LegoRangeValue < 30)
             {
                 MoveMiddleDrive(-1);
             }
@@ -102,9 +99,23 @@ public class Auto_Red_test extends Telemetry
             {
                 MoveMiddleDrive(0);
                 ChangeState(1);
+            }*/
+            ChangeState(0.5);
+        }
+        if (move_state == 0.5)
+        {
+            int MiddlePosition;
+            MiddlePosition = -4100;
+            if (MiddleDrivePosition > MiddlePosition)
+            {
+                MiddleDrive.setPower(-.7);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                MiddleDrive.setTargetPosition(MiddlePosition);
+            } else
+            {
+                ChangeState(1);
             }
         }
-
         //State 1 = Shoot the ball twice
         if (move_state == 1)
         {
@@ -180,7 +191,7 @@ public class Auto_Red_test extends Telemetry
 
             if ((MiddleDrivePosition > MiddlePosition) )
             {
-                MiddleDrive.setPower(.7);
+                MiddleDrive.setPower(.9);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
 
@@ -194,7 +205,7 @@ public class Auto_Red_test extends Telemetry
         //State 4 = Get closer to line for first beacon (Option B: Move Forward)
         if (move_state == 4)
         {
-            int ForwardPosition = -3500;
+            int ForwardPosition = -3600;
 
             if ((LeftDrivePosition > ForwardPosition))
             {
@@ -255,7 +266,7 @@ public class Auto_Red_test extends Telemetry
             //If none of the line trackers have yet to sense white, keep moving left
             else
             {
-                MoveMiddleDrive(-0.2);
+                MoveMiddleDrive(-0.25);
             }
         }
 
@@ -267,30 +278,30 @@ public class Auto_Red_test extends Telemetry
             // The right and left line trackers detect white -> Go Forward
             if (RightLineVoltage < LineTrackerVoltage && LeftLineVoltage < LineTrackerVoltage)
             {
-                MoveRobot(-0.65, -0.65);
+                MoveRobot(-0.75, -0.75);
             } else
             {
                 // The right and left line trackers detect black -> Go Forward
                 if (RightLineVoltage >= LineTrackerVoltage && LeftLineVoltage >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.65, -0.65);
+                    MoveRobot(-0.75, -0.75);
                 }
                 // Else if only the right line tracker is black -> Turn one side
                 else if (RightLineVoltage >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.2, -0.65);
+                    MoveRobot(-0.3, -0.75);
                 }
                 // Else if only the left line tracker is black -> Turn the other side
                 else if (LeftLineVoltage >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.65, -0.2);
+                    MoveRobot(-0.75, -0.3);
                 }
             }
             ///////// END FOLLOW THE LINE CODE
 
 
             // If the robot is less than 18 cm from the wall, detect color and lower ARM Servo
-            if (Range1Value < 18)
+            if (Range1Value < 20)
             {
                 // If the beacon is RED
                 if (red && !blue)
@@ -431,7 +442,7 @@ public class Auto_Red_test extends Telemetry
                 else
                 {
                     MoveMiddleDrive(-0.2);
-                    if (Range2Value < 80)
+                    if (Range2Value < 10)
                     {
                         ChangeState(14);
                         LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -448,8 +459,8 @@ public class Auto_Red_test extends Telemetry
         {
 
             // Select coordinates for center vortex parking
-            int MiddlePosition = -4000;
-            //int ForwardPosition = 4500;
+            int MiddlePosition = -5000;
+            int ForwardPosition = 6000;
 
             if (timer2 < 2)
             {
@@ -461,12 +472,12 @@ public class Auto_Red_test extends Telemetry
                 MiddleDrive.setPower(1);
 
 
-//                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                LeftDrive.setTargetPosition(ForwardPosition);
-//                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                RightDrive.setTargetPosition(ForwardPosition);
-//                LeftDrive.setPower(1);
-//                RightDrive.setPower(1);
+                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                LeftDrive.setTargetPosition(ForwardPosition);
+                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                RightDrive.setTargetPosition(ForwardPosition);
+                LeftDrive.setPower(1);
+                RightDrive.setPower(1);
 
 //
 
@@ -481,7 +492,7 @@ public class Auto_Red_test extends Telemetry
         if (move_state == 14)
         {
             // Select coordinates for center vortex parking
-            int MiddlePosition = 4000;
+            int MiddlePosition = 3600;
             int ForwardPosition = 6000;
 
             if (timer2 < 3)

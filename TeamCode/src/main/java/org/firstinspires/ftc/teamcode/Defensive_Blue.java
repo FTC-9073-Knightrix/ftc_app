@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name = "Blue 2 Ball 2 Beacon", group = "Autonomous")
+@Autonomous(name = "Blue Defensive", group = "Autonomous")
 /**
  * Created by nicolasbravo on 3/16/17.
  * For use in the [Driver Controlled/Autonomous] Portion of the match
@@ -22,6 +22,7 @@ public class Defensive_Blue extends Telemetry
     public void loop()
     {
         UpdateTelemetry();
+        BlueDefense = true;
         telemetry.addData("11", "Timer: " + timer2);
         telemetry.addData("12", "State: " + move_state);
         if (Color1 != null)
@@ -71,10 +72,13 @@ public class Defensive_Blue extends Telemetry
 
             MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BallShooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            BallShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            BallShooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             MiddlePosition = -4000;
 
-            while (MiddleDrivePosition > MiddlePosition)
+            if (MiddleDrivePosition > MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -136,7 +140,7 @@ public class Defensive_Blue extends Telemetry
 
             MiddlePosition = -2000;
 
-            while (MiddleDrivePosition > MiddlePosition)
+            if (MiddleDrivePosition > MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -173,11 +177,11 @@ public class Defensive_Blue extends Telemetry
         int MiddlePosition = 0;
             if (timer2 < 2)
                 MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             MiddlePosition = -800;
 
-            while (MiddleDrivePosition > MiddlePosition)
+            if (MiddleDrivePosition > MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
