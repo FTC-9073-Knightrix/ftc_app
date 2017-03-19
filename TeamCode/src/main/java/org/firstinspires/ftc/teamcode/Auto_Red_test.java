@@ -105,13 +105,14 @@ public class Auto_Red_test extends Telemetry
         if (move_state == 0.5)
         {
             int MiddlePosition;
-            MiddlePosition = -4100;
+            MiddlePosition = -4250;
             if (MiddleDrivePosition > MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
-            } else
+            }
+            else
             {
                 ChangeState(1);
             }
@@ -278,23 +279,23 @@ public class Auto_Red_test extends Telemetry
             // The right and left line trackers detect white -> Go Forward
             if (RightLineVoltage < LineTrackerVoltage && LeftLineVoltage < LineTrackerVoltage)
             {
-                MoveRobot(-0.75, -0.75);
+                MoveRobot(-0.65, -0.65);
             } else
             {
                 // The right and left line trackers detect black -> Go Forward
                 if (RightLineVoltage >= LineTrackerVoltage && LeftLineVoltage >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.75, -0.75);
+                    MoveRobot(-0.65, -0.65);
                 }
                 // Else if only the right line tracker is black -> Turn one side
                 else if (RightLineVoltage >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.3, -0.75);
+                    MoveRobot(-0.2, -0.65);
                 }
                 // Else if only the left line tracker is black -> Turn the other side
                 else if (LeftLineVoltage >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.75, -0.3);
+                    MoveRobot(-0.65, -0.2);
                 }
             }
             ///////// END FOLLOW THE LINE CODE
@@ -492,15 +493,15 @@ public class Auto_Red_test extends Telemetry
         if (move_state == 14)
         {
             // Select coordinates for center vortex parking
-            int MiddlePosition = 3600;
+            int MiddlePosition = -3600;
             int ForwardPosition = 6000;
 
             if (timer2 < 3)
             {
-                if (MiddleDrivePosition < MiddlePosition || LeftDrivePosition < ForwardPosition)
+                if (MiddleDrivePosition > MiddlePosition || LeftDrivePosition < ForwardPosition)
                 {
 
-                    MiddleDrive.setPower(0.7);
+                    MiddleDrive.setPower(-0.7);
                     MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     MiddleDrive.setTargetPosition(MiddlePosition);
 

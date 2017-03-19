@@ -3,14 +3,14 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name = "Blue Corner", group = "Autonomous")
+@Autonomous(name = "Blue Vortex", group = "Autonomous")
 /**
  * Created by nicolasbravo on 3/16/17.
  * For use in the [Driver Controlled/Autonomous] Portion of the match
  * [Description]
  */
 
-public class Defensive_Blue extends Telemetry
+public class SecondaryBlueCap extends Telemetry
 {
     @Override
     public void start()
@@ -78,7 +78,7 @@ public class Defensive_Blue extends Telemetry
         }
         if (move_state == 0.5)
         {
-            int MiddlePosition = -8000;
+            int MiddlePosition = -8200;
 
             if (MiddleDrivePosition > MiddlePosition)
             {
@@ -141,9 +141,9 @@ public class Defensive_Blue extends Telemetry
         }
         if (move_state == 3)
         {
-            if (timer2 < 2)
+            if (timer2 < 1)
             {
-                MoveRobot(0.8, 0.8);
+                MoveMiddleDrive(-0.9);
             }
             else
             {
@@ -153,26 +153,22 @@ public class Defensive_Blue extends Telemetry
         }
         if (move_state == 4)
         {
-            if (timer2 < 2)
+            MoveRobot(0.7, -0.7);                   // Move Robot
+            if (Gyro1Heading > 65 && Gyro1Heading < 115)       // Stop robot when reaching position
             {
-                MoveMiddleDrive(-1);
-            }
-            else
-            {
+                MoveRobot(0, 0);
                 ChangeState(5);
-                MoveMiddleDrive(0);
             }
         }
         if (move_state == 5)
         {
-            if (timer2 < 1.4)
+            if (timer2 < 1.5)
             {
-                MoveRobot(3, 3);
+                MoveRobot(-1, -1);
             }
             else
             {
                 ChangeState(20);
-                MoveRobot(0, 0);
             }
         }
         if (move_state == 20)
@@ -184,108 +180,6 @@ public class Defensive_Blue extends Telemetry
             MoveRobot(0, 0);
             MoveMiddleDrive(0);
         }
-        /**if (move_state == 3)
-        {
-            MoveRobot(-0.7, 0.7);
-            if (Gyro1Heading > 55)       // Stop robot when reaching position
-            {
-                MoveRobot(0, 0);
-                ChangeState(4);
-            }
-        }
-        if (move_state == 4)
-        {
-            int MiddlePosition = 0;
-            if (timer2 < 2)
-            MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            MiddlePosition = -2000;
-
-            if (MiddleDrivePosition > MiddlePosition)
-            {
-                MiddleDrive.setPower(-.7);
-                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                MiddleDrive.setTargetPosition(MiddlePosition);
-
-            }
-            ChangeState(5);
-
-        }
-        if (move_state == 5)
-        {
-            int ForwardPosition = 8000;
-
-            if (LeftDrivePosition < ForwardPosition)
-            {
-                LeftDrive.setPower(1);
-                RightDrive.setPower(1);
-                LeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                LeftDrive.setTargetPosition(ForwardPosition);
-                RightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                RightDrive.setTargetPosition(ForwardPosition);
-
-            }
-            else
-            {
-                LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                ChangeState(6);
-            }
-        }
-        if (move_state == 6)
-        {
-        int MiddlePosition = 0;
-            if (timer2 < 2)
-                MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            MiddlePosition = -800;
-
-            if (MiddleDrivePosition > MiddlePosition)
-            {
-                MiddleDrive.setPower(-.7);
-                MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                MiddleDrive.setTargetPosition(MiddlePosition);
-
-            }
-            ChangeState(7);
-        }
-        if (move_state == 7)
-        {
-            if (Range1Value > 5)
-            {
-                MoveRobot(-0.8, -0.8);
-            }
-            else
-            {
-                MoveRobot(0, 0);
-                ChangeState(8);
-            }
-        }
-        if (move_state == 8)
-        {
-            if (timer2 < 1)
-            {
-                MoveMiddleDrive(1);
-            }
-            else
-            {
-                ChangeState(9);
-            }
-        }
-        if (move_state == 9)
-        {
-            if (timer2 < 1.2)
-            {
-                MoveMiddleDrive(-.5);
-            }
-            else
-            {
-                ChangeState(8);
-            }
-        }*/
     }
 }
 

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name = "Red Defensive", group = "Autonomous")
+@Autonomous(name = "Red Secondary", group = "Autonomous")
 /**
  * Created by nicolasbravo on 3/16/17.
  * For use in the [Driver Controlled/Autonomous] Portion of the match
@@ -66,24 +66,28 @@ public class Defensive_Red extends Telemetry
         Timer2Reset();
         if (move_state == 0)
         {
-            int MiddlePosition = 0;
-
             MiddleDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             MiddleDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             BallShooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             BallShooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             BallShooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            MiddlePosition = -4000;
+            ChangeState(0.5);
+        }
+        if (move_state == 0.5)
+        {
+            int MiddlePosition = -7250;
 
             if (MiddleDrivePosition > MiddlePosition)
             {
                 MiddleDrive.setPower(-.7);
                 MiddleDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 MiddleDrive.setTargetPosition(MiddlePosition);
-
             }
-            ChangeState(1);
+            else
+            {
+                ChangeState(1);
+            }
         }
         if (move_state == 1)
         {
@@ -114,13 +118,73 @@ public class Defensive_Red extends Telemetry
                 //Move to the next state
                 // State Option A: Diagonal         -> ChangeState(2)
                 // State Option B: Side & Forward   -> ChangeState(3)
-                ChangeState(3);
+                ChangeState(2);
                 LeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 RightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 ShootState = 0;
             }
         }
+        if (move_state == 2)
+        {
+            if (timer2 < 10)
+            {
+                LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                MoveRobot(0,0);
+                MoveMiddleDrive(0);
+            }
+            else
+            {
+                ChangeState(3);
+            }
+        }
         if (move_state == 3)
+        {
+            if (timer2 < 2)
+            {
+                MoveRobot(-0.8, -0.8);
+            }
+            else
+            {
+                ChangeState(4);
+                MoveRobot(0, 0);
+            }
+        }
+        if (move_state == 4)
+        {
+            if (timer2 < 2)
+            {
+                MoveMiddleDrive(-1);
+            }
+            else
+            {
+                ChangeState(5);
+                MoveMiddleDrive(0);
+            }
+        }
+        if (move_state == 5)
+        {
+            if (timer2 < 1.4)
+            {
+                MoveRobot(-3, -3);
+            }
+            else
+            {
+                ChangeState(20);
+                MoveRobot(0, 0);
+            }
+        }
+        if (move_state == 20)
+        {
+            LeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            RightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            MiddleDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            MoveRobot(0, 0);
+            MoveMiddleDrive(0);
+        }
+        /**if (move_state == 3)
         {
             MoveRobot(0.7, -0.7);
             if (Gyro1Heading < 55)       // Stop robot when reaching position
@@ -147,7 +211,7 @@ public class Defensive_Red extends Telemetry
             }
             ChangeState(5);
 
-        }
+        }*/
     }
 }
 

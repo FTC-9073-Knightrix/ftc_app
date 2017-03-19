@@ -99,7 +99,7 @@ public class Auto_Blue_test extends Telemetry{
         if (move_state == 0.5)
         {
             int MiddlePosition;
-            MiddlePosition = -4100;
+            MiddlePosition = -4500;
             if (MiddleDrive != null)
             {
                 if (MiddleDrivePosition > MiddlePosition)
@@ -240,6 +240,42 @@ public class Auto_Blue_test extends Telemetry{
         // Go Left until finding white line
         if (move_state == 7)
         {
+            // #########   Section to keep robot close to wall ##########
+            // #########   Keep robot parallel to the wall ##########
+            double LeftPower = 0;
+            double RightPower =0;
+
+            // (A) Keep robot at 30 - 50 cm from wall
+            if (Range1Value < 30)      //we are close
+            {
+                // Moves away from the wall
+                LeftPower = .3;
+                RightPower = .3;
+            }
+            else if (Range1Value > 45) //we are far away
+            {
+                // Moves towards from the wall
+                LeftPower = -.3;
+                RightPower = -.3;
+            }
+
+            // (B) Alight the Gyro to 180 degrees
+            if (Gyro1Heading > 180) {
+                //  Spin the robot in one direction
+                LeftPower = LeftPower - .075;
+                RightPower = RightPower + .075;
+            }
+            else if (Gyro1Heading <= 180) {
+                //  Spin the robot in the other direction
+                LeftPower = LeftPower + .075;
+                RightPower = RightPower - .075;
+
+            }
+            // (A) + (B) Values to move the left+right wheels to keep robot parallel to the wall
+            MoveRobot(LeftPower,RightPower);
+            // #########   End Keep robot parallel to the wall ##########
+
+
             //If at least one line tracker detects white, we reached the line and go to next stage
             if (RightLineVoltage < LineTrackerVoltage || LeftLineVoltage < LineTrackerVoltage || FrontLineVoltage < LineTrackerVoltage)
             {
@@ -261,24 +297,24 @@ public class Auto_Blue_test extends Telemetry{
             // The right and left line trackers detect white -> Go Forward
             if (RightLineVoltage < LineTrackerVoltage && LeftLineVoltage < LineTrackerVoltage)
             {
-                MoveRobot(-0.75, -0.75);
+                MoveRobot(-0.65, -0.65);
             }
             else
             {
                 // The right and left line trackers detect black -> Go Forward
                 if (RightLineVoltage >= LineTrackerVoltage && LeftLineVoltage >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.75, -0.75);
+                    MoveRobot(-0.65, -0.65);
                 }
                 // Else if only the right line tracker is black -> Turn one side
                 else if (RightLineVoltage >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.3, -0.75);
+                    MoveRobot(-0.2, -0.65);
                 }
                 // Else if only the left line tracker is black -> Turn the other side
                 else if (LeftLineVoltage >= LineTrackerVoltage)
                 {
-                    MoveRobot(-0.75, -0.3);
+                    MoveRobot(-0.65, -0.2);
                 }
             }
             ///////// END FOLLOW THE LINE CODE
@@ -479,7 +515,7 @@ public class Auto_Blue_test extends Telemetry{
         if (move_state == 14)
         {
             // Select coordinates for center vortex parking
-            int MiddlePosition = -3600;
+            int MiddlePosition = -4000;
             int ForwardPosition = 6000;
 
             if (timer2 < 3)

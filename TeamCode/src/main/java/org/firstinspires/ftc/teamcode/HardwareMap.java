@@ -61,7 +61,7 @@ public abstract class HardwareMap extends OpMode{
     public boolean blue;
     public boolean red;
     public boolean benny = false;
-    public static final double LineTrackerVoltage = 3.7;
+    public static final double LineTrackerVoltage = 2; //2 or 3.7
     public static final int ShooterEncoderRotation = 2870;
     public int ShooterEncoderPosition = 0;
     public double move_state = 0;
@@ -82,6 +82,7 @@ public abstract class HardwareMap extends OpMode{
     public boolean BlueDefense = false;
     public boolean RedAuto = false;
     public boolean RedDefense = false;
+    public boolean EncoderReset = false;
 
     //Sensor Values
     public double LegoRangeValue;
@@ -105,7 +106,7 @@ public abstract class HardwareMap extends OpMode{
     public int MiddleDrivePosition;
     public int LeftDrivePosition;
     public int RightDrivePosition;
-    public int BallShooterPosition;
+    public int BallShooterPosition = 0;
 
     @Override
     public void init(){
@@ -534,7 +535,7 @@ public abstract class HardwareMap extends OpMode{
             }
             if (BlueDefense)
             {
-                if (move_state == 0)
+                if (move_state == 0.5)
                 {
                     MiddleDrivePower = MiddleDrive.getPower();
                     MiddleDrivePosition = MiddleDrive.getCurrentPosition();
@@ -545,31 +546,31 @@ public abstract class HardwareMap extends OpMode{
                 }
                 if (move_state == 3)
                 {
-                    Gyro1Heading = Gyro1.getHeading();
+                    //Gyro1Heading = Gyro1.getHeading();
                 }
                 if (move_state == 4)
                 {
-                    MiddleDrivePower = MiddleDrive.getPower();
-                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                    //MiddleDrivePower = MiddleDrive.getPower();
+                    //MiddleDrivePosition = MiddleDrive.getCurrentPosition();
                 }
                 if (move_state == 5)
                 {
-                    LeftDrivePower = LeftDrive.getPower();
-                    LeftDrivePosition = LeftDrive.getCurrentPosition();
+                    //LeftDrivePower = LeftDrive.getPower();
+                    //LeftDrivePosition = LeftDrive.getCurrentPosition();
                 }
                 if (move_state == 6)
                 {
-                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                    //MiddleDrivePosition = MiddleDrive.getCurrentPosition();
                 }
                 if (move_state == 7)
                 {
-                    Range1Cache = Range1Reader.read(0x04, 2);
-                    Range1Value = Range1Cache[0] & 0xFF;
+                    //Range1Cache = Range1Reader.read(0x04, 2);
+                    //Range1Value = Range1Cache[0] & 0xFF;
                 }
             }
             if (RedDefense)
             {
-                if (move_state == 0)
+                if (move_state == 0.5)
                 {
                     MiddleDrivePower = MiddleDrive.getPower();
                     MiddleDrivePosition = MiddleDrive.getCurrentPosition();
@@ -580,12 +581,12 @@ public abstract class HardwareMap extends OpMode{
                 }
                 if (move_state == 3)
                 {
-                    Gyro1Heading = Gyro1.getHeading();
+                    //Gyro1Heading = Gyro1.getHeading();
                 }
                 if (move_state == 4)
                 {
-                    MiddleDrivePower = MiddleDrive.getPower();
-                    MiddleDrivePosition = MiddleDrive.getCurrentPosition();
+                    //MiddleDrivePower = MiddleDrive.getPower();
+                    //MiddleDrivePosition = MiddleDrive.getCurrentPosition();
                 }
             }
             else
@@ -619,7 +620,7 @@ public abstract class HardwareMap extends OpMode{
         }
         else
         {
-            BallShooterPosition = BallShooter.getCurrentPosition();
+            //BallShooterPosition = BallShooter.getCurrentPosition();
         }
     }
 }

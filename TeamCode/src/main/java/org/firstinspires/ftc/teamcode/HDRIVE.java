@@ -23,8 +23,8 @@ public class HDRIVE extends Telemetry{
     @Override
     public void loop(){
         TeleOp = true;
-        //Displays telemetry data
-        UpdateTelemetry();
+//        //Displays telemetry data
+//        UpdateTelemetry();
 
         //If gamepad 2's left bumper is pressed
         if(gamepad2.left_bumper){
@@ -39,13 +39,20 @@ public class HDRIVE extends Telemetry{
 
         if(gamepad2.right_bumper && (BallShooterPosition == ShooterEncoderPosition || (BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 12 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 12)))
         {
+            EncoderReset = true;
             BallShooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            BallShooterPosition = BallShooter.getCurrentPosition();
             ShooterEncoderPosition = BallShooterPosition;
             BallShooter.setPower(1);
             BallShooter.setTargetPosition(ShooterEncoderRotation + BallShooterPosition);
         }
-        else if (BallShooterPosition == ShooterEncoderPosition || (BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 12 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 12))
+        else if (BallShooterPosition == ShooterEncoderPosition || (BallShooterPosition >= (ShooterEncoderPosition + ShooterEncoderRotation) - 25 && BallShooterPosition <= (ShooterEncoderPosition + ShooterEncoderRotation) + 25))
         {
+            if (EncoderReset == true)
+            {
+                BallShooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                EncoderReset = false;
+            }
             BallShooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
